@@ -1,0 +1,34 @@
+.menu {
+    position: relative;
+    display: inline-block;
+}
+
+#tree{
+    margin:4px;
+    padding:0px;
+}
+
+#tree li{
+    list-style:none;
+    color:brown;
+}
+
+#tree span{
+    cursor:pointer;
+}
+
+#tree span:before{
+   content:"\25B6";
+   display:inline-block;
+   margin-right:6px;
+   color:blue;
+}
+
+.dipilih::before{
+   transform:rotate(90deg);
+}
+
+.tampilkan{
+   display:block;
+}
+
