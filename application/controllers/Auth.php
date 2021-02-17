@@ -87,6 +87,7 @@ class Auth extends CI_Controller
                                 } else {
                                     $this->session->set_userdata($data);
                                     //$this->session->set_userdata('coba');
+                                    //$this->session->set_userdata('coba');
                                     redirect('user');
                                 }
                             }

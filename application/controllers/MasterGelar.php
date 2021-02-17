@@ -3,6 +3,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MasterGelar extends CI_Controller
 {
+    //constructor
+    public function __construct()
+    {
+        parent::__construct();
+        // Load Model
+        $this->load->model('admin/m_title');
+    }
+
     public function index()
     {
         $data['title'] = 'Master Gelar';
@@ -38,6 +46,7 @@ class MasterGelar extends CI_Controller
             $row = $query->row_array();
             $max_id = $row['max_id'];
             //$max_id1 = (int) substr($max_id, 1, 2);
+            //$max_id1 = (int) substr($max_id, 1, 2);
             $max_id1 = (int) $max_id;
             $kdtitle = $max_id1 + 1;
 
@@ -53,5 +62,37 @@ class MasterGelar extends CI_Controller
 
             redirect('MasterGelar');
         }
+    }
+
+    public function update()
+    {
+        $id['KdTitle'] = $this->input->post("e_title");
+        $data = array(
+
+            'NamaTitle'         => $this->input->post("e_namatitle"),
+            'KodeExternal'      => $this->input->post("e_kodeexternal"),
+            'NamaExternal'      => $this->input->post("e_namaexternal"),
+
+        );
+    }
+    public function edit($editkdtitle)
+    {
+        $data1['title'] = 'Edit Title';
+        $editkdtitle = $this->uri->segment(3);
+        $data = array(
+            'gelar' => $this->m_title->edit($editkdtitle),
+
+        );
+        $this->load->view('templates/header', $data1);
+        // $this->load->view('admin/edit_title', $data);
+        $this->load->view('admin/MasterGelar', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function hapus($kdtitle)
+    {
+        $kodetitle['KdTitle'] = $this->uri->segment(3);
+        $this->m_title->hapus($kodetitle);
+        redirect('MasterGelar');
     }
 }
