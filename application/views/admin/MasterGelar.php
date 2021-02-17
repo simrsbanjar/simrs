@@ -7,7 +7,6 @@
     <div class="row">
         <div class="col-lg">
 
-
             <?= $this->session->flashdata('message2'); ?>
 
 
@@ -15,7 +14,7 @@
 
             <table class=" table table-hover table-bordered table-sm">
                 <thead>
-                    <tr>
+                    <tr style="text-align: center;">
                         <th scope="col">Kode</th>
                         <th scope="col">Title</th>
                         <th scope="col">Kode External</th>
@@ -27,7 +26,7 @@
                 <tbody>
                     <?php foreach ($gelar as $glr) : ?>
                         <tr>
-                            <th scope="row"><?= $glr['KdTitle']; ?></th>
+                            <th scope="row" style="text-align: center;"><?= $glr['KdTitle']; ?></th>
                             <td><?= $glr['NamaTitle']; ?></td>
                             <td><?= $glr['KodeExternal']; ?></td>
                             <td><?= $glr['NamaExternal']; ?></td>
@@ -36,7 +35,7 @@
                             <?php } else { ?>
                                 <td style="text-align: center;"> Tidak Aktif </td>
                             <?php }; ?>
-                            <td>
+                            <td style="text-align: center;">
                                 <a href="<?= base_url('MasterGelar/hapus/') ?><?= $glr['KdTitle'] ?>" type="hidden" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin?')">
                                     <i class="fa fa-trash"> Hapus</i></a>
 
