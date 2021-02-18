@@ -2,61 +2,70 @@
 
 class StatusPegawaiModel extends CI_Model
 {
-    public $KdStatus;
-    public $Status;
-    public $QStatus;
-    public $KodeExternal;
-    public $NamaExternal;
-    public $StatusEnabled;
+    var $table  = 'StatusPegawai';
+    var $column_order = array('KdStatus', 'Status', 'QStatus', 'KodeExternal', 'NamaExternal', 'StatusEnabled');
+    var $order  = array('KdStatus', 'Status', 'QStatus', 'KodeExternal', 'NamaExternal', 'StatusEnabled');
 
-    public function rules()
+    private function _get_data_query()
     {
-        return [
-            [
-                'field' => 'status',
-                'label' => 'Status',
-                'rules' => 'required'
-            ]
+        $this->db->from($this->table);
+        if (isset($_POST['search']['value'])) {
+            $this->db->like('Status', $_POST['search']['value']);
+            $this->db->or_like('QStatus', $_POST['search']['value']);
+            $this->db->or_like('KodeExternal', $_POST['search']['value']);
+            $this->db->or_like('NamaExternal', $_POST['search']['value']);
+            $this->db->or_like('StatusEnabled', $_POST['search']['value']);
+        }
 
-        ];
+        if (isset($_POST['order'])) {
+            $this->db->order_by($this->order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+        } else {
+            $this->db->order_by('KdStatus', 'ASC');
+        }
+    }
+    public function getDataTable()
+    {
+        $this->_get_data_query();
+        if ($_POST['length'] == -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+        $query = $this->db->get();
+        return $query->result();
     }
 
-    public function getAll()
+    public function count_filtered_data()
     {
-        return $this->db->get("StatusPegawai")->result();
+        $this->_get_data_query();
+        $query = $this->db->get();
+        return $query->num_rows();
     }
 
-    public function getById($KdStatus)
+    public function count_all_data()
     {
-        return $this->db->get_where("StatusPegawai", ["kdStatus" => $KdStatus])->row();
+        $this->db->from($this->table);
+        return $this->db->count_all_results();
     }
 
-    public function save()
+    public function create($data)
     {
-        $post = $this->input->post();
-        $this->kodeStatus = uniqid();
-        $this->Status = $post["status"];
-        $this->Status = $post["qstatus"];
-        $this->Status = $post["kodeexternal"];
-        $this->Status = $post["namaexternal"];
-        $this->Status = $post["statusenabled"];
-        $this->db->insert("StatusPegawai", $this);
+        $this->db->insert('StatusPegawai', $data);
+        return $this->db->affected_rows();
     }
 
-    public function update()
+    public function getdataById($kdstatus)
     {
-        $post = $this->input->post();
-        $this->kodeStatus = uniqid();
-        $this->Status = $post["status"];
-        $this->Status = $post["qstatus"];
-        $this->Status = $post["kodeexternal"];
-        $this->Status = $post["namaexternal"];
-        $this->Status = $post["statusenabled"];
-        $this->db->update("StatusPegawai", $this, array('KdStatus' => $post['kodestatus']));
+        return $this->db->get_where($this->table, ['KdStatus' => $kdstatus])->row();
     }
 
-    public function delete($KdStatus)
+    public function update($where, $data)
     {
-        return $this->db->delete("StatusPegawai", array("kdStatus" => $KdStatus));
+        $this->db->update($this->table, $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    public function delete($kdstatus)
+    {
+        $this->db->delete($this->table, ['KdStatus' => $kdstatus]);
+        return $this->db->affected_rows();
     }
 }
