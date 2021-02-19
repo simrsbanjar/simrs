@@ -12,9 +12,9 @@
 <body>
     <div class="container mt-3">
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-900"><?= $title; ?></h1>
+        <h1 class="h3 text-gray-900"><?= $title; ?></h1>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary m-2" onclick="add()">
+        <button type="button" class="btn btn-primary m-7" onclick="add()">
             Tambah Data
         </button>
 
@@ -85,6 +85,7 @@
 
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"> </script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"> </script>
+
 
     <script>
         var saveData;
@@ -245,6 +246,7 @@
             })
         }
     </script>
+
 </body>
 
 </html>
