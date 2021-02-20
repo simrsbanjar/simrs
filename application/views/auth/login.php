@@ -10,10 +10,14 @@
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Sistem Informasi Rumah Sakit</h1>
-                                </div>
+                            <div class="text-center">
+                                <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px" class="mb-3 col col-auto"><img>
+                            </div>
+                            <div class="p-2">
+                                <center>
+                                    <h4>Sistem Informasi Manajamen Rumah Sakit</h4>
+                                </center>
+                                <br>
 
                                 <?= $this->session->flashdata('message'); ?>
 
@@ -53,5 +57,12 @@
         </div>
 
     </div>
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span style="color: white;">Copyright &copy; SIMRS RSU Kota Banjar <?= date('Y'); ?></span>
+        </div>
+    </div>
+
+
 
 </div>

@@ -8,61 +8,106 @@ class MasterGelar extends CI_Controller
     {
         parent::__construct();
         // Load Model
-        $this->load->model('admin/m_title');
+        $this->load->model('admin/GelarModel');
     }
 
     public function index()
     {
         $data['title'] = 'Master Gelar';
-        //var_dump($this->session->userdata('username'));
         $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
         $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
 
-        $data['gelar'] = $this->db->get('Title')->result_array();
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/MasterGelar', $data);
+        $this->load->view('templates/footer');
+    }
 
-        $array = array(
-            'KdTitle'   => 'KdTitle',
-            'NamaTitle' => 'judul',
-            'KodeExternal' => 'kodeexternal',
-            'NamaExternal' => 'namaexternal',
-            'StatusEnabled' => '1'
-        );
-
-        $this->form_validation->set_rules('judul', 'NamaTitle', 'trim|required');
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('admin/MasterGelar', $data);
-            $this->load->view('templates/footer');
-        } else {
-            $stsaktif   =  $this->input->post('statusaktif');
-
-            if ($stsaktif  != '1') {
-                $stsaktif   = '0';
+    public function getData()
+    {
+        $results = $this->GelarModel->getDataTable();
+        $data = [];
+        $no = $_POST['start'];
+        foreach ($results as $result) {
+            if ($result->StatusEnabled == '1') {
+                $stsaktif = 'Aktif';
+            } else {
+                $stsaktif = 'Tidak Aktif';
             }
 
-            $query = $this->db->query("SELECT MAX(KdTitle) as max_id FROM Title");
-            $row = $query->row_array();
-            $max_id = $row['max_id'];
-            //$max_id1 = (int) substr($max_id, 1, 2);
-            //$max_id1 = (int) substr($max_id, 1, 2);
-            $max_id1 = (int) $max_id;
-            $kdtitle = $max_id1 + 1;
+            $row = array();
+            $row[] = $result->KdTitle;
+            $row[] = $result->NamaTitle;
+            $row[] = $result->KodeExternal;
+            $row[] = $result->NamaExternal;
+            $row[] = $stsaktif;
 
-            $data = array(
-                'NamaTitle' => $this->input->post('judul'),
-                'StatusEnabled' => $stsaktif,
-                'KdTitle' =>  $kdtitle,
-                'KodeExternal' => '',
-                'NamaExternal' => ''
-            );
-
-            $this->db->insert('Title', $data);
-
-            redirect('MasterGelar');
+            $data[] = $row;
         }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->GelarModel->count_all_data(),
+            "recordsFiltered" => $this->GelarModel->count_filtered_data(),
+            "data" => $data,
+
+        );
+        $this->output->set_content_type('application/json')->set_output(json_encode($output));
     }
+
+
+    // public function index()
+    // {
+    //     $data['title'] = 'Master Gelar';
+    //     //var_dump($this->session->userdata('username'));
+    //     $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
+    //     $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
+
+    //     $data['gelar'] = $this->db->get('Title')->result_array();
+
+    //     $array = array(
+    //         'KdTitle'   => 'KdTitle',
+    //         'NamaTitle' => 'judul',
+    //         'KodeExternal' => 'kodeexternal',
+    //         'NamaExternal' => 'namaexternal',
+    //         'StatusEnabled' => '1'
+    //     );
+
+    //     $this->form_validation->set_rules('judul', 'NamaTitle', 'trim|required');
+    //     if ($this->form_validation->run() == false) {
+    //         $this->load->view('templates/header', $data);
+    //         $this->load->view('templates/sidebar', $data);
+    //         $this->load->view('templates/topbar', $data);
+    //         $this->load->view('admin/MasterGelar', $data);
+    //         $this->load->view('templates/footer');
+    //     } else {
+    //         $stsaktif   =  $this->input->post('statusaktif');
+
+    //         if ($stsaktif  != '1') {
+    //             $stsaktif   = '0';
+    //         }
+
+    //         $query = $this->db->query("SELECT MAX(KdTitle) as max_id FROM Title");
+    //         $row = $query->row_array();
+    //         $max_id = $row['max_id'];
+    //         //$max_id1 = (int) substr($max_id, 1, 2);
+    //         //$max_id1 = (int) substr($max_id, 1, 2);
+    //         $max_id1 = (int) $max_id;
+    //         $kdtitle = $max_id1 + 1;
+
+    //         $data = array(
+    //             'NamaTitle' => $this->input->post('judul'),
+    //             'StatusEnabled' => $stsaktif,
+    //             'KdTitle' =>  $kdtitle,
+    //             'KodeExternal' => '',
+    //             'NamaExternal' => ''
+    //         );
+
+    //         $this->db->insert('Title', $data);
+
+    //         redirect('MasterGelar');
+    //     }
+    // }
 
     public function update()
     {

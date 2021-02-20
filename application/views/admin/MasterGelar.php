@@ -1,162 +1,256 @@
-<!-- Begin Page Content -->
-<div class="container-fluid">
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-900"><?= $title; ?></h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="widht=device-width, initial-scale=1.0">
+    <title>Master Status Pegawai</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
+</head>
 
-    <div class="row">
-        <div class="col-lg">
+<body>
+    <div class="container mt-3">
+        <!-- Page Heading -->
+        <h1 class="h3 text-gray-900"><?= $title; ?></h1>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary m-7" onclick="add()">
+            Tambah Data
+        </button>
 
-            <?= $this->session->flashdata('message2'); ?>
+        <!-- Modal -->
+        <div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body form">
+                        <form action="#" id="formData">
+                            <input type="hidden" id="kdtitle" name="kdtitle" value="">
+                            <div class="form-group">
+                                <label for="status">Title</label>
+                                <input type="text" class="form-control" id="namatitle" name="namatitle" placeholder="Masukkan Title">
 
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Kode External</label>
+                                <input type="text" class="form-control" id="kodeexternal" name="kodeexternal" placeholder="Masukkan Kode External">
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Nama External</label>
+                                <input type="text" class="form-control" id="namaexternal" name="namaexternal" placeholder="Masukkan Nama External">
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label" for="statusaktif">Status Aktif</label>
+                                <input class="form-check-input col-9" type="checkbox" value="1" id="statusaktif" name="statusaktif" checked>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-primary" id="btnSave" onclick="save()">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <table id="myTable" class="table table-striped table-bordered" style="width:100%">
+                <div class="card-body">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th>Kode</th>
+                            <th>Title</th>
+                            <th>Kode External</th>
+                            <th>Nama External</th>
+                            <th>Status Enabled</th>
 
-            <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#tambahgelarModal"><i class="fa fa-plus"></i>Tambah Gelar</button>
-
-            <table class=" table table-hover table-bordered table-sm">
-                <thead>
-                    <tr style="text-align: center;">
-                        <th scope="col">Kode</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Kode External</th>
-                        <th scope="col">Nama External</th>
-                        <th scope="col">Status Enabled</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($gelar as $glr) : ?>
-                        <tr>
-                            <th scope="row" style="text-align: center;"><?= $glr['KdTitle']; ?></th>
-                            <td><?= $glr['NamaTitle']; ?></td>
-                            <td><?= $glr['KodeExternal']; ?></td>
-                            <td><?= $glr['NamaExternal']; ?></td>
-                            <?php if ($glr['StatusEnabled'] == '1') { ?>
-                                <td style="text-align: center;"> Aktif </td>
-                            <?php } else { ?>
-                                <td style="text-align: center;"> Tidak Aktif </td>
-                            <?php }; ?>
-                            <td style="text-align: center;">
-                                <a href="<?= base_url('MasterGelar/hapus/') ?><?= $glr['KdTitle'] ?>" type="hidden" class="btn btn-danger btn-sm" onclick="return confirm('Apakah anda yakin?')">
-                                    <i class="fa fa-trash"> Hapus</i></a>
-
-                                <!-- <a href="<?= base_url('admin/edit/') ?><?= $glr['KdTitle'] ?>" class=" btn btn-success btn-sm d-inline">
-                                    <i class="fa fa-edit"></i></a> -->
-
-                                <button class="btn btn-success btn-sm d-inline" data-toggle="modal" data-target="#hapusgelarModal" <?= base_url('MasterGelar/edit/') ?>><i class="fa fa-edit"></i> Edit</button>
-
-                            </td>
                         </tr>
-                    <?php endforeach ?>
-                </tbody>
+                    </thead>
+                    <tbody>
+                    </tbody>
             </table>
         </div>
-
     </div>
-</div>
-<!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->
-
-<!-- Modal Tambah Gelar -->
-<div class="modal fade" id="tambahgelarModal" tabindex="-1" aria-labelledby="tambahgelarModalLabel" aria-hidden="true" name="tambahgelarModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="tambahgelarModalLabel">Form Tambah Gelar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('MasterGelar'); ?>" method="POST">
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label for="judul" class="col-sm-4 col-form-label">Title</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="judul" name="judul" value="<?= set_value('judul'); ?>">
-
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="kodeexternal" class="col-sm-4 col-form-label">Kode External</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="kodeexternal" name="kodeexternal">
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label" for="statusaktif">Status Aktif</label>
-                            <input class="form-check-input col-9" type="checkbox" value="1" id="statusaktif" name="statusaktif" checked <?= set_checkbox('statusaktif', '1'); ?>>
-
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="namaexternal" class="col-sm-4 col-form-label">Nama External</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="namaexternal" name="namaexternal">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Tambah</button>
-                </div>
-            </form>
-
-        </div>
     </div>
-</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
 
-<!-- Modal Hapus Gelar -->
+    <script src="<?= base_url('assets/'); ?>sweetalert/sweetalert.js"></script>
 
-<div class="modal fade" id="hapusgelarModal" tabindex="-1" aria-labelledby="hapusgelarModalLabel" aria-hidden="true" name="tambahgelarModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="hapusgelarModalLabel">Form Edit Gelar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="<?= base_url('MasterGelar/edit'); ?>">
-                <div class="modal-body">
-                    <div class="form-group row">
-                        <label for="e_kdtitle" class="col-sm-4 col-form-label">Kode Title</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="e_kdtitle" name="e_kdtitle" value="<?= $glr['KdTitle']; ?>" disabled>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="e_namatitle" class="col-sm-4 col-form-label">Nama Title</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="e_namatitle" name="e_namatitle" value="<?= $glr['NamaTitle']; ?>">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="e_kodeexternal" class="col-sm-4 col-form-label">Kode External</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="e_kodeexternal" name="e_kodeexternal" value="<?= $glr['KodeExternal']; ?>">
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label" for="statusaktif">Status Aktif</label>
-                            <input class="form-check-input col-9" type="checkbox" value="<?= $glr['StatusEnabled']; ?>" id="statusaktif" name="statusaktif" checked <?= set_checkbox('statusaktif', '1'); ?>>
+    <!-- <script src="<?= base_url('assets/'); ?>bootstrap/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
 
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="namaexternal" class="col-sm-4 col-form-label">Nama External</label>
-                        <div class="col-4">
-                            <input type="text" class="form-control" id="namaexternal" name="namaexternal">
-                        </div>
-                    </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="reset" class="btn btn-warning">Reset</button>
-                    <button type="submit" class="btn btn-success">Update</button>
-                </div>
-            </form>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-        </div>
-    </div>
-</div>
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"> </script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"> </script>
+
+
+    <script>
+        var saveData;
+        var modal = $('#modalData');
+        var tableData = $('#myTable');
+        var formData = $('#formData');
+        var modalTitle = $('#modalTitle');
+        var btnsave = $('#btnSave');
+
+        $(document).ready(function() {
+            tableData.DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "ajax": {
+                    "url": "<?= base_url('MasterGelar/getData') ?>",
+                    "type": "POST"
+                },
+                "columnDefs": [{
+                    "target": [-1],
+                    "orderable": false
+                }]
+            });
+        });
+
+        function reloadTable() {
+            tableData.DataTable().ajax.reload();
+        }
+
+        function message(icon, text) {
+            Swal.fire({
+                icon: icon,
+                title: 'Informasi',
+                text: text,
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            })
+        }
+
+        function deleteQuestion(kode, Nama) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: "Apakah anda yakin akan menghapus data " + Nama + " ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteData(kode);
+                }
+            })
+        }
+
+        function add() {
+            saveData = 'tambah';
+            formData[0].reset();
+            modal.modal('show');
+            modalTitle.text('Tambah Data');
+        }
+
+        function save() {
+            btnsave.text('Mohon tunggu....');
+            btnsave.attr('disabled', true);
+
+            if (saveData == 'tambah') {
+                url = "<?= base_url('MasterGelar/add') ?>"
+            } else {
+                url = "<?= base_url('MasterGelar/update') ?>"
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: formData.serialize(),
+                dataType: "JSON",
+                success: function(response) {
+                    if (response.status == 'success') {
+                        modal.modal('hide');
+                        reloadTable();
+
+                        if (saveData == 'tambah') {
+                            message('success', 'Data Berhasil Disimpan');
+                        } else {
+                            message('success', 'Data Berhasil Diubah');
+                        }
+                    } else {
+                        for (var i = 0; i < response.inputerror.length; i++) {
+                            $('[name="' + response.inputerror[i] + '"]').addClass('is-invalid');
+                            $('[name="' + response.inputerror[i] + '"]').next().text(response.error_string[i]);
+                        }
+                    }
+                    btnsave.text('Simpan');
+                    btnsave.attr('disabled', false);
+                },
+                error: function() {
+                    message('error', 'Server gangguan, silahkan ulangi kembali.');
+                }
+
+            })
+
+        }
+
+        function byid(kode, type) {
+            if (type == 'ubah') {
+                saveData = 'ubah';
+                formData[0].reset();
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "<?= base_url('MasterGelar/byid/') ?>" + kode,
+                dataType: "JSON",
+                success: function(response) {
+                    if (type == 'ubah') {
+                        formData.find('input').removeClass('is-invalid');
+                        modalTitle.text('Ubah Data');
+                        btnsave.text('Ubah Data');
+                        btnsave.attr('disabled', false);
+                        $('[name="kdtitle"]').val(response.KdTitle);
+                        $('[name="namatitle"]').val(response.NamaTitle);
+                        $('[name="kodeexternal"]').val(response.KodeExternal);
+                        $('[name="namaexternal"]').val(response.NamaExternal);
+
+                        if (response.StatusEnabled == '1') {
+                            $('[name="statusaktif"]').prop('checked', true);
+                        } else {
+                            $('[name="statusaktif"]').prop('checked', false);
+                        }
+
+                        modal.modal('show');
+                    } else {
+                        deleteQuestion(response.KdTitle, response.Status);
+                    }
+                },
+                error: function() {
+                    message('error', 'Server gangguan, silahkan ulangi kembali.');
+                }
+            })
+        }
+
+        function deleteData(kode) {
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url('MasterStatusPegawai/delete/') ?>" + kode,
+                dataType: "JSON",
+                success: function(response) {
+                    console.log(response);
+                    reloadTable();
+                    message('success', 'Data Berhasil Dihapus');
+                },
+                error: function() {
+                    message('error', 'Server gangguan, silahkan ulangi kembali.');
+                }
+
+            })
+        }
+    </script>
+
+</body>
+
+</html>
