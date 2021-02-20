@@ -1,34 +1,24 @@
-.menu {
-    position: relative;
-    display: inline-block;
-}
-
-#tree{
-    margin:4px;
-    padding:0px;
-}
-
-#tree li{
-    list-style:none;
-    color:brown;
-}
-
-#tree span{
-    cursor:pointer;
-}
-
-#tree span:before{
-   content:"\25B6";
-   display:inline-block;
-   margin-right:6px;
-   color:blue;
-}
-
-.dipilih::before{
-   transform:rotate(90deg);
-}
-
-.tampilkan{
-   display:block;
-}
-
+.sc-btn a{
+   background: silver;
+   padding: 5px;
+   margin-right:5px;
+ }
+.non-aktif{
+   opacity: 0.5;
+ }
+.aktif{
+   opacity: 1.0;
+} 
+.aktif:before{
+   content: “";
+   position:absolute;
+   width:0;
+   border-width: 0 8px 8px 8px;
+   border-style: solid;
+   border-color: #bbb transparent;
+   margin-top: 26px;
+   margin-left: 0px;}
+.isi {
+   margin-top: 13px;
+   border-top: 1px solid #bbb;
+ }

@@ -1,17 +1,16 @@
 <?php defined('BASEPATH') or exit('No Dirext Script Access Allower');
 
-class StatusPegawaiModel extends CI_Model
+class JenisDiklatModel extends CI_Model
 {
-    var $table  = 'StatusPegawai';
-    var $column_order = array('KdStatus', 'Status', 'QStatus', 'KodeExternal', 'NamaExternal', 'StatusEnabled');
-    var $order  = array('KdStatus', 'Status', 'QStatus', 'KodeExternal', 'NamaExternal', 'StatusEnabled');
+    var $table  = 'JenisDiklat';
+    var $column_order = array('KdJenisDiklat', 'JenisDiklat', 'KodeExternal', 'NamaExternal', 'StatusEnabled');
+    var $order  = array('KdJenisDiklat', 'JenisDiklat', 'KodeExternal', 'NamaExternal', 'StatusEnabled');
 
     private function _get_data_query()
     {
         $this->db->from($this->table);
         if (isset($_POST['search']['value'])) {
-            $this->db->like('Status', $_POST['search']['value']);
-            $this->db->or_like('QStatus', $_POST['search']['value']);
+            $this->db->like('JenisDiklat', $_POST['search']['value']);
             $this->db->or_like('KodeExternal', $_POST['search']['value']);
             $this->db->or_like('NamaExternal', $_POST['search']['value']);
             $this->db->or_like('StatusEnabled', $_POST['search']['value']);
@@ -20,7 +19,7 @@ class StatusPegawaiModel extends CI_Model
         if (isset($_POST['order'])) {
             $this->db->order_by($this->order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else {
-            $this->db->order_by('KdStatus', 'ASC');
+            $this->db->order_by('KdJenisDiklat', 'ASC');
         }
     }
     public function getDataTable()
@@ -48,13 +47,13 @@ class StatusPegawaiModel extends CI_Model
 
     public function create($data)
     {
-        $this->db->insert('StatusPegawai', $data);
+        $this->db->insert($this->table, $data);
         return $this->db->affected_rows();
     }
 
-    public function getdataById($kdstatus)
+    public function getdataById($kode)
     {
-        return $this->db->get_where($this->table, ['KdStatus' => $kdstatus])->row();
+        return $this->db->get_where($this->table, ['KdJenisDiklat' => $kode])->row();
     }
 
     public function update($where, $data)
@@ -63,9 +62,9 @@ class StatusPegawaiModel extends CI_Model
         return $this->db->affected_rows();
     }
 
-    public function delete($kdstatus)
+    public function delete($kode)
     {
-        $this->db->delete($this->table, ['KdStatus' => $kdstatus]);
+        $this->db->delete($this->table, ['KdJenisDiklat' => $kode]);
         return $this->db->affected_rows();
     }
 }
