@@ -14,7 +14,7 @@ class GelarModel extends CI_Model
             $this->db->or_like('NamaTitle', $_POST['search']['value']);
             $this->db->or_like('KodeExternal', $_POST['search']['value']);
             $this->db->or_like('NamaExternal', $_POST['search']['value']);
-            $this->db->or_wlike('StatusEnabled', $_POST['search']['value']);
+            $this->db->or_like('StatusEnabled', $_POST['search']['value']);
         }
         if (isset($_POST['order'])) {
             $this->db->order_by($this->order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);

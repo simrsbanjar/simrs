@@ -10,6 +10,7 @@
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg">
+
                             <div class="text-center">
                                 <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px" class="mb-3 col col-auto"><img>
                             </div>
@@ -18,6 +19,7 @@
                                     <h4>Sistem Informasi Manajamen Rumah Sakit</h4>
                                 </center>
                                 <br>
+
 
                                 <?= $this->session->flashdata('message'); ?>
 
