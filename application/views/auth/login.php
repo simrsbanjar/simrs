@@ -10,14 +10,23 @@
                     <!-- Nested Row within Card Body -->
                     <div class="row">
                         <div class="col-lg">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h3 class="h2 text-gray-900 mb-4">Sistem Informasi Rumah Sakit</h3>
-                                </div>
+
+                            <div class="text-center">
+                                <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px" class="mb-3 col col-auto"><img>
+                            </div>
+                            <!-- <hr> -->
+                            <div class="p-2">
+
+                                <center>
+                                    <!-- <h4 class="shadow-sm p-3 bg-white" style="color: black;">Sistem Informasi Manajamen Rumah Sakit</h4> -->
+                                    <h4><img src="<?= base_url('assets/'); ?>img/simrs/kata simrs.png"> Sistem Informasi Manajamen Rumah Sakit</h4>
+                                </center>
+                                <br>
+
 
                                 <?= $this->session->flashdata('message'); ?>
 
-                                <form class="user" method="post" action="<?= base_url('auth'); ?>">
+                                <form class=" user" method="post" action="<?= base_url('auth'); ?>">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" value="<?= set_value('username'); ?>">
                                         <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -52,5 +61,12 @@
         </div>
 
     </div>
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span style="color: white;">Copyright &copy; SIMRS RSU Kota Banjar <?= date('Y'); ?></span>
+        </div>
+    </div>
+
+
 
 </div>
