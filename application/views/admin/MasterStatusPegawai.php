@@ -13,7 +13,7 @@
         <!-- Page Heading -->
         <h1 class="h3 text-gray-900"><?= $title; ?></h1>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary m-7" onclick="add()">
+        <button type="button" class="btn btn-primary m-7 mb-3" onclick="add()">
             Tambah Data
         </button>
 

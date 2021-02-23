@@ -14,16 +14,19 @@
                             <div class="text-center">
                                 <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px" class="mb-3 col col-auto"><img>
                             </div>
+                            <!-- <hr> -->
                             <div class="p-2">
+
                                 <center>
-                                    <h4>Sistem Informasi Manajamen Rumah Sakit</h4>
+                                    <!-- <h4 class="shadow-sm p-3 bg-white" style="color: black;">Sistem Informasi Manajamen Rumah Sakit</h4> -->
+                                    <h4><img src="<?= base_url('assets/'); ?>img/simrs/kata simrs.png"> Sistem Informasi Manajamen Rumah Sakit</h4>
                                 </center>
                                 <br>
 
 
                                 <?= $this->session->flashdata('message'); ?>
 
-                                <form class="user" method="post" action="<?= base_url('auth'); ?>">
+                                <form class=" user" method="post" action="<?= base_url('auth'); ?>">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" value="<?= set_value('username'); ?>">
                                         <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>

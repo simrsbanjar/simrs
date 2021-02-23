@@ -42,7 +42,10 @@ class MasterGelar extends CI_Controller
             $row[] = $result->KodeExternal;
             $row[] = $result->NamaExternal;
             $row[] = $stsaktif;
-
+            $row[] = '
+            <a href ="#" class="btn btn-success btn-sm fa fa-edit" onclick="byid(' . "'" . $result->KdTitle . "','ubah'" . ')"> Ubah</a>
+            <a href ="#" class="btn btn-danger btn-sm" onclick="byid(' . "'" . $result->KdTitle . "','hapus'" . ')"><i class="fa fa-trash"> Hapus </i> </a>
+            ';
             $data[] = $row;
         }
         $output = array(
@@ -56,88 +59,98 @@ class MasterGelar extends CI_Controller
     }
 
 
-    // public function index()
-    // {
-    //     $data['title'] = 'Master Gelar';
-    //     //var_dump($this->session->userdata('username'));
-    //     $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
-    //     $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
+    public function add()
+    {
+        $this->_validation();
+        $query = $this->db->query("SELECT MAX(KdTitle) as max_id FROM Title");
+        $row = $query->row_array();
+        $max_id = $row['max_id'];
+        $max_id1 = (int) $max_id;
+        $kdtitle = $max_id1 + 1;
 
-    //     $data['gelar'] = $this->db->get('Title')->result_array();
+        $stsaktif   =  $this->input->post('statusaktif');
 
-    //     $array = array(
-    //         'KdTitle'   => 'KdTitle',
-    //         'NamaTitle' => 'judul',
-    //         'KodeExternal' => 'kodeexternal',
-    //         'NamaExternal' => 'namaexternal',
-    //         'StatusEnabled' => '1'
-    //     );
+        if ($stsaktif  != '1') {
+            $stsaktif   = '0';
+        }
 
-    //     $this->form_validation->set_rules('judul', 'NamaTitle', 'trim|required');
-    //     if ($this->form_validation->run() == false) {
-    //         $this->load->view('templates/header', $data);
-    //         $this->load->view('templates/sidebar', $data);
-    //         $this->load->view('templates/topbar', $data);
-    //         $this->load->view('admin/MasterGelar', $data);
-    //         $this->load->view('templates/footer');
-    //     } else {
-    //         $stsaktif   =  $this->input->post('statusaktif');
+        $data = [
+            'KdTitle' => substr(('00' . $kdtitle), -2),
+            'NamaTitle' => htmlspecialchars($this->input->post('namatitle')),
+            'KodeExternal' => htmlspecialchars($this->input->post('kodeexternal')),
+            'NamaExternal' => htmlspecialchars($this->input->post('namaexternal')),
+            'StatusEnabled' => $stsaktif
+        ];
 
-    //         if ($stsaktif  != '1') {
-    //             $stsaktif   = '0';
-    //         }
+        if ($this->GelarModel->create($data) > 0) {
+            $message['namatitle'] = 'success';
+        } else {
+            $message['namatitle'] = 'failed';
+        };
 
-    //         $query = $this->db->query("SELECT MAX(KdTitle) as max_id FROM Title");
-    //         $row = $query->row_array();
-    //         $max_id = $row['max_id'];
-    //         //$max_id1 = (int) substr($max_id, 1, 2);
-    //         //$max_id1 = (int) substr($max_id, 1, 2);
-    //         $max_id1 = (int) $max_id;
-    //         $kdtitle = $max_id1 + 1;
+        $this->output->set_content_type('aplication/json')->set_output(json_encode(($message)));
+    }
 
-    //         $data = array(
-    //             'NamaTitle' => $this->input->post('judul'),
-    //             'StatusEnabled' => $stsaktif,
-    //             'KdTitle' =>  $kdtitle,
-    //             'KodeExternal' => '',
-    //             'NamaExternal' => ''
-    //         );
 
-    //         $this->db->insert('Title', $data);
-
-    //         redirect('MasterGelar');
-    //     }
-    // }
+    public function byid($kdtitle)
+    {
+        $data   = $this->GelarModel->getdataById($kdtitle);
+        $this->output->set_content_type('application/json')->set_output(json_encode($data));
+    }
 
     public function update()
     {
-        $id['KdTitle'] = $this->input->post("e_title");
-        $data = array(
+        $this->_validation();
+        $stsaktif   =  $this->input->post('statusaktif');
 
-            'NamaTitle'         => $this->input->post("e_namatitle"),
-            'KodeExternal'      => $this->input->post("e_kodeexternal"),
-            'NamaExternal'      => $this->input->post("e_namaexternal"),
+        if ($stsaktif  != '1') {
+            $stsaktif   = '0';
+        }
 
-        );
+        $data = [
+            'NamaTitle' => htmlspecialchars($this->input->post('namatitle')),
+            'KodeExternal' => htmlspecialchars($this->input->post('kodeexternal')),
+            'NamaExternal' => htmlspecialchars($this->input->post('namaexternal')),
+            'StatusEnabled' => $stsaktif
+        ];
+
+        if ($this->GelarModel->update(array('KdTitle' => $this->input->post('kdtitle')), $data) >= 0) {
+            $message['namatitle'] = 'success';
+        } else {
+            $message['namatitle'] = 'failed';
+        };
+
+        $this->output->set_content_type('aplication/json')->set_output(json_encode(($message)));
     }
-    public function edit($editkdtitle)
-    {
-        $data1['title'] = 'Edit Title';
-        $editkdtitle = $this->uri->segment(3);
-        $data = array(
-            'gelar' => $this->m_title->edit($editkdtitle),
 
-        );
-        $this->load->view('templates/header', $data1);
-        // $this->load->view('admin/edit_title', $data);
-        $this->load->view('admin/MasterGelar', $data);
-        $this->load->view('templates/footer');
+    public function delete($kode)
+    {
+        if ($this->GelarModel->delete($kode) > 0) {
+            $message['namatitle'] = 'success';
+        } else {
+            $message['namatitle'] = 'failed';
+        };
+
+        $this->output->set_content_type('aplication/json')->set_output(json_encode(($message)));
     }
 
-    public function hapus($kdtitle)
+
+    private function _validation()
     {
-        $kodetitle['KdTitle'] = $this->uri->segment(3);
-        $this->m_title->hapus($kodetitle);
-        redirect('MasterGelar');
+        $data = array();
+        $data['error_string'] = array();
+        $data['inputerror'] = array();
+        $data['namatitle'] = true;
+
+        if ($this->input->post('namatitle') == '') {
+            $data['error_string'][] = 'Status wajib diisi';
+            $data['inputerror'][] = 'namatitle';
+            $data['namatitle'] = false;
+        }
+
+        if ($data['namatitle'] === false) {
+            echo json_encode($data);
+            exit();
+        }
     }
 }

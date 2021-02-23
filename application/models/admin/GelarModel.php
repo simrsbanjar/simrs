@@ -26,7 +26,7 @@ class GelarModel extends CI_Model
     public function getDataTable()
     {
         $this->get_data_query();
-        if ($_POST['length'] == -1) {
+        if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);
         }
         $query = $this->db->get();
@@ -44,5 +44,28 @@ class GelarModel extends CI_Model
     {
         $this->db->from($this->table);
         return $this->db->count_all_results();
+    }
+
+    public function create($data)
+    {
+        $this->db->insert('Title', $data);
+        return $this->db->affected_rows();
+    }
+
+    public function getdataById($kode)
+    {
+        return $this->db->get_where($this->table, ['KdTitle' => $kode])->row();
+    }
+
+    public function update($where, $data)
+    {
+        $this->db->update($this->table, $data, $where);
+        return $this->db->affected_rows();
+    }
+
+    public function delete($kdtitle)
+    {
+        $this->db->delete($this->table, ['KdTitle' => $kdtitle]);
+        return $this->db->affected_rows();
     }
 }

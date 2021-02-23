@@ -14,7 +14,7 @@
         <!-- Page Heading -->
         <h1 class="h3 text-gray-900"><?= $title; ?></h1>
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary m-7" onclick="add()">
+        <button type="button" class="btn btn-primary m-7 mb-3" onclick="add()">
             Tambah Data
         </button>
 
@@ -68,6 +68,7 @@
                             <th>Kode External</th>
                             <th>Nama External</th>
                             <th>Status Enabled</th>
+                            <th>Aksi</th>
 
                         </tr>
                     </thead>
@@ -95,6 +96,7 @@
         var saveData;
         var modal = $('#modalData');
         var tableData = $('#myTable');
+        //Mereset data inputan
         var formData = $('#formData');
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
@@ -131,10 +133,10 @@
             })
         }
 
-        function deleteQuestion(kode, Nama) {
+        function deleteQuestion(kode, NamaTitle) {
             Swal.fire({
                 title: 'Konfirmasi',
-                text: "Apakah anda yakin akan menghapus data " + Nama + " ?",
+                text: "Apakah anda yakin akan menghapus data " + NamaTitle + " ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -148,6 +150,7 @@
 
         function add() {
             saveData = 'tambah';
+            //Mereset data inputan
             formData[0].reset();
             modal.modal('show');
             modalTitle.text('Tambah Data');
@@ -169,7 +172,7 @@
                 data: formData.serialize(),
                 dataType: "JSON",
                 success: function(response) {
-                    if (response.status == 'success') {
+                    if (response.namatitle == 'success') {
                         modal.modal('hide');
                         reloadTable();
 
@@ -224,7 +227,7 @@
 
                         modal.modal('show');
                     } else {
-                        deleteQuestion(response.KdTitle, response.Status);
+                        deleteQuestion(response.KdTitle, response.NamaTitle);
                     }
                 },
                 error: function() {
@@ -236,7 +239,7 @@
         function deleteData(kode) {
             $.ajax({
                 type: "POST",
-                url: "<?= base_url('MasterStatusPegawai/delete/') ?>" + kode,
+                url: "<?= base_url('MasterGelar/delete/') ?>" + kode,
                 dataType: "JSON",
                 success: function(response) {
                     console.log(response);

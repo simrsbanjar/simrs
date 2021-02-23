@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
     <title><?= $title; ?></title>
 
     <!-- Custom fonts for this template-->
@@ -21,3 +22,23 @@
 </head>
 
 <body class="bg-gradient-primary">
+    <!-- <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-5 col-lg-5">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-4">
+                        Nested Row within Card Body
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="text-center">
+                                    <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px" class="mb-3 col col-auto"><img>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
