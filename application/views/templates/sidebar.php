@@ -9,7 +9,7 @@
         <div class="sidebar-brand-text mx-3">SIMRS</div>
     </a>
 
-    <?php $menu          = $this->db->get('ListMenuWeb')->result();  ?>
+    <?php $menu          = $this->db->query("SELECT * FROM ListMenuWeb WHERE StatusEnabled = '1' ")->result();  ?>
 
     <!-- Divider -->
     <br>
@@ -26,8 +26,7 @@
 
             <?php if ($mensub) { ?>
                 <?php foreach ($mensub as $key_s) { ?>
-                    <?php $mendsub       = $this->db->get_where('DtlSubListMenuWeb', ['NoIndex_p' => $key->NoIndex])->result(); ?>
-                    <?php $mendsub       = $this->db->get_where('DtlSubListMenuWeb', ['NoIndex_p_s' => $key_s->NoIndex])->result(); ?>
+                    <?php $mendsub       = $this->db->query("SELECT * FROM DtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND StatusEnabled ='1'")->result(); ?>
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -35,9 +34,7 @@
                 <span style="font-size: 13px;"><?php echo $key_s->NamaMenu; ?></span>
             </a>
             <?php foreach ($mendsub as $key_ds) { ?>
-                <?php $menrdsub       = $this->db->get_where('RincDtlSubListMenuWeb', ['NoIndex_p' => $key->NoIndex])->result(); ?>
-                <?php $menrdsub       = $this->db->get_where('RincDtlSubListMenuWeb', ['NoIndex_p_s' => $key_s->NoIndex])->result(); ?>
-                <?php $menrdsub       = $this->db->get_where('RincDtlSubListMenuWeb', ['NoIndex_p_s_d' => $key_ds->NoIndex])->result(); ?>
+                <?php $menrdsub       = $this->db->query("SELECT * FROM RincDtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND NoIndex_p_s_d ='" . $key_ds->NoIndex . "'AND StatusEnabled ='1'")->result(); ?>
 
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">

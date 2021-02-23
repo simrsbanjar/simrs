@@ -27,8 +27,7 @@
                                         <?= form_error('password', '<small class="text-danger pl-3">', '</small>'); ?>
                                     </div>
 
-                                    <?php $ruangan  = $this->db->order_by('NamaRuangan', 'ASC'); ?>
-                                    <?php $ruangan  = $this->db->get('Ruangan')->result(); ?>
+                                    <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan ORDER BY NamaRuangan ASC")->result(); ?>
 
                                     <div class="form-group">
                                         <select name="ruangan" class='form-control'>

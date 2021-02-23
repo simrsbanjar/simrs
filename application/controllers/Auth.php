@@ -42,7 +42,7 @@ class Auth extends CI_Controller
         $password       =   $this->input->post('password');
         $ruangan        =   $this->input->post('ruangan');
 
-        $user           = $this->db->get_where('Login', ['cast(Username as varchar)=' => $username])->row_array();
+        $user           = $this->db->query("SELECT * FROM Login WHERE cast(Username as varchar)= '" . $username . "'")->row_array();
         $pwd_decript     = $this->_decript($user['Password']);
 
         if ($ruangan    == '0') {
