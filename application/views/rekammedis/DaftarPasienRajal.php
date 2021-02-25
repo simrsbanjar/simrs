@@ -15,23 +15,23 @@
         <hr>
         <br>
 
-        <form style="font-size:15px" action="rekammedis/BukuRegister/cetak">
+        <form style="font-size:15px" action="#" id="formData">
             <div class="form-inline">
                 <div class="form-group">
                     <label for="awal">Periode</label>
-                    <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2 mr-2" id="awal" style="width:200px;">
+                    <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2 mr-2" id="awal" name="awal" style="width:200px;">
                 </div>
                 <div class="form-group">
                     <label for="akhir">s/d</label>
-                    <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2" id="akhir" style="width:200px;">
+                    <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2" id="akhir" name="akhir" style="width:200px;">
                 </div>
 
                 <?php $jenispasien  = $this->db->query("SELECT * FROM KelompokPasien  WHERE StatusEnabled = '1' ORDER BY JenisPasien ASC")->result(); ?>
                 <div class="form-inline">
                     <div class="form-group">
-                        <label for=" instalasi" style="margin-left:5px;">Jenis Pasien</label>
-                        <select name="Instalasi" class='form-control' style="width:200px; margin-left:2px;">
-                            <option value="0">- Semua Jenis Pasien -</option>
+                        <label for=" jenispasien" style="margin-left:5px;">Jenis Pasien</label>
+                        <select id="jenispasien" name="jenispasien" class='form-control' style="width:200px; margin-left:2px;">
+                            <option value="%">- Semua Jenis Pasien -</option>
                             <?php foreach ($jenispasien as $key) { ?>
                                 <option value="<?php echo $key->JenisPasien ?>"><?php echo $key->JenisPasien ?> </option>
                             <?php } ?>
@@ -39,14 +39,14 @@
                     </div>
                 </div>
 
-                <buttons type="button" class="btn btn-success ml-auto" id="print">Lihat Laporan</buttons>
+                <buttons type="button" class="btn btn-success ml-auto" id="print" onclick="AmbilData()">Lihat Laporan</buttons>
                 <br><br><br>
                 <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
                     <div class="form-group">
-                        <label for=" instalasi">Ruangan</label>
-                        <select name="Instalasi" class='form-control' style="width:200px; margin-left:2px;">
-                            <option value="0">- Semua Ruangan -</option>
+                        <label for=" ruangan">Ruangan</label>
+                        <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
+                            <option value="%">- Semua Ruangan -</option>
                             <?php foreach ($ruangan as $key) { ?>
                                 <option value="<?php echo $key->KdRuangan ?>"><?php echo $key->NamaRuangan ?> </option>
                             <?php } ?>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <div class="form-inline" style="margin-left:10px;">
                             <label for="format">Nama Pasien / No. CM</label>
-                            <input type="text" class="form-control" style="margin-left:10px;" id="status" name="status">
+                            <input type="text" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
                         </div>
                     </div>
                 </div>
@@ -73,6 +73,7 @@
                             <th>Umur</th>
                             <th>JK</th>
                             <th>Jenis Pasien</th>
+                            <th>Ruangan</th>
                             <th>Nama Diagnosa</th>
                             <th>Tgl. Masuk</th>
                             <th>Tgl. Lahir</th>
@@ -105,6 +106,7 @@
                 "serverSide": true,
                 "bFilter": false,
                 "bLengthChange": false,
+                "paging": false,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('rekammedis/DaftarPasienRajal/getData') ?>",
@@ -117,38 +119,37 @@
             });
         });
 
-        function ambildata() {
+        function AmbilData() {
+            var awal = $('#awal').val();
+            var akhir = $('#akhir').val();
+            var jenispasien = $('#jenispasien').val();
+            var ruangan = $('#ruangan').val();
+            var caritext = $('#caritext').val();
+
             tableData.DataTable({
+                "destroy": true,
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
                 "bLengthChange": false,
+                "paging": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('rekammedis/DaftarPasienRajal/ambildata') ?>",
-                    "type": "POST"
+                    "url": "<?= base_url('rekammedis/DaftarPasienRajal/AmbilData') ?>",
+                    "type": "POST",
+                    "data": {
+                        "awal": awal,
+                        "akhir": akhir,
+                        "jenispasien": jenispasien,
+                        "ruangan": ruangan,
+                        "caritext": caritext
+                    },
                 },
                 "columnDefs": [{
                     "target": [-1],
                     "orderable": false
                 }]
             });
-        }
-
-        function reloadTable() {
-            tableData.DataTable().ajax.reload();
-        }
-
-        function message(icon, text) {
-            Swal.fire({
-                icon: icon,
-                title: 'Informasi',
-                text: text,
-                showConfirmButton: false,
-                showCancelButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            })
         }
 
         function cetak() {

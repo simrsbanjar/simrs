@@ -36,9 +36,10 @@ class DaftarPasienRajal extends CI_Controller
             $row[] = $result->Umur;
             $row[] = $result->JK;
             $row[] = $result->JenisPasien;
+            $row[] = $result->NamaRuangan;
             $row[] = $result->NamaDiagnosa;
-            $row[] = $result->TglMasuk;
-            $row[] = $result->TglLahir;
+            $row[] = date('d-m-Y m:s', strtotime($result->TglMasuk));
+            $row[] = date('d-m-Y', strtotime($result->TglLahir));
             $row[] = $result->Telepon;
             $data[] = $row;
         }
@@ -50,6 +51,49 @@ class DaftarPasienRajal extends CI_Controller
         );
         $this->output->set_content_type('application/json')->set_output(json_encode($output));
     }
+
+    public function AmbilData()
+    {
+        $awal   = $this->input->post('awal');
+        $akhir   = $this->input->post('akhir');
+        $jenispasien   = $this->input->post('jenispasien');
+        $ruangan   = $this->input->post('ruangan');
+        $caritext   = strtoupper($this->input->post('caritext'));
+
+        if ($caritext == '') {
+            $caritext = '%';
+        }
+
+        $results    = $this->DaftarPasienRajalModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
+
+        $data = [];
+        $no = 0;
+        foreach ($results as $result) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $result->NoCM;
+            $row[] = $result->NamaPasien;
+            $row[] = $result->Umur;
+            $row[] = $result->JK;
+            $row[] = $result->JenisPasien;
+            $row[] = $result->NamaRuangan;
+            $row[] = $result->NamaDiagnosa;
+            $row[] = date('d-m-Y m:s', strtotime($result->TglMasuk));
+            $row[] = date('d-m-Y', strtotime($result->TglLahir));
+            $row[] = $result->Telepon;
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->DaftarPasienRajalModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext),
+            "data" => $data,
+        );
+
+        $this->output->set_content_type('application/json')->set_output(json_encode($output));
+    }
+
 
     public function cetak()
     {
