@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pasien Rawat Jalan</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
 </head>
 
@@ -17,52 +16,35 @@
 
         <form style="font-size:15px" action="#" id="formData">
             <div class="form-inline">
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <label for="awal">Periode</label>
                     <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2 mr-2" id="awal" name="awal" style="width:200px;">
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <label for="akhir">s/d</label>
                     <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2" id="akhir" name="akhir" style="width:200px;">
                 </div>
-
-                <?php $jenispasien  = $this->db->query("SELECT * FROM KelompokPasien  WHERE StatusEnabled = '1' ORDER BY JenisPasien ASC")->result(); ?>
                 <div class="form-inline">
-                    <div class="form-group">
-                        <label for=" jenispasien" style="margin-left:5px;">Jenis Pasien</label>
-                        <select id="jenispasien" name="jenispasien" class='form-control' style="width:200px; margin-left:2px;">
-                            <option value="%">- Semua Jenis Pasien -</option>
-                            <?php foreach ($jenispasien as $key) { ?>
-                                <option value="<?php echo $key->JenisPasien ?>"><?php echo $key->JenisPasien ?> </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-
-                <buttons type="button" class="btn btn-success ml-auto" id="print" onclick="AmbilData()">Lihat Laporan</buttons>
-                <br><br><br>
-                <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan ORDER BY NamaRuangan ASC")->result(); ?>
-                <div class="form-inline">
-                    <div class="form-group">
-                        <label for=" ruangan">Ruangan</label>
-                        <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
-                            <option value="%">- Semua Ruangan -</option>
-                            <?php foreach ($ruangan as $key) { ?>
-                                <option value="<?php echo $key->KdRuangan ?>"><?php echo $key->NamaRuangan ?> </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-inline" style="margin-left:10px;">
-                            <label for="format">Nama Pasien / No. CM</label>
-                            <input type="text" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
+                    <div class="form-group mb-2 d-flex bd-highlight">
+                        <div class="p-3 order-10 bd-highlight">
+                            <button type="submit" class="btn btn-outline-success"><i class="fas fa-book-dead"></i>
+                                Lihat Laporan</button>
                         </div>
+                        <div class="p-0 order-10 bd-highlight">
+                            <a target="_blank"> <button type="button" class="btn btn-outline-primary"><i class="fa fa-print"></i>
+                                    Cetak </button></a>
+                        </div>
+
                     </div>
                 </div>
-                <button type=" button" class="btn btn-primary ml-auto" id="cetak">Cetak</button>
+
+                <!-- <buttons type="button" class="btn btn-success mb-3" id="print" onclick="AmbilData()">Lihat Laporan</buttons> -->
+
+
+                <!-- <button type=" button" class="btn btn-primary ml-auto" id="cetak">Cetak</button> -->
         </form>
 
-        <div class="card" style="width:100%">
+        <div class="table-responsive" style="width:100%">
             <table id="myTable" class="table table-striped table-bordered" style="width:100%">
                 <div class="card-body">
                     <thead>
@@ -70,14 +52,27 @@
                             <th>No. Urut</th>
                             <th>No. CM</th>
                             <th>Nama Pasien</th>
-                            <th>Umur</th>
                             <th>JK</th>
-                            <th>Jenis Pasien</th>
-                            <th>Ruangan</th>
+                            <th>Umur</th>
+                            <th>Alamat</th>
+                            <th>Tgl Pendaftaran</th>
+                            <th>Tgl Meninggal</th>
+                            <th>Penyebab</th>
+                            <th>Dokter Pemeriksa</th>
+                            <th>Umur Tahun</th>
+                            <th>Pekerjaan</th>
+                            <th>Kode Kelas Akhir</th>
+                            <th>Desk Kelas</th>
                             <th>Nama Diagnosa</th>
-                            <th>Tgl. Masuk</th>
-                            <th>Tgl. Lahir</th>
-                            <th>Telepon</th>
+                            <th>Kode Kelompok Pasien</th>
+                            <th>Jenis Pasien</th>
+                            <th>Kota</th>
+                            <th>Kelurahan</th>
+                            <th>Kecamatan</th>
+                            <th>RT/RW</th>
+                            <th>Tgl Lahir</th>
+                            <th>Id Pegawai</th>
+                            <th>Nama Jabatan</th>
                         </tr>
                     </thead>
             </table>
@@ -109,7 +104,7 @@
                 "paging": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('DaftarPasienRajal/getData') ?>",
+                    "url": "<?= base_url('DaftarPasienMeninggal/getData') ?>",
                     "type": "POST"
                 },
                 "columnDefs": [{
@@ -135,7 +130,7 @@
                 "paging": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('DaftarPasienRajal/AmbilData') ?>",
+                    "url": "<?= base_url('DaftarPasienMeninggal/AmbilData') ?>",
                     "type": "POST",
                     "data": {
                         "awal": awal,
