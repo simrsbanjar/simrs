@@ -39,12 +39,22 @@
                     </div>
                 </div>
 
-                <buttons type="button" class="btn btn-success ml-auto" id="print" onclick="AmbilData()">Lihat Laporan</buttons>
-                <input type="submit" value="Cetak" class="btn btn-danger ml-auto"></input>
+                <div class="form-inline">
+                    <div class="form-group d-flex bd-highlight">
+                        <div class="p-3 order-10 bd-highlight">
+                            <buttons type="button" class="btn btn-success" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
+                        </div>
+                        <div class="p-0 order-10 bd-highlight">
+                            <button type="submit" value="Cetak" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+                        </div>
+                    </div>
+                </div>
+
+
                 <br><br>
                 <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '02' ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label for=" ruangan">Ruangan</label>
                         <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Ruangan -</option>
@@ -53,7 +63,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <div class="form-inline" style="margin-left:10px;">
                             <label for="format">Nama Pasien / No. CM</label>
                             <input type="text" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
