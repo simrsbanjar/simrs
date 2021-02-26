@@ -18,6 +18,7 @@ class DaftarPasienRajal extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('rekammedis/DaftarPasienRajal', $data);
+        //$this->load->view('rekammedis/LapDaftarPasienRajal', $data);
         $this->load->view('templates/footer');
     }
 
@@ -82,6 +83,7 @@ class DaftarPasienRajal extends CI_Controller
             $row[] = date('d-m-Y m:s', strtotime($result->TglMasuk));
             $row[] = date('d-m-Y', strtotime($result->TglLahir));
             $row[] = $result->Telepon;
+            $row[] = $result->Alamat;
             $data[] = $row;
         }
 
@@ -95,8 +97,30 @@ class DaftarPasienRajal extends CI_Controller
     }
 
 
-    public function cetak()
+    public function Cetak()
     {
-        $this->load->view('rekammedis/LapBukuRegister');
+        $awal   = $this->input->post('awal');
+        $akhir   = $this->input->post('akhir');
+        $jenispasien   = $this->input->post('jenispasien');
+        $ruangan   = $this->input->post('ruangan');
+        $caritext   = strtoupper($this->input->post('caritext'));
+
+        if ($caritext == '') {
+            $caritext = '%';
+        }
+
+
+        $result['datahasil']    = $this->DaftarPasienRajalModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        $result['datafilter']    = [
+            'TglAwal' => $awal,
+            'TglAkhir' => $akhir,
+            'JenisPasien' => $jenispasien,
+            'Ruangan' => $ruangan,
+            'CariText' => $caritext
+        ];
+
+        if ($result['datahasil']) {
+            $this->load->view('rekammedis/LapDaftarPasienRajal', $result);
+        }
     }
 }
