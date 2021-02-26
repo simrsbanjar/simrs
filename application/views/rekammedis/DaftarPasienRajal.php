@@ -15,7 +15,7 @@
         <hr>
         <br>
 
-        <form style="font-size:15px" action="#" id="formData">
+        <form style="font-size:15px" action="<?php echo base_url('DaftarPasienRajal/Cetak') ?>" id="formData" method="POST" target="_blank">
             <div class="form-inline">
                 <div class="form-group">
                     <label for="awal">Periode</label>
@@ -40,8 +40,9 @@
                 </div>
 
                 <buttons type="button" class="btn btn-success ml-auto" id="print" onclick="AmbilData()">Lihat Laporan</buttons>
-                <br><br><br>
-                <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan ORDER BY NamaRuangan ASC")->result(); ?>
+                <input type="submit" value="Cetak" class="btn btn-danger ml-auto"></input>
+                <br><br>
+                <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '02' ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
                     <div class="form-group">
                         <label for=" ruangan">Ruangan</label>
@@ -59,10 +60,9 @@
                         </div>
                     </div>
                 </div>
-                <button type=" button" class="btn btn-primary ml-auto" id="cetak">Cetak</button>
         </form>
 
-        <div class="card" style="width:100%">
+        <div class="table-responsive" style="width:100%">
             <table id="myTable" class="table table-striped table-bordered" style="width:100%">
                 <div class="card-body">
                     <thead>
@@ -78,6 +78,7 @@
                             <th>Tgl. Masuk</th>
                             <th>Tgl. Lahir</th>
                             <th>Telepon</th>
+                            <th>Alamat</th>
                         </tr>
                     </thead>
             </table>
@@ -109,7 +110,7 @@
                 "paging": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('rekammedis/DaftarPasienRajal/getData') ?>",
+                    "url": "<?= base_url('DaftarPasienRajal/getData') ?>",
                     "type": "POST"
                 },
                 "columnDefs": [{
@@ -118,6 +119,18 @@
                 }]
             });
         });
+
+        function message(icon, text) {
+            Swal.fire({
+                icon: icon,
+                title: 'Informasi',
+                text: text,
+                showConfirmButton: false,
+                showCancelButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            })
+        }
 
         function AmbilData() {
             var awal = $('#awal').val();
@@ -135,7 +148,7 @@
                 "paging": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('rekammedis/DaftarPasienRajal/AmbilData') ?>",
+                    "url": "<?= base_url('DaftarPasienRajal/AmbilData') ?>",
                     "type": "POST",
                     "data": {
                         "awal": awal,
@@ -150,23 +163,7 @@
                     "orderable": false
                 }]
             });
-        }
 
-        function cetak() {
-            $.ajax({
-                type: "POST",
-                url: "<?= base_url('rekammedis/BukuRegister/cetak') ?>",
-                dataType: "JSON",
-                success: function(response) {
-                    console.log(response);
-                    reloadTable();
-                    message('success', 'Data Berhasil Dihapus');
-                },
-                error: function() {
-                    message('error', 'Server gangguan, silahkan ulangi kembali.');
-                }
-
-            })
         }
     </script>
 
