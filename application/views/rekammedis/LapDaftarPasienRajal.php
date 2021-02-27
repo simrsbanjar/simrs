@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Laporan Daftar Pasien Rawat Jalan</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
     <style>
         .line-title {
             border: 0;
@@ -17,33 +17,34 @@
 </head>
 
 <body onload="window.print()">
-    <img src="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" style="position: absolute; width: 60px; height: auto;">
-    <table style="width: 100%;">
+    <table style="width: 100%;" class="mb-5">
         <tr>
-            <td align="center">
-                <span style="line-height: 1.6; font-weight: bold;">
-                    BADAN LAYANAN UMUM DAERAH RUMAH SAKIT UMUM KOTA BANJAR
-                    <br>
-                    Jl. Rumah Sakit No. 5, Telp. (0265) 741 032 Fax. (0265) 744730
-                    <br>
-                    E-mail: rsubanjarjabar@gmail.com / online: rsu_kotabanjar@yahoo.co.id
-                    <br>
+            <td align="Left">
+                <span style="line-height: normal; font-size: 12px;">
+                    <div>
+                        BADAN LAYANAN UMUM DAERAH RUMAH SAKIT UMUM KOTA BANJAR
+                    </div>
+                    <div>
+                        Jl. Rumah Sakit No. 5, Telp. (0265) 741 032 Fax. (0265) 744730
+                    </div>
+                    <div>
+                        E-mail: rsubanjarjabar@gmail.com / online: rsu_kotabanjar@yahoo.co.id
+                    </div>
                 </span>
             </td>
         </tr>
     </table>
-
-    <hr class="kop" style="border-top:1px solid black">
-    <h4>
-        <center><b>Daftar Pasien Rawat Jalan</b></center>
-    </h4>
-    <p align="center">
-        <?php $ruangan       = $this->db->get_where('Ruangan', ['KdRuangan' => $datafilter['Ruangan']])->result_array(); ?>
-        <br>
-        Periode : <?= $datafilter['TglAwal'] ?> s.d <?= $datafilter['TglAkhir'] ?>
-    </p>
     <br>
-    <table class="table table-bordered">
+    <h2>
+        <center><b>Daftar Pasien Rawat Jalan</b></center>
+    </h2>
+    <div class="mb-3">
+        <p align="center">
+            <?php $ruangan       = $this->db->get_where('Ruangan', ['KdRuangan' => $datafilter['Ruangan']])->result_array(); ?>
+            Periode : <?= $datafilter['TglAwal'] ?> s.d <?= $datafilter['TglAkhir'] ?>
+        </p>
+    </div>
+    <table class="table table-bordered mt-5">
         <tr style="text-align: center;">
             <th>No. Urut</th>
             <th>No. CM</th>
