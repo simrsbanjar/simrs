@@ -47,12 +47,12 @@
                 </div>
 
                 <li class="nav-item">
-                    <?php $mensub       = $this->db->get_where('SubListMenuWeb', ['NoIndex_p' => $key->NoIndex])->result(); ?>
+                    <?php $mensub       = $this->db->query("SELECT * FROM SubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' ORDER BY NoUrut")->result(); ?>
 
                     <?php if ($mensub) { ?>
                         <?php foreach ($mensub as $key_s) { ?>
 
-                            <?php $mendsub       = $this->db->query("SELECT * FROM DtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND StatusEnabled ='1'")->result(); ?>
+                            <?php $mendsub       = $this->db->query("SELECT * FROM DtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND StatusEnabled ='1' ORDER BY NoUrut")->result(); ?>
 
                             <?php if ($mendsub) { ?>
                 <li class="nav-item">
@@ -62,7 +62,7 @@
                     </a>
                     <?php foreach ($mendsub as $key_ds) { ?>
 
-                        <?php $menrdsub       = $this->db->query("SELECT * FROM RincDtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND NoIndex_p_s_d ='" . $key_ds->NoIndex . "'AND StatusEnabled ='1'")->result(); ?>
+                        <?php $menrdsub       = $this->db->query("SELECT * FROM RincDtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND NoIndex_p_s_d ='" . $key_ds->NoIndex . "'AND StatusEnabled ='1' ORDER BY NoUrut")->result(); ?>
 
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                             <div class="bg-white py-2 collapse-inner rounded">

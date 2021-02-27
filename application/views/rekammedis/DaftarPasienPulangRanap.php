@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pasien Rawat Jalan</title>
+    <title>Daftar Pasien Pulang Rawat Inap</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
 </head>
 
@@ -52,7 +52,7 @@
 
 
                 <br><br>
-                <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '02' ORDER BY NamaRuangan ASC")->result(); ?>
+                <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '03' ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
                     <div class="form-group mt-4">
                         <label for=" ruangan">Ruangan</label>
@@ -70,6 +70,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group mt-4">
+                    <div class="form-inline" style="margin-left:10px;">
+                        <label for="format" style="margin-right:10px;">Kondisi Pulang</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiokondisipulang" id="hidupmati" value="1" checked />
+                            <label class="form-check-label" for="inlineRadio1">Hidup dan Mati</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiokondisipulang" id="hidup" value="2" />
+                            <label class="form-check-label" for="inlineRadio2">Hidup</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radiokondisipulang" id="mati" value="3" />
+                            <label class="form-check-label" for="inlineRadio3">Mati</label>
+                        </div>
+                    </div>
+                </div>
         </form>
 
         <div class="table-responsive" style="width:100%">
@@ -80,15 +100,21 @@
                             <th>No. Urut</th>
                             <th>No. CM</th>
                             <th>Nama Pasien</th>
-                            <th>Umur</th>
                             <th>JK</th>
-                            <th>Jenis Pasien</th>
-                            <th>Ruangan</th>
-                            <th>Nama Diagnosa</th>
-                            <th>Tgl. Masuk</th>
                             <th>Tgl. Lahir</th>
                             <th>Telepon</th>
                             <th>Alamat</th>
+                            <th>Tgl. Masuk</th>
+                            <th>Jenis Pasien</th>
+                            <th>Ruangan</th>
+                            <th>Tgl. Pulang</th>
+                            <th>Lama Dirawat</th>
+                            <th>Jenis Diagnosa</th>
+                            <th>Kode Diagnosa</th>
+                            <th>Nama Diagnosa</th>
+                            <th>Dokter</th>
+                            <th>Status Pulang</th>
+                            <th>Kondisi Pulang</th>
                         </tr>
                     </thead>
             </table>
@@ -121,7 +147,7 @@
                 "info": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('DaftarPasienRajal/getData') ?>",
+                    "url": "<?= base_url('DaftarPasienPulangRanap/getData') ?>",
                     "type": "POST"
                 },
                 "columnDefs": [{
@@ -149,6 +175,7 @@
             var jenispasien = $('#jenispasien').val();
             var ruangan = $('#ruangan').val();
             var caritext = $('#caritext').val();
+            var kondisipulang = $("input:radio[name=radiokondisipulang]:checked").val()
 
             tableData.DataTable({
                 "destroy": true,
@@ -160,14 +187,15 @@
                 "info": false,
                 "order": [],
                 "ajax": {
-                    "url": "<?= base_url('DaftarPasienRajal/AmbilData') ?>",
+                    "url": "<?= base_url('DaftarPasienPulangRanap/AmbilData') ?>",
                     "type": "POST",
                     "data": {
                         "awal": awal,
                         "akhir": akhir,
                         "jenispasien": jenispasien,
                         "ruangan": ruangan,
-                        "caritext": caritext
+                        "caritext": caritext,
+                        "kondisipulang": kondisipulang
                     },
                 },
                 "columnDefs": [{
