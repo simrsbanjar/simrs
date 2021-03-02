@@ -7,6 +7,8 @@ class DaftarPasienRajal extends CI_Controller
     {
         parent::__construct();
         $this->load->model("rekammedis/DaftarPasienRajalModel");
+        $this->load->library('mypdf');
+        //$this->mypdf->generate('rekammedis/LapDaftarPasienRajal');
     }
 
     public function index()

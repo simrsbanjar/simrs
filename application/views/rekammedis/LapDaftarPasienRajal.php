@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Laporan Daftar Pasien Rawat Jalan</title>
+    <title>Daftar Pasien Rawat Jalan</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
 
@@ -12,17 +12,18 @@
 
 <body>
     <table style="width: 100%;" class="mb-5">
+        <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
             <td align="Left">
                 <span style="line-height: normal; font-size: 12px;">
                     <div>
-                        BADAN LAYANAN UMUM DAERAH RUMAH SAKIT UMUM KOTA BANJAR
+                        <?= $masterrs->NamaRS ?>
                     </div>
                     <div>
-                        Jl. Rumah Sakit No. 5, Telp. (0265) 741 032 Fax. (0265) 744730
+                        <?= $masterrs->Alamat ?>, <?= $masterrs->KotaKodyaKab ?> - <?= $masterrs->KodePos ?> Telp. <?= $masterrs->Telepon ?> Fax. <?= $masterrs->Faks ?>
                     </div>
                     <div>
-                        E-mail: rsubanjarjabar@gmail.com / online: rsu_kotabanjar@yahoo.co.id
+                        <?= $masterrs->Website ?> , <?= $masterrs->Email ?>
                     </div>
                 </span>
             </td>
@@ -30,7 +31,7 @@
     </table>
     <br>
     <h2>
-        <center><b>Daftar Pasien Rawat Jalan</b></center>
+        <center><b>Pasien Rawat Jalan</b></center>
     </h2>
     <div class="mb-3">
         <p align="center">

@@ -118,6 +118,7 @@
                 "bFilter": false,
                 "bLengthChange": false,
                 "paging": false,
+                "info": false,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienRajal/getData') ?>",
@@ -156,6 +157,7 @@
                 "bFilter": false,
                 "bLengthChange": false,
                 "paging": false,
+                "info": false,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienRajal/AmbilData') ?>",
