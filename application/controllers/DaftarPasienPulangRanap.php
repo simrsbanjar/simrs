@@ -120,12 +120,12 @@ class DaftarPasienPulangRanap extends CI_Controller
         $jenispasien   = $this->input->post('jenispasien');
         $ruangan   = $this->input->post('ruangan');
         $caritext   = strtoupper($this->input->post('caritext'));
-        $kondisipulang   = strtoupper($this->input->post('inlineRadioOptions'));
+        $kondisipulang   = $this->input->post('radiokondisipulang');
+        $tombolcetak   = $this->input->post('tombolcetak');
 
         if ($caritext == '') {
             $caritext = '%';
         }
-
 
         $result['datahasil']    = $this->DaftarPasienPulangRanapModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext, $kondisipulang);
         $result['datafilter']    = [
@@ -135,9 +135,13 @@ class DaftarPasienPulangRanap extends CI_Controller
             'Ruangan' => $ruangan,
             'CariText' => $caritext
         ];
-
         if ($result['datahasil']) {
-            $this->load->view('rekammedis/LapDaftarPasienRajal', $result);
+
+            if ($tombolcetak == '1') {
+                $this->load->view('rekammedis/LapDaftarPasienPulang', $result);
+            } else {
+                $this->load->view('rekammedis/LapDaftarPasienPulangKonPlg', $result);
+            }
         }
     }
 }

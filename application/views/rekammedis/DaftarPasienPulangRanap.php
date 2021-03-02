@@ -15,7 +15,7 @@
         <hr>
         <br>
 
-        <form style="font-size:15px" action="<?php echo base_url('DaftarPasienRajal/Cetak') ?>" id="formData" method="POST" target="_blank">
+        <form style="font-size:15px" action="<?php echo base_url('DaftarPasienPulangRanap/Cetak') ?>" id="formData" method="POST" target="_blank">
             <div class="form-inline">
                 <div class="form-group">
                     <label for="awal">Periode</label>
@@ -39,16 +39,6 @@
                     </div>
                 </div>
 
-                <div class="form-inline">
-                    <div class="form-group d-flex bd-highlight">
-                        <div class="p-3 order-10 bd-highlight">
-                            <buttons type="button" class="btn btn-success" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
-                        </div>
-                        <div class="p-0 order-10 bd-highlight">
-                            <button type="submit" value="Cetak" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
-                        </div>
-                    </div>
-                </div>
 
 
                 <br><br>
@@ -59,7 +49,7 @@
                         <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Ruangan -</option>
                             <?php foreach ($ruangan as $key) { ?>
-                                <option value="<?php echo $key->KdRuangan ?>"><?php echo $key->NamaRuangan ?> </option>
+                                <option value="<?php echo $key->NamaRuangan ?>"><?php echo $key->NamaRuangan ?> </option>
                             <?php } ?>
                         </select>
                     </div>
@@ -87,6 +77,20 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="radiokondisipulang" id="mati" value="3" />
                             <label class="form-check-label" for="inlineRadio3">Mati</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-inline" style="margin-top: 10px;">
+                    <div class="form-group d-flex bd-highlight">
+                        <div class="p-3 order-10 bd-highlight">
+                            <buttons type="button" class="btn btn-success" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
+                        </div>
+                        <div class="p-0 order-10 bd-highlight">
+                            <button type="submit" value="1" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+                        </div>
+                        <div class="p-0 order-10 bd-highlight" style="margin-left:15px;">
+                            <button type="submit" value="2" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak Kondisi Pulang</button>
                         </div>
                     </div>
                 </div>

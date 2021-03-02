@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Daftar Pasien Rawat Jalan</title>
+    <title>Daftar Pulang Rawat Inap</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
     <style>
@@ -37,7 +37,7 @@
     </table>
     <br>
     <h2>
-        <center><b>Pasien Rawat Jalan</b></center>
+        <center><b>Daftar Pulang Rawat Inap</b></center>
     </h2>
     <div class="mb-3">
         <p align="center">
@@ -49,34 +49,47 @@
             <th>No. Urut</th>
             <th>No. CM</th>
             <th>Nama Pasien</th>
-            <th>Umur</th>
             <th>JK</th>
-            <th>Jenis Pasien</th>
-            <th>Ruangan</th>
-            <th>Nama Diagnosa</th>
-            <th>Tgl. Masuk</th>
             <th>Tgl. Lahir</th>
             <th>Telepon</th>
             <th>Alamat</th>
+            <th>Tgl. Masuk</th>
+            <th>Jenis Pasien</th>
+            <th>Ruangan</th>
+            <th>Tgl. Pulang</th>
+            <th>Lama Dirawat</th>
+            <th>Jenis Diagnosa</th>
+            <th>Kode Diagnosa</th>
+            <th>Nama Diagnosa</th>
+            <th>Dokter</th>
+            <th>Status Pulang</th>
+            <th>Kondisi Pulang</th>
         </tr>
         <?php $no = 1;
         foreach ($datahasil as $row) : ?>
-            <?php $TglMasuk = date('d-m-Y m:s', strtotime($row->TglMasuk)) ?>
+            <?php $TglMasuk = date('d-m-Y m:s', strtotime($row->TglPendaftaran)) ?>
             <?php $TglLahir = date('d-m-Y', strtotime($row->TglLahir)) ?>
 
             <tr>
-                <td><?php echo $no++; ?></td>
-                <td><?php echo $row->NoCM ?></td>
-                <td><?php echo $row->NamaPasien ?></td>
-                <td><?php echo $row->Umur ?></td>
-                <td><?php echo $row->JK ?></td>
-                <td><?php echo $row->JenisPasien ?></td>
-                <td><?php echo $row->NamaRuangan ?></td>
-                <td><?php echo $row->NamaDiagnosa ?></td>
-                <td><?php echo $TglMasuk  ?></td>
-                <td><?php echo $TglLahir ?></td>
-                <td><?php echo $row->Telepon ?></td>
-                <td><?php echo $row->Alamat ?></td>
+                <td><?php echo $no++;                 ?></td>
+                <td><?php echo $row->NoCM;            ?></td>
+                <td><?php echo $row->NamaPasien;    ?></td>
+                <td><?php echo $row->JenisKelamin;    ?></td>
+                <td><?php echo $TglLahir; ?> </td>
+                <td><?php echo $row->Telepon;    ?></td>
+                <td><?php echo $row->Alamat;    ?></td>
+                <td><?php echo $TglMasuk; ?></td>
+                <td><?php echo $row->JenisPasien;    ?></td>
+                <td><?php echo $row->NamaRuangan;    ?></td>
+                <td><?php echo $row->TglPulang;        ?></td>
+                <td><?php echo $row->LamaDirawat;    ?></td>
+                <td><?php echo $row->JenisDiagnosa;    ?></td>
+                <td><?php echo $row->KodeDiagnosa;  ?></td>
+                <td><?php echo $row->NamaDiagnosa;    ?></td>
+                <td><?php echo $row->Dokter;        ?></td>
+                <td><?php echo $row->StatusPulang;    ?></td>
+                <td><?php echo $row->KondisiPulang; ?></td>
+
             </tr>
         <?php endforeach ?>
     </table>
