@@ -7,16 +7,10 @@
     <title>Daftar Pasien Rawat Jalan</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
-    <style>
-        .line-title {
-            border: 0;
-            border-style: inset;
-            border-top: 1px solid #000;
-        }
-    </style>
+
 </head>
 
-<body onload="window.print()">
+<body>
     <table style="width: 100%;" class="mb-5">
         <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
@@ -44,7 +38,7 @@
             Periode : <?= date('d-m-Y', strtotime($datafilter['TglAwal'])) ?> s.d <?= date('d-m-Y', strtotime($datafilter['TglAkhir'])) ?>
         </p>
     </div>
-    <table class="table table-bordered mt-5">
+    <table class="table table-bordered mt-5" onload="window.print()">
         <tr style="text-align: center;">
             <th>No. Urut</th>
             <th>No. CM</th>
@@ -65,8 +59,8 @@
             <?php $TglLahir = date('d-m-Y', strtotime($row->TglLahir)) ?>
 
             <tr>
-                <td><?php echo $no++; ?></td>
-                <td><?php echo $row->NoCM ?></td>
+                <td style="text-align: center;"><?php echo $no++; ?></td>
+                <td style="font-size: 20px;"><b><?php echo $row->NoCM ?></b></td>
                 <td><?php echo $row->NamaPasien ?></td>
                 <td><?php echo $row->Umur ?></td>
                 <td><?php echo $row->JK ?></td>
