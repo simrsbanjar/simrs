@@ -31,6 +31,28 @@ class RekapBesarKematianTen extends CI_Controller
         echo json_encode($data);
     }
 
+    public function Grafik()
+    {
+        $awal   = $this->input->post('awal');
+        $akhir   = $this->input->post('akhir');
+        $jenispasien   = $this->input->post('jenispasien');
+        $ruangan   = $this->input->post('ruangan');
+        $jumlahbaris   = strtoupper($this->input->post('jumlahdata'));
+        $instalasi   = strtoupper($this->input->post('instalasi'));
+        $kriteria   = strtoupper($this->input->post('kriteria'));
+
+        $results    = $this->RekapBesarKematianTenModel->getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+
+        foreach ($results as $row) {
+
+            $data[] = array(
+                'hasil' => $row->hasil,
+                'total' => $row->total
+            );
+        }
+        echo json_encode($data);
+    }
+
     public function AmbilData()
     {
         $awal   = $this->input->post('awal');

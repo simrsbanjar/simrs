@@ -47,9 +47,21 @@
 
     <div class="mb-3">
         <p align="center">
-            <?= $instalasi->NamaInstalasi; ?> <br>
-            <?= $ruangan->NamaRuangan; ?> <br>
-            <?= $jenispasien->JenisPasien; ?><br>
+            <?php if ($datafilter['Instalasi'] != '%') {
+                echo  $instalasi->NamaInstalasi;
+            } else {
+                echo  'Semua Instalasi';
+            }; ?> <br>
+            <?php if ($datafilter['Ruangan'] != '%') {
+                echo  $ruangan->NamaRuangan;
+            } else {
+                echo  'Semua Ruangan';
+            }; ?> <br>
+            <?php if ($datafilter['JenisPasien'] != '%') {
+                echo  $jenispasien->JenisPasien;
+            } else {
+                echo  'Semua Jenis Pasien';
+            }; ?> <br>
             Periode : <?= date('d-m-Y', strtotime($datafilter['TglAwal'])) ?> s.d <?= date('d-m-Y', strtotime($datafilter['TglAkhir'])) ?> <br>
 
         </p>

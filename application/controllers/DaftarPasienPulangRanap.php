@@ -43,7 +43,7 @@ class DaftarPasienPulangRanap extends CI_Controller
             $row[] = date('d-m-Y m:s', strtotime($result->TglPendaftaran));
             $row[] = $result->JenisPasien;
             $row[] = $result->NamaRuangan;
-            $row[] = $result->TglPulang;
+            $row[] = date('d-m-Y m:s', strtotime($result->TglPulang));
             $row[] = $result->LamaDirawat;
             $row[] = $result->JenisDiagnosa;
             $row[] = $result->KodeDiagnosa;
@@ -92,7 +92,7 @@ class DaftarPasienPulangRanap extends CI_Controller
             $row[] = date('d-m-Y m:s', strtotime($result->TglPendaftaran));
             $row[] = $result->JenisPasien;
             $row[] = $result->NamaRuangan;
-            $row[] = $result->TglPulang;
+            $row[] = date('d-m-Y m:s', strtotime($result->TglPulang));
             $row[] = $result->LamaDirawat;
             $row[] = $result->JenisDiagnosa;
             $row[] = $result->KodeDiagnosa;
