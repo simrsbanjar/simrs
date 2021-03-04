@@ -84,9 +84,8 @@
             <div class="form-inline">
                 <div class="form-group d-flex bd-highlight">
                     <div class="p-3 order-10 bd-highlight">
-                        <buttons type="button" class="btn btn-success" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
-                    </div>
-                    <div class="p-0 order-10 bd-highlight">
+                        <buttons type="button" class="btn btn-success mr-2" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
+                        <buttons type="button" class="btn btn-success mr-2" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</buttons>
                         <button type="submit" value="1" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
                     </div>
                 </div>
@@ -105,6 +104,9 @@
                     </thead>
             </table>
         </div>
+
+        <div id="chartContainer" style="float: left; height: 500px; width: 100%;">
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
@@ -113,7 +115,10 @@
 
     <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"> </script>
     <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"> </script>
-
+    <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxcore.js"></script>
+    <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxdraw.js"></script>
+    <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxchart.core.js"></script>
+    <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxdata.js"></script>
 
     <script>
         var saveData;
@@ -122,7 +127,10 @@
         var formData = $('#formData');
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
+        var chart = $('#chartContainer');
 
+        chart.hide();
+        tableData.show();
         $(document).ready(function() {
             $('#instalasi').change(function() {
                 var id = $(this).val();
@@ -156,7 +164,8 @@
             var jumlahdata = $('#jumlahdata').val();
             var instalasi = $('#instalasi').val();
             var kriteria = $("input:radio[name=radiokriteria]:checked").val()
-
+            chart.hide();
+            tableData.show();
             tableData.DataTable({
                 "destroy": true,
                 "processing": true,
@@ -185,6 +194,94 @@
                 }]
             });
 
+        }
+
+        function Grafik() {
+            var awal = $('#awal').val();
+            var akhir = $('#akhir').val();
+            var jenispasien = $('#jenispasien').val();
+            var ruangan = $('#ruangan').val();
+            var jumlahdata = $('#jumlahdata').val();
+            var instalasi = $('#instalasi').val();
+            var kriteria = $("input:radio[name=radiokriteria]:checked").val()
+
+            chart.show();
+            tableData.hide();
+            // memanggil data array dengan JSON
+            var source = {
+                datatype: "json",
+                datafields: [{
+                        name: 'hasil'
+                    },
+                    {
+                        name: 'total'
+                    }
+                ],
+                url: "<?= base_url('RekapBesarKematianTen/Grafik') ?>",
+                type: "POST",
+                data: {
+                    "awal": awal,
+                    "akhir": akhir,
+                    "jenispasien": jenispasien,
+                    "ruangan": ruangan,
+                    "jumlahdata": jumlahdata,
+                    "kriteria": kriteria,
+                    "instalasi": instalasi
+                },
+            };
+
+            var dataAdapter = new $.jqx.dataAdapter(source, {
+                async: false,
+                autoBind: true
+            });
+            // pengaturan jqxChart
+            var settings = {
+                title: "Rekapitulasi 10 Besar Penyakit",
+                description: "",
+                enableAnimations: true,
+                showLegend: true,
+                showBorderLine: true,
+                legendLayout: {
+                    left: 10,
+                    top: 100,
+                    width: 400,
+                    height: 500,
+                    flow: 'vertical'
+                },
+                padding: {
+                    left: 5,
+                    top: 5,
+                    right: 5,
+                    bottom: 5
+                },
+                titlePadding: {
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 10
+                },
+                source: dataAdapter,
+                colorScheme: 'scheme03',
+                seriesGroups: [{
+                    type: 'pie',
+                    showLabels: true,
+                    series: [{
+                        dataField: 'total',
+                        displayText: 'hasil',
+                        labelRadius: 120,
+                        initialAngle: 15,
+                        radius: 100,
+                        centerOffset: 0,
+                        formatFunction: function(value) {
+                            if (isNaN(value))
+                                return value;
+                            return parseFloat(value);
+                        },
+                    }]
+                }]
+            };
+            // Menampilkan Chart
+            $('#chartContainer').jqxChart(settings);
         }
     </script>
 

@@ -18,4 +18,14 @@ class RekapBesarKematianTenModel extends CI_Model
         }
         return $query->result();
     }
+
+    public function getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria)
+    {
+        if ($kriteria  == '1') {
+            $query  = $this->db->query("SELECT TOP  " . $jumlahbaris . " Diagnosa as hasil, sum(jumlahpasien) as total  FROM V_RekapitulasiDiagnosaKematian WHERE TglPeriksa BETWEEN '" . $awal . " 00:00:00' AND '" . $akhir . " 23:59:59'  AND KdInstalasi LIKE '" . $instalasi . "' AND KdRuangan LIKE '" . $ruangan . "' AND KdKelompokPasien LIKE '" . $jenispasien . "' group by Diagnosa  order by Diagnosa asc");
+        } else {
+            $query  = $this->db->query("SELECT TOP  " . $jumlahbaris . " Diagnosa as hasil, sum(jumlahpasien) as total  FROM V_RekapitulasiDiagnosaKematian WHERE TglPeriksa BETWEEN '" . $awal . " 00:00:00' AND '" . $akhir . " 23:59:59'  AND KdInstalasi LIKE '" . $instalasi . "' AND KdRuangan LIKE '" . $ruangan . "' AND KdKelompokPasien LIKE '" . $jenispasien . "' group by Diagnosa  order by total desc");
+        }
+        return $query->result();
+    }
 }
