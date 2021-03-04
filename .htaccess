@@ -2,3 +2,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
+
+ <ifModule !cgid_module>
+	php_value date.timezone "Asia/Jakarta"
+ </ifModule>

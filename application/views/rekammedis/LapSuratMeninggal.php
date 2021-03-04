@@ -8,9 +8,9 @@
     <title>Surat Meninggal</title>
 </head>
 
-<body>
+<body onload="window.print()">
     <?php $profil = $this->db->query("SELECT * FROM ProfilRS")->row(); ?>
-
+    <?php $pasien = $this->db->query("SELECT * FROM V_DaftarPasienMeninggal WHERE penyebab = 'Stroke'")->row(); ?>
     <table style="width: 100%;">
         <tr>
             <td style="text-align: center;">
@@ -30,37 +30,43 @@
                     </span>
                     <br>
                     <span>
-                        Nomor : RSU / <?= date('Y'); ?> /
+                        Nomor : RSU / <?= date('Y'); ?> / <?= $pasien->NoCM ?>
                     </span>
                 </div>
-                <p style="text-align: left; text-indent: 50px; margin-top: 60px;">
-                    Yang bertanda tangan dibawah ini, dokter <?= $profil->NamaRS ?> , menerangkan dengan sesungguhnya bahwa :
+                <p style="text-align: justify; margin-top: 60px; text-align-last: auto; word-spacing: normal;">
+                    Yang bertanda tangan dibawah ini, dokter <?= $profil->NamaRS ?> , menerangkan dengan
+                    sesungguhnya bahwa :
                 </p>
 
                 <table>
                     <tr>
                         <td style="text-align: left; text-indent: 50px;">Nama</td>
-                        <td style="text-align: left; text-indent: 70px;">:</td>
+                        <td style="text-align: left; text-indent: 70px;">: <?= $pasien->NamaJabatan ?></td>
                     </tr>
                     <tr>
                         <td style="text-align: left; text-indent: 50px;">Umur / Jenis Kelamin</td>
-                        <td style="text-align: left; text-indent: 70px;">:</td>
+                        <td style="text-align: left; text-indent: 70px;">: <?= $pasien->Umur ?> / <?= $pasien->JK ?></td>
                     </tr>
                     <tr>
                         <td style="text-align: left; text-indent: 50px;">Pekerjaan</td>
-                        <td style="text-align: left; text-indent: 70px;">:</td>
+                        <td style="text-align: left; text-indent: 70px;">: <?= $pasien->Pekerjaan ?></td>
                     </tr>
                     <tr>
                         <td style="text-align: left; text-indent: 50px;">Alamat</td>
-                        <td style="text-align: left; text-indent: 70px;">:</td>
+                        <td style="text-align: left; text-indent: 70px;">: <?= $pasien->Alamat ?></td>
                     </tr>
                 </table>
-                <p style="text-align: left; text-indent: 50px;">
-                    Setelah dilakukan pemeriksaan dengan teliti pada Jam <?= date('h:m:s') ?> WIB, tanggal
+                <p style="text-align: justify; text-align-last: auto;">
+                    Setelah dilakukan pemeriksaan dengan teliti pada Jam <?= date('G:i:s') ?> WIB, tanggal <?= date('d-m-Y') ?> orang/penderita tersebut telah
+                    <b><i>MENINGGAL DUNIA</i></b>. Demikian, surat keterangan ini dibuat dengan sebenarnya.
                 </p>
-                <p style="text-align: left; text-indent: 50px;">
-                    <?= date('Y-m-d') ?> orang/penderita tersebut
+                <p style="text-indent: 500px; margin-top: 80px;" class="col mr-5">
+                    Banjar, <?= date('d-m-Y') ?>
+                    <br>
+                <p style="text-indent: 500px;">Dokter RSUD <?= $profil->KotaKodyaKab ?></p>
                 </p>
+                <br>
+                <hr style="width:25%;text-align:right;margin-right:10px; margin-top: 50px;">
 
 
 
