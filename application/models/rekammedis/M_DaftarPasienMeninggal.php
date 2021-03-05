@@ -76,8 +76,22 @@ class M_DaftarPasienMeninggal extends CI_Model
         return $query->result();
     }
 
-    public function getdataById($kode)
+    public function getDataTableFilterSurat($kode)
     {
-        return $this->db->get_where($this->table, ['NoCM' => $kode])->row();
+        $query  = $this->db->query("SELECT * FROM (SELECT 
+        NoPendaftaran, NoCM,
+        [Nama Pasien] AS NamaPasien,
+        JK, Umur, Alamat,
+        TglPendaftaran, TglMeninggal,
+        Penyebab, [Tempat Meninggal] AS TempatMeninggal,
+        [Dokter Pemeriksa] AS DokterPemeriksa,
+        KdRuangan, NamaSubInstalasi, UmurTahun,
+        Pekerjaan = ISNULL(Pekerjaan,'-'), KdKelasAkhir, DeskKelas,
+        NamaDiagnosa, KdKelompokPasien, JenisPasien,
+        Kota, Kelurahan, Kecamatan, RTRW, TglLahir,
+        IdPegawai, NamaJabatan
+        FROM V_DaftarPasienMeninggal) AS COBA 
+        WHERE NoPendaftaran = '" . $kode . "'");
+        return $query->row();
     }
 }

@@ -31,7 +31,7 @@ class DaftarPasienMeninggal extends CI_Controller
             $row = array();
             $row[] = '
             <a href ="DaftarPasienMeninggal/Cetak" value="2" name="tombolcetak" 
-            class="btn btn-success btn-sm" onclick="byid(' . "'" . $result->NoCM . "','cetaksurat'" . ')"> Cetak Surat Meninggal</a>
+            class="btn btn-success btn-sm" onclick="byid(' . "'" . $result->NoPendaftaran . "','cetaksurat'" . ')"> Cetak Surat Meninggal</a>
             ';
             $row[] = $no;
             $row[] = $result->NoPendaftaran;
@@ -40,8 +40,8 @@ class DaftarPasienMeninggal extends CI_Controller
             $row[] = $result->JK;
             $row[] = $result->Umur;
             $row[] = $result->Alamat;
-            $row[] = date('d-m-Y m:s', strtotime($result->TglPendaftaran));
-            $row[] = date('d-m-Y', strtotime($result->TglMeninggal));
+            $row[] = date('d-m-Y h:m', strtotime($result->TglPendaftaran));
+            $row[] = date('d-m-Y h:m', strtotime($result->TglMeninggal));
             $row[] = $result->Penyebab;
             $row[] = $result->TempatMeninggal;
             $row[] = $result->DokterPemeriksa;
@@ -58,7 +58,7 @@ class DaftarPasienMeninggal extends CI_Controller
             $row[] = $result->Kelurahan;
             $row[] = $result->Kecamatan;
             $row[] = $result->RTRW;
-            $row[] = $result->TglLahir;
+            $row[] = date('d-m-Y', strtotime($result->TglLahir));
             $row[] = $result->IdPegawai;
             $row[] = $result->NamaJabatan;
             $data[] = $row;
@@ -89,8 +89,8 @@ class DaftarPasienMeninggal extends CI_Controller
             $no++;
             $row = array();
             $row[] = '
-            <a href ="DaftarPasienMeninggal/Cetak" value="2" name="tombolcetak" target="_blank" 
-            class="btn btn-success btn-sm" onclick="byid(' . "'" . $result->NoCM . "','cetaksurat'" . ')">Cetak Surat Meninggal</a>
+            <a href ="DaftarPasienMeninggal/CetakSurat/' . $result->NoPendaftaran . '" value="2" name="tombolcetak" target="_blank" 
+            class="btn btn-success btn-sm">Cetak Surat Meninggal</a>
             ';
             $row[] = $no;
             $row[] = $result->NoPendaftaran;
@@ -99,8 +99,8 @@ class DaftarPasienMeninggal extends CI_Controller
             $row[] = $result->JK;
             $row[] = $result->Umur;
             $row[] = $result->Alamat;
-            $row[] = date('d-m-Y m:s', strtotime($result->TglPendaftaran));
-            $row[] = date('d-m-Y', strtotime($result->TglMeninggal));
+            $row[] = date('d-m-Y h:m', strtotime($result->TglPendaftaran));
+            $row[] = date('d-m-Y h:m', strtotime($result->TglMeninggal));
             $row[] = $result->Penyebab;
             $row[] = $result->TempatMeninggal;
             $row[] = $result->DokterPemeriksa;
@@ -117,7 +117,7 @@ class DaftarPasienMeninggal extends CI_Controller
             $row[] = $result->Kelurahan;
             $row[] = $result->Kecamatan;
             $row[] = $result->RTRW;
-            $row[] = $result->TglLahir;
+            $row[] = date('d-m-Y', strtotime($result->TglLahir));
             $row[] = $result->IdPegawai;
             $row[] = $result->NamaJabatan;
             $data[] = $row;
@@ -132,12 +132,20 @@ class DaftarPasienMeninggal extends CI_Controller
         $this->output->set_content_type('application/json')->set_output(json_encode($output));
     }
 
+    public function CetakSurat($nopendaftaran)
+    {
+        $result['pasien']    = $this->M_DaftarPasienMeninggal->getDataTableFilterSurat($nopendaftaran);
+
+        $this->load->view('rekammedis/LapSuratMeninggal', $result);
+    }
+
     public function Cetak()
     {
         $awal   = $this->input->post('awal');
         $akhir   = $this->input->post('akhir');
         $caritext   = strtoupper($this->input->post('caritext'));
         $tombolcetak = $this->input->post('tombolcetak');
+
         if ($caritext == '') {
             $caritext = '%';
         }
@@ -150,10 +158,6 @@ class DaftarPasienMeninggal extends CI_Controller
             'CariText' => $caritext
         ];
 
-        if ($tombolcetak == 1) {
-            $this->load->view('rekammedis/LapDaftarPasienMeninggal', $result);
-        } else {
-            $this->load->view('rekammedis/LapSuratMeninggal', $result);
-        }
+        $this->load->view('rekammedis/LapDaftarPasienMeninggal', $result);
     }
 }

@@ -33,9 +33,6 @@
                         <div class="p-0 order-10 bd-highlight">
                             <button type="submit" value="1" name="tombolcetak" class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
                         </div>
-                        <div class="p-3 order-10 bd-highlight">
-                            <button type="submit" value="2" name="tombolcetak" class="btn btn-primary"><i class="fa fa-print"></i> Cetak Surat Meninggal</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -165,6 +162,10 @@
                 }]
             });
 
+        }
+
+        function byid(NoPendaftaran) {
+            alert('a');
         }
     </script>
 
