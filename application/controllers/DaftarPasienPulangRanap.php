@@ -20,7 +20,6 @@ class DaftarPasienPulangRanap extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('rekammedis/DaftarPasienPulangRanap', $data);
-        //$this->load->view('rekammedis/LapDaftarPasienRajal', $data);
         $this->load->view('templates/footer');
     }
 

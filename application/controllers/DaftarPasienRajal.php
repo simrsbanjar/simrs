@@ -20,7 +20,6 @@ class DaftarPasienRajal extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('rekammedis/DaftarPasienRajal', $data);
-        //$this->load->view('rekammedis/LapDaftarPasienRajal', $data);
         $this->load->view('templates/footer');
     }
 

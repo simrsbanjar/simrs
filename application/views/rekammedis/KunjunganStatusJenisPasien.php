@@ -47,9 +47,9 @@
                                 <strong>Form</strong> Filter
                             </div>
                             <!--id formfilter adalah nama form untuk filter-->
-                            <form id="formfilter">
+                            <form id="formfiltercetak">
                                 <div class="card-body card-block">
-                                    <input name="valnilai" type="hidden">
+                                    <input name="valnilai22" type="hidden">
                                     <div class="row form-group">
                                         <div id="form-tanggal" class="col col-md-3"><label for="select" class=" form-control-label">Pilih Periode By</label></div>
                                         <div class="col-12 col-md-9">
@@ -74,7 +74,7 @@
                     <div class="col-lg-5">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Form</strong> Filter
+                                <strong>Form</strong> Filter 1
                             </div>
                             <!--id formfilter adalah nama form untuk filter-->
                             <form id="formfilter">

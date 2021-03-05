@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pasien Rawat Jalan</title>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css" />
-</head>
-
-<body>
     <div class="container mt-3">
         <!-- Page Heading -->
         <h1 class="h3 text-gray-900"><?= $title; ?></h1>
@@ -179,6 +171,14 @@
         }
     </script>
 
-</body>
 
-</html>
+
+
+
+</div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
