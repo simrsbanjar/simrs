@@ -20,7 +20,6 @@ class RekapBesarPenyakitTen extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('rekammedis/RekapBesarPenyakitTen', $data);
-        //$this->load->view('rekammedis/LapDaftarPasienRajal', $data);
         $this->load->view('templates/footer');
     }
 

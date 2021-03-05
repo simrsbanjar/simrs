@@ -7,8 +7,6 @@ class RekapBesarKematianTen extends CI_Controller
     {
         parent::__construct();
         $this->load->model("rekammedis/RekapBesarKematianTenModel");
-        //$this->load->library('mypdf');
-        //$this->mypdf->generate('rekammedis/LapDaftarPasienRajal');
     }
 
     public function index()
@@ -20,7 +18,6 @@ class RekapBesarKematianTen extends CI_Controller
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
         $this->load->view('rekammedis/RekapBesarKematianTen', $data);
-        //$this->load->view('rekammedis/LapDaftarPasienRajal', $data);
         $this->load->view('templates/footer');
     }
 
