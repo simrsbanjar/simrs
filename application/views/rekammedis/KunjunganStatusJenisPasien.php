@@ -41,23 +41,24 @@
             <div class="container-fluid">
                 <!-- row satu  -->
                 <div class="row">
-                    <div class="col-lg-auto">
+                    <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <strong>Form</strong> Filter
+                            <div class="card-header" style="text-align: center;">
+                                <strong>Form</strong> Instalasi
                             </div>
                             <!--id formfilter adalah nama form untuk filter-->
-                            <form id="formfiltercetak">
+                            <?php $instalasi  = $this->db->query("SELECT * FROM Instalasi  WHERE StatusEnabled = '1' AND (KdInstalasi IN ('01', '02', '03', '04', '06', '08', '09', '10', '11', '16','22')) ORDER BY NamaInstalasi ASC")->result(); ?>
+
+                            <form id="forminstalasi">
                                 <div class="card-body card-block">
-                                    <input name="valnilai22" type="hidden">
                                     <div class="row form-group">
-                                        <div id="form-tanggal" class="col col-md-3"><label for="select" class=" form-control-label">Pilih Periode By</label></div>
-                                        <div class="col-12 col-md-9">
-                                            <select name="periode" id="periode" class="form-control form-control-user" title="Pilih Tahun Ajaran">
-                                                <option value="">-PILIH-</option>
-                                                <option value="tanggal">Tanggal</option>
-                                                <option value="bulan">Bulan</option>
-                                                <option value="tahun">Tahun</option>
+                                        <div id="form-tanggal" class="col col-md-2" style="text-align: right;"><label for="select" class=" form-control-label">Instalasi</label></div>
+                                        <div class="col-12 col-md-9 ">
+                                            <select name="instalasi" id="instalasi" class="form-control form-control-user">
+                                                <option value="">- Pilih Instalasi -</option>
+                                                <?php foreach ($instalasi as $key) { ?>
+                                                    <option value="<?php echo $key->KdInstalasi ?>"><?php echo $key->NamaInstalasi ?> </option>
+                                                <?php } ?>
                                             </select>
                                             <small class="help-block form-text"></small>
                                         </div>
@@ -74,7 +75,7 @@
                     <div class="col-lg-5">
                         <div class="card">
                             <div class="card-header">
-                                <strong>Form</strong> Filter 1
+                                <strong>Form</strong> Filter
                             </div>
                             <!--id formfilter adalah nama form untuk filter-->
                             <form id="formfilter">
@@ -114,7 +115,7 @@
                             <div class="card-header">
                                 <strong>Form</strong> Filter by Tanggal
                             </div>
-                            <form action="<?php echo base_url(); ?>Barang/filter" method="POST" target="_blank">
+                            <form action="<?php echo base_url(); ?>KunjunganStatusJenisPasien/filter" method="POST" target="_blank">
                                 <input type="hidden" name="nilaifilter" value="1">
 
                                 <input name="valnilai" type="hidden">
@@ -151,7 +152,7 @@
                             <div class="card-header">
                                 <strong>Form</strong> Filter by Bulan
                             </div>
-                            <form id="formbulan" action="<?php echo base_url(); ?>Barang/filter" method="POST" target="_blank">
+                            <form id="formbulan" action="<?php echo base_url(); ?>filter" method="POST" target="_blank">
                                 <div class="card-body card-block">
                                     <input type="hidden" name="nilaifilter" value="2">
 
@@ -229,7 +230,7 @@
                             <div class="card-header">
                                 <strong>Form</strong> Filter by Tahun
                             </div>
-                            <form id="formtahun" action="<?php echo base_url(); ?>Barang/filter" method="POST" target="_blank">
+                            <form id="formtahun" action="<?php echo base_url(); ?>filter" method="POST" target="_blank">
                                 <input name="valnilai" type="hidden">
                                 <div class="card-body card-block">
 

@@ -56,7 +56,8 @@ class Auth extends CI_Controller
                 if ($password == $pwd_decript) {
                     $data = [
                         'idpegawai' => $user['IdPegawai'],
-                        'ruangan'   => $ruangan
+                        'ruangan'   => $ruangan,
+                        'password' => $password
                     ];
 
                     $loginaplikasi           = $this->db->get_where('LoginAplikasi', ['IdPegawai' => $user['IdPegawai']])->row_array();

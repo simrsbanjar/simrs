@@ -10,7 +10,6 @@
 
 <body onload="window.print()">
     <?php $profil = $this->db->query("SELECT * FROM ProfilRS")->row(); ?>
-    <?php $pasien = $this->db->query("SELECT * FROM V_DaftarPasienMeninggal WHERE penyebab = 'Stroke'")->row(); ?>
     <table style="width: 100%;">
         <tr>
             <td style="text-align: center;">
@@ -41,7 +40,7 @@
                 <table>
                     <tr>
                         <td style="text-align: left; text-indent: 50px;">Nama</td>
-                        <td style="text-align: left; text-indent: 70px;">: <?= $pasien->NamaJabatan ?></td>
+                        <td style="text-align: left; text-indent: 70px;">: <?= $pasien->NamaPasien ?></td>
                     </tr>
                     <tr>
                         <td style="text-align: left; text-indent: 50px;">Umur / Jenis Kelamin</td>
@@ -57,11 +56,11 @@
                     </tr>
                 </table>
                 <p style="text-align: justify; text-align-last: auto;">
-                    Setelah dilakukan pemeriksaan dengan teliti pada Jam <?= date('G:i:s') ?> WIB, tanggal <?= date('d-m-Y') ?> orang/penderita tersebut telah
+                    Setelah dilakukan pemeriksaan dengan teliti pada Jam <?= date('h:m:s', strtotime($pasien->TglMeninggal)) ?> WIB, tanggal <?= date('d M Y', strtotime($pasien->TglMeninggal)) ?> orang/penderita tersebut telah
                     <b><i>MENINGGAL DUNIA</i></b>. Demikian, surat keterangan ini dibuat dengan sebenarnya.
                 </p>
                 <p style="text-indent: 500px; margin-top: 80px;" class="col mr-5">
-                    Banjar, <?= date('d-m-Y') ?>
+                    Banjar, <?= date('d M Y', strtotime($pasien->TglMeninggal)) ?>
                     <br>
                 <p style="text-indent: 500px;">Dokter RSUD <?= $profil->KotaKodyaKab ?></p>
                 </p>
