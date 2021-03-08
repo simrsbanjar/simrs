@@ -34,31 +34,53 @@ class KunjunganStatusJenisPasien extends CI_Controller
         $tahun2 = $this->input->post('tahun2');
         $nilaifilter = $this->input->post('nilaifilter');
         $instalasi = $this->input->post('instalasi');
-        var_dump($instalasi, $tanggalawal);
-        die;
+
         if ($nilaifilter == 1) {
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Tanggal";
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
             $data['instalasi'] = $instalasi;
-            $data['datafilter'] = $this->KunjunganStatusJenisPasienModel->filterbytanggal($tanggalawal, $tanggalakhir);
-
+            $data['datafilter'] = $this->KunjunganStatusJenisPasienModel->filterbytanggal($tanggalawal, $tanggalakhir, $instalasi);
+            $data['jenispasien'] = $this->KunjunganStatusJenisPasienModel->GetJenisPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
+            $data['statuspasien'] = $this->KunjunganStatusJenisPasienModel->GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
+            $data['ruangan'] = $this->KunjunganStatusJenisPasienModel->GetRuanganTgl($tanggalawal, $tanggalakhir, $instalasi);
+            $data['datafilter'] = [
+                'tanggalawal'   => $tanggalawal,
+                'tanggalakhir'   => $tanggalakhir,
+                'instalasi'   => $instalasi,
+                'nilaifilter' => $nilaifilter
+            ];
             $this->load->view('rekammedis/LapKunjunganStatusJenisPas', $data);
         } elseif ($nilaifilter == 2) {
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Bulan";
             $data['subtitle'] =  $bulanawal . ' s.d ' . $bulanakhir . ' Tahun : ' . $tahun1;
             $data['instalasi'] = $instalasi;
-            $data['datafilter'] = $this->KunjunganStatusJenisPasienModel->filterbybulan($tahun1, $bulanawal, $bulanakhir);
-
+            $data['datafilter'] = $this->KunjunganStatusJenisPasienModel->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+            $data['jenispasien'] = $this->KunjunganStatusJenisPasienModel->GetJenisPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+            $data['statuspasien'] = $this->KunjunganStatusJenisPasienModel->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+            $data['ruangan'] = $this->KunjunganStatusJenisPasienModel->GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+            $data['datafilter'] = [
+                'tahun'   => $tahun1,
+                'bulanawal'   => $bulanawal,
+                'bulanakhir'   => $bulanakhir,
+                'nilaifilter' => $nilaifilter
+            ];
             $this->load->view('rekammedis/LapKunjunganStatusJenisPas', $data);
         } elseif ($nilaifilter == 3) {
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Tahun";
             $data['subtitle'] =  $tahun2;
             $data['instalasi'] = $instalasi;
-            $data['datafilter'] = $this->KunjunganStatusJenisPasienModel->filterbytahun($tahun2);
-
+            $data['datafilter'] = $this->KunjunganStatusJenisPasienModel->filterbytahun($tahun2, $instalasi);
+            $data['jenispasien'] = $this->KunjunganStatusJenisPasienModel->GetJenisPasienTahun($tahun2, $instalasi);
+            $data['statuspasien'] = $this->KunjunganStatusJenisPasienModel->GetStatusPasienTahun($tahun2, $instalasi);
+            $data['ruangan'] = $this->KunjunganStatusJenisPasienModel->GetRuanganTahun($tahun2, $instalasi);
+            $data['datafilter'] = [
+                'tahun'   => $tahun2,
+                'instalasi'   => $instalasi,
+                'nilaifilter' => $nilaifilter
+            ];
             $this->load->view('rekammedis/LapKunjunganStatusJenisPas', $data);
         }
     }
