@@ -427,7 +427,7 @@
                                 categoryPercentage: 0.6
                             }],
                             yAxes: yaxisdata
-                        }
+                        },
                     };
 
                     var barChart = new Chart(densityCanvas, {
