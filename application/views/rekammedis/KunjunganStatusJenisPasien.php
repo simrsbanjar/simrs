@@ -30,6 +30,8 @@
     <script src="<?php echo base_url(); ?>assets/vendor/datatables/jquery.dataTables.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.js"></script>
     <!--<script src="<?php echo base_url(); ?>assets/js/jquery-ui.js" ></script>-->
+    <link rel="stylesheet" href="<?php echo base_url() . 'assets/css/morris.css' ?>">
+    <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
 
 </head>
 
@@ -85,7 +87,7 @@
                                 <strong>Form</strong> Filter by Tanggal
                             </div>
                             <form action="<?php echo base_url(); ?>KunjunganStatusJenisPasien/filter" method="POST" target="_blank">
-                                <input type="hidden" name="nilaifilter" value="1">
+                                <input type="hidden" name="nilaifilter" id="nilaifilter" value="1">
 
                                 <input name="valnilai" type="hidden">
                                 <div class="card-body card-block">
@@ -122,7 +124,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
-
+                                    <button type="button" class="btn btn-sm btn-success" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</button>
                                 </div>
                             </form>
                         </div>
@@ -136,14 +138,14 @@
                             </div>
                             <form id="formbulan" action="<?php echo base_url(); ?>KunjunganStatusJenisPasien/filter" method="POST" target="_blank">
                                 <div class="card-body card-block">
-                                    <input type="hidden" name="nilaifilter" value="2">
+                                    <input type="hidden" name="nilaifilter" id="nilaifilter" value="2">
 
                                     <input name="valnilai" type="hidden">
                                     <div class="row form-group">
                                         <?php $instalasi  = $this->db->query("SELECT * FROM Instalasi  WHERE StatusEnabled = '1' AND (KdInstalasi IN ('01', '02', '03', '04', '06', '08', '09', '10', '11', '16','22')) ORDER BY KdInstalasi ASC")->result(); ?>
                                         <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Instalasi</label></div>
                                         <div class="col-12 col-md-9 ">
-                                            <select name="instalasi" id="instalasi" class="form-control form-control-user">
+                                            <select name="instalasi1" id="instalasi1" class="form-control form-control-user">
                                                 <option value="">- Pilih Instalasi -</option>
                                                 <?php foreach ($instalasi as $key) { ?>
                                                     <option value="<?php echo $key->KdInstalasi ?>"><?php echo $key->NamaInstalasi ?> </option>
@@ -213,6 +215,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
+                                    <button type="button" class="btn btn-sm btn-success" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</button>
 
                                 </div>
                             </form>
@@ -229,12 +232,12 @@
                                 <input name="valnilai" type="hidden">
                                 <div class="card-body card-block">
 
-                                    <input type="hidden" name="nilaifilter" value="3">
+                                    <input type="hidden" name="nilaifilter" id="nilaifilter" value="3">
                                     <div class="row form-group">
                                         <?php $instalasi  = $this->db->query("SELECT * FROM Instalasi  WHERE StatusEnabled = '1' AND (KdInstalasi IN ('01', '02', '03', '04', '06', '08', '09', '10', '11', '16','22')) ORDER BY KdInstalasi ASC")->result(); ?>
                                         <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Instalasi</label></div>
                                         <div class="col-12 col-md-9 ">
-                                            <select name="instalasi" id="instalasi" class="form-control form-control-user">
+                                            <select name="instalasi2" id="instalasi2" class="form-control form-control-user">
                                                 <option value="">- Pilih Instalasi -</option>
                                                 <?php foreach ($instalasi as $key) { ?>
                                                     <option value="<?php echo $key->KdInstalasi ?>"><?php echo $key->NamaInstalasi ?> </option>
@@ -259,6 +262,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
+                                    <button type="button" class="btn btn-sm btn-success" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</button>
 
                                 </div>
                             </form>
@@ -270,9 +274,19 @@
             </div>
             <!-- /.content-wrapper -->
         </div>
+
     </div>
 
+    <div style="width:auto;">
+        <canvas id="myChart"></canvas>
+    </div>
+
+
+    <script src="<?php echo base_url() . 'assets/js/raphael-min.js' ?>"></script>
+    <script src="<?php echo base_url() . 'assets/js/morris.min.js' ?>"></script>
+
     <script type="text/javascript">
+        var chart = $('#chartContainer');
         /*digunakan untuk menyembunyikan form tanggal, bulan dan tahun saat halaman di load */
         $(document).ready(function() {
 
@@ -280,6 +294,7 @@
             $("#tahunfilter").hide();
             $("#bulanfilter").hide();
             $("#cardbayar").hide();
+            chart.hide();
 
         });
 
@@ -315,6 +330,7 @@
             $("#bulanfilter").hide();
             $("#cardbayar").hide();
 
+            $("#instalasi").val('');
             $("#periode").val('');
             $("#tanggalawal").val('');
             $("#tanggalakhir").val('');
@@ -323,6 +339,106 @@
             $("#bulanakhir").val('');
             $("#tahun2").val('');
             $("#targetbayar").empty();
+            chart.hide();
+        }
+
+        function Grafik() {
+            chart.show();
+
+            var periode = $("[name='periode']").val();
+            if (periode == 'tanggal') {
+                var instalasi = $('#instalasi').val();
+            } else if (periode == 'bulan') {
+                var instalasi = $('#instalasi1').val();
+            } else {
+                var instalasi = $('#instalasi2').val();
+            }
+
+            var tanggalawal = $('#tanggalawal').val();
+            var tanggalakhir = $('#tanggalakhir').val();
+            var tahun1 = $('#tahun1').val();
+            var bulanawal = $('#bulanawal').val();
+            var bulanakhir = $('#bulanakhir').val();
+            var tahun2 = $('#tahun2').val();
+            var dataparm = {
+                "tanggalawal": tanggalawal,
+                "tanggalakhir": tanggalakhir,
+                "periode": periode,
+                "instalasi": instalasi,
+                "tahun1": tahun1,
+                "bulanawal": bulanawal,
+                "bulanakhir": bulanakhir,
+                "tahun2": tahun2
+            };
+
+            $.ajax({
+                url: "<?= base_url('KunjunganStatusJenisPasien/Grafik') ?>",
+                type: "POST",
+                dataType: "json",
+                data: dataparm,
+                success: function(msg) {
+                    var densityCanvas = document.getElementById("myChart");
+
+                    var totaldata = [];
+                    var tanggaldata = [];
+                    var yaxisdata = [];
+                    var dataawal = [];
+
+                    // console.log(datahasil);
+                    for (var i in msg.hasil) {
+
+                        var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
+                        var datahasil = [];
+                        for (var ii in dataawal) {
+                            datahasil.push(dataawal[ii].JUMLAH)
+                        }
+
+                        const r = parseInt(Math.random() * 255);
+                        const g = parseInt(Math.random() * 255);
+                        const b = parseInt(Math.random() * 255);
+                        const a = Math.random();
+
+                        totaldata.push({
+                            label: msg.hasil[i].KELOMPOK,
+                            data: datahasil,
+                            backgroundColor: `rgba(${r}, ${g}, ${b}, ${a})`,
+                            borderWidth: 0,
+                            yAxisID: 'y-axis-' + msg.hasil[i].KELOMPOK
+                        })
+
+                        yaxisdata.push({
+                            id: 'y-axis-' + msg.hasil[i].KELOMPOK
+                        })
+
+                    }
+
+                    for (var i in msg.tanggal) {
+                        tanggaldata.push(msg.tanggal[i].TANGGAL)
+                    }
+                    var hasilData = {
+                        labels: tanggaldata,
+                        datasets: totaldata
+                    };
+
+                    var chartOptions = {
+                        scales: {
+                            xAxes: [{
+                                barPercentage: 1,
+                                categoryPercentage: 0.6
+                            }],
+                            yAxes: yaxisdata
+                        }
+                    };
+
+                    var barChart = new Chart(densityCanvas, {
+                        type: 'bar',
+                        data: hasilData,
+                        options: chartOptions
+                    });
+
+
+                }
+            });
 
         }
     </script>

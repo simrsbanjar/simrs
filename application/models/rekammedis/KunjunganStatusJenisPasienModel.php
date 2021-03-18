@@ -104,4 +104,17 @@ class KunjunganStatusJenisPasienModel extends CI_Model
 
         return $query->result();
     }
+
+    public function getGrafik($tahun, $tanggalawal, $tanggalakhir, $instalasi, $status, $format)
+    {
+        if ($status == 'tanggal') {
+            $query = $this->db->query("EXEC Sp_GrafikKunPasMasukJenisPasienWeb '1',NULL,'" . $tanggalawal . "','" . $tanggalakhir . "','" . $instalasi . "','" . $format . "'");
+        } else if ($status == 'bulan') {
+            $query = $this->db->query("EXEC Sp_GrafikKunPasMasukJenisPasienWeb '2'," . $tahun . "," . $tanggalawal . "," . $tanggalakhir . ",'" . $instalasi . "','" . $format . "'");
+        } else {
+            $query = $this->db->query("EXEC Sp_GrafikKunPasMasukJenisPasienWeb '3'," . $tahun . ",'','','" . $instalasi . "','" . $format . "'");
+        }
+
+        return $query->result();
+    }
 }
