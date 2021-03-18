@@ -10,7 +10,7 @@
 
 </head>
 
-<body>
+<body onload="window.print()">
     <table style="width: 100%;" class="mb-5">
         <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
@@ -38,7 +38,7 @@
             Periode : <?= date('d-m-Y', strtotime($datafilter['TglAwal'])) ?> s.d <?= date('d-m-Y', strtotime($datafilter['TglAkhir'])) ?>
         </p>
     </div>
-    <table class="table table-bordered mt-5" onload="window.print()">
+    <table class="table table-bordered mt-5">
         <tr style="text-align: center;">
             <th>No. Urut</th>
             <th>No. CM</th>

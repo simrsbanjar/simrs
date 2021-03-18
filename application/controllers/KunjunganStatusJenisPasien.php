@@ -23,6 +23,33 @@ class KunjunganStatusJenisPasien extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function Grafik()
+    {
+        $tanggalawal = $this->input->post('tanggalawal');
+        $tanggalakhir = $this->input->post('tanggalakhir');
+        $tahun1 = $this->input->post('tahun1');
+        $bulanawal = $this->input->post('bulanawal');
+        $bulanakhir = $this->input->post('bulanakhir');
+        $tahun2 = $this->input->post('tahun2');
+        $periode = $this->input->post('periode');
+        $instalasi = $this->input->post('instalasi');
+
+        if ($periode == 'tanggal') {
+            $data['tanggal']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $tanggalawal, $tanggalakhir, $instalasi, $periode, '1');
+            $data['hasil']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $tanggalawal, $tanggalakhir, $instalasi, $periode, '2');
+            $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $tanggalawal, $tanggalakhir, $instalasi, $periode, '3');
+        } elseif ($periode == 'bulan') {
+            $data['tanggal']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $bulanawal, $bulanakhir, $instalasi, $periode, '1');
+            $data['hasil']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $bulanawal, $bulanakhir, $instalasi, $periode, '2');
+            $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $bulanawal, $bulanakhir, $instalasi, $periode, '3');
+        } else {
+            $data['tanggal']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '1');
+            $data['hasil']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '2');
+            $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '3');
+        }
+
+        echo json_encode($data);
+    }
 
     function filter()
     {
