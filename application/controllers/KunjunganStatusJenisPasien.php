@@ -48,6 +48,8 @@ class KunjunganStatusJenisPasien extends CI_Controller
             $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '3');
         }
 
+
+
         echo json_encode($data);
     }
 
