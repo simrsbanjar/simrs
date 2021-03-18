@@ -60,9 +60,9 @@ class KunjunganStatusJenisPasien extends CI_Controller
         $bulanakhir = $this->input->post('bulanakhir');
         $tahun2 = $this->input->post('tahun2');
         $nilaifilter = $this->input->post('nilaifilter');
-        $instalasi = $this->input->post('instalasi');
 
         if ($nilaifilter == 1) {
+            $instalasi = $this->input->post('instalasi');
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Tanggal";
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
@@ -79,6 +79,7 @@ class KunjunganStatusJenisPasien extends CI_Controller
             ];
             $this->load->view('rekammedis/LapKunjunganStatusJenisPas', $data);
         } elseif ($nilaifilter == 2) {
+            $instalasi = $this->input->post('instalasi1');
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Bulan";
             $data['subtitle'] =  $bulanawal . ' s.d ' . $bulanakhir . ' Tahun : ' . $tahun1;
@@ -95,6 +96,7 @@ class KunjunganStatusJenisPasien extends CI_Controller
             ];
             $this->load->view('rekammedis/LapKunjunganStatusJenisPas', $data);
         } elseif ($nilaifilter == 3) {
+            $instalasi = $this->input->post('instalasi2');
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Tahun";
             $data['subtitle'] =  $tahun2;
