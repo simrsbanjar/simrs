@@ -17,7 +17,8 @@
     <br>
 
     <?php foreach ($menu as $key) { ?>
-        <div class="sidebar-heading" style="font-size: 12px;">
+
+        <div class="RSUwarna RSUuppercase" style="font-size: 18px; padding: 0 1rem; font-weight: 800;">
             <?php echo $key->NamaMenu; ?>
         </div>
 
@@ -31,7 +32,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span style="font-size: 13px;"><?php echo $key_s->NamaMenu; ?></span>
+                <span style="font-size: 16px;"><?php echo $key_s->NamaMenu; ?></span>
             </a>
             <?php foreach ($mendsub as $key_ds) { ?>
                 <?php $menrdsub       = $this->db->query("SELECT * FROM RincDtlSubListMenuWeb WHERE NoIndex_p = '" . $key->NoIndex . "' AND NoIndex_p_s = '" . $key_s->NoIndex . "' AND NoIndex_p_s_d ='" . $key_ds->NoIndex . "'AND StatusEnabled ='1'")->result(); ?>
@@ -39,9 +40,11 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <a class="collapse-header"><?php echo $key_ds->NamaMenu; ?></a>
+                            <div class="RSUnavdesain">
+                                <a class="RSUnavbarline"><?php echo $key_ds->NamaMenu; ?></a>
+                            </div>
                             <?php foreach ($menrdsub as $key_rds) { ?>
-                                <a style="font-size: 12px;" class="collapse-item" href="<?php echo $key_rds->Object; ?>"><?php echo $key_rds->NamaMenu; ?></a>
+                                <a style="font-size: 12px;" class="RSUsidebarline" href="<?php echo $key_rds->Object; ?>"><?php echo $key_rds->NamaMenu; ?></a>
                             <?php } ?>
                         </div>
                     </div>

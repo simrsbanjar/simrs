@@ -7,7 +7,6 @@
     <title>Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Pasien</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
-
 </head>
 
 <body onload="window.print()">
@@ -51,6 +50,7 @@
     foreach ($statuspasien as $row) : ?>
         <?php $no1++ ?>
     <?php endforeach ?>
+
     <table class="table table-bordered mt-5">
         <tr style="text-align: center;">
             <th rowspan="3">Ruangan</th>
@@ -119,6 +119,7 @@
                 <td style="text-align: center;"><?= $sumpastotal; ?></td>
             </tr>
         <?php endforeach ?>
+
         <th style="text-align: center;">Total</th>
         <?php $sumtotalall = 0; ?>
         <?php foreach ($jenispasien as $row3) : ?>

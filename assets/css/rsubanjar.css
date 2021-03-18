@@ -1,0 +1,66 @@
+.non-aktif{
+   opacity: 0.5;
+ }
+.aktif{
+   opacity: 1.0;
+} 
+.RSUsidebarline{
+   padding: .5rem 1rem;
+   margin: 0 .5rem;
+   display: block;
+   color: #3a3b45;
+   text-decoration: none;
+   border-radius: .35rem;
+}
+
+.RSUuppercase{
+   text-transform: uppercase;
+}
+
+.RSUnavdesain{
+   font-weight: bold;
+}
+
+.RSUnavbarline{
+   margin:0;
+   white-space: nowrap;
+   text-align: center;
+   padding: .5rem 1.5rem;
+   text-transform: uppercase;
+   font-weight: 800;
+   text-decoration: underline;
+}
+.RSUnavdesain{
+   text-decoration: underline;
+   color: #4e73df;
+   font-size: 14px;
+}
+
+.RSUwarna{
+   color: white;
+   text-align: left;
+}
+
+
+.RSUalign{
+   padding: 0 1rem;
+   font-weight: 800;
+   background-color: black;
+}
+
+.aktif:before{
+   content: “;
+   position:absolute;
+   width:0;
+   border-width: 0 8px 8px 8px;
+   border-style: solid;
+   border-color: #bbb transparent;
+   margin-top: 26px;
+   margin-left: 0px;}
+.isi {
+   margin-top: 13px;
+   border-top: 1px solid #bbb;
+ }
+ .table td {
+   text-align: center;
+ }
