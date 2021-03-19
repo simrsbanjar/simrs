@@ -4,7 +4,6 @@
     <div class="container-fluid">
         <div class="row">
             <!-- row satu  -->
-            <!-- row satu  -->
             <div class="col-lg-5">
                 <div class="card">
                     <div class="card-header">

@@ -37,6 +37,7 @@
     <script src="<?php echo base_url(); ?>assets/css/Chart.js"></script>
     <link href="<?= base_url('assets/'); ?>css/Chart.css">
     <link href="<?= base_url('assets/'); ?>css/Chart.min.css">
+    <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
 
 </head>
 
