@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Pilih Tahun</label></div>
+                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Tahun</label></div>
                                 <div class="col-12 col-md-10">
                                     <select name="tahun1" id="tahun1" class="form-control form-control-user" title="Pilih Tahun">
                                         <option value="">-PILIH-</option>
@@ -130,7 +130,7 @@
 
                             <div class="row form-group">
                                 <div class="col col-md-2">
-                                    <label for="select" class=" form-control-label">Dari tanggal</label>
+                                    <label for="select" class=" form-control-label">Dari Bulan</label>
                                 </div>
                                 <div class="col col-md-4">
                                     <select name="bulanawal" id="bulanawal" class="form-control form-control-user" title="Pilih Bulan">
@@ -150,7 +150,7 @@
                                     </select>
                                 </div>
                                 <div class="col col-md-2">
-                                    <label for="select" class=" form-control-label">Sampai tanggal</label>
+                                    <label for="select" class=" form-control-label">Sampai Bulan</label>
                                 </div>
                                 <div class="col col-md-4">
                                     <select name="bulanakhir" id="bulanakhir" class="form-control form-control-user" title="Pilih Bulan">
@@ -208,8 +208,8 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Pilih Tahun</label></div>
-                                <div class="col-12 col-md-10">
+                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Tahun Awal </label></div>
+                                <div class="col col-md-4">
                                     <select name="tahun2" id="tahun2" class="form-control form-control-user" title="Pilih Tahun">
                                         <option value="">-PILIH-</option>
                                         <?php foreach ($tahun as $thn) : ?>
@@ -218,8 +218,18 @@
                                     </select>
                                     <small class="help-block form-text"></small>
                                 </div>
-                            </div>
 
+                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Tahun Akhir</label></div>
+                                <div class="col col-md-4">
+                                    <select name="tahun3" id="tahun3" class="form-control form-control-user" title="Pilih Tahun">
+                                        <option value="">-PILIH-</option>
+                                        <?php foreach ($tahun as $thn) : ?>
+                                            <option value="<?php echo $thn->tahun; ?>"><?php echo $thn->tahun; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <small class="help-block form-text"></small>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
@@ -317,6 +327,7 @@
             var bulanawal = $('#bulanawal').val();
             var bulanakhir = $('#bulanakhir').val();
             var tahun2 = $('#tahun2').val();
+            var tahun3 = $('#tahun3').val();
             var dataparm = {
                 "tanggalawal": tanggalawal,
                 "tanggalakhir": tanggalakhir,
@@ -325,7 +336,8 @@
                 "tahun1": tahun1,
                 "bulanawal": bulanawal,
                 "bulanakhir": bulanakhir,
-                "tahun2": tahun2
+                "tahun2": tahun2,
+                "tahun3": tahun3,
             };
 
             $.ajax({
@@ -359,8 +371,8 @@
                             label: msg.hasil[i].KELOMPOK,
                             data: datahasil,
                             backgroundColor: `rgba(${r}, ${g}, ${b}, ${a})`,
-                            borderWidth: 0,
-                            yAxisID: 'y-axis-' + msg.hasil[i].KELOMPOK
+                            borderWidth: 0 //,
+                            // yAxisID: 'y-axis-' + msg.hasil[i].KELOMPOK
                         })
 
                         yaxisdata.push({
@@ -377,20 +389,20 @@
                         datasets: totaldata
                     };
 
-                    var chartOptions = {
-                        scales: {
-                            xAxes: [{
-                                barPercentage: 1,
-                                categoryPercentage: 0.6
-                            }],
-                            yAxes: yaxisdata
-                        },
-                    };
+                    // var chartOptions = {
+                    //     scales: {
+                    //         xAxes: [{
+                    //             barPercentage: 1,
+                    //             categoryPercentage: 0.6
+                    //         }],
+                    //         yAxes: yaxisdata
+                    //     }
+                    // };
 
                     var barChart = new Chart(densityCanvas, {
                         type: 'bar',
                         data: hasilData,
-                        options: chartOptions
+                        //options: chartOptions
                     });
 
 
