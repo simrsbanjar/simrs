@@ -14,9 +14,10 @@
             border-top: 1px solid #000;
         }
     </style>
+
 </head>
 
-<body onload="window.print()">
+<body>
     <table style="width: 100%;" class="mb-5">
         <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
@@ -67,40 +68,147 @@
         </p>
     </div>
 
-    <table class="table table-bordered mt-5">
-        <tr style="text-align: center;">
-            <th>No. Urut</th>
-            <th>Kd. Diagnosa</th>
-            <th>Diagnosa</th>
-            <th>Jumlah</th>
-            <th>Persentase</th>
-        </tr>
-
-        <?php
-        $jumlahdata = 0;
-        foreach ($datahasil as $row) : ?>
-            <?php $jumlahdata += $row->JumlahPasien ?>
-        <?php endforeach ?>
-
-        <?php
-        $no = 1;
-        foreach ($datahasil as $row) : ?>
-            <tr>
-                <td style="text-align: center;"><?php echo $no++;                 ?></td>
-                <td style="text-align: center;"><?php echo $row->KdDiagnosa;            ?></td>
-                <td><?php echo $row->Diagnosa;    ?></td>
-                <td style="text-align: center;"><?php echo $row->JumlahPasien;    ?></td>
-                <td style="text-align: center;"><?php echo round(($row->JumlahPasien / $jumlahdata) * 100, 2); ?> % </td>
+    <?php if ($datafilter['kliktombol'] == '1') { ?>
+        <table class="table table-bordered mt-5">
+            <tr style="text-align: center;">
+                <th>No. Urut</th>
+                <th>Kd. Diagnosa</th>
+                <th>Diagnosa</th>
+                <th>Jumlah</th>
+                <th>Persentase</th>
             </tr>
-        <?php endforeach ?>
 
-        <tr style="font-weight: bold; text-align: center;">
-            <td colspan="3">Jumlah</td>
-            <td><?php echo $jumlahdata; ?> </td>
-            <td>100 %</td>
-        </tr>
+            <?php
+            $jumlahdata = 0;
+            foreach ($datahasil as $row) : ?>
+                <?php $jumlahdata += $row->JumlahPasien ?>
+            <?php endforeach ?>
 
-    </table>
+            <?php
+            $no = 1;
+            foreach ($datahasil as $row) : ?>
+                <tr>
+                    <td style="text-align: center;"><?php echo $no++;                 ?></td>
+                    <td style="text-align: center;"><?php echo $row->KdDiagnosa;            ?></td>
+                    <td><?php echo $row->Diagnosa;    ?></td>
+                    <td style="text-align: center;"><?php echo $row->JumlahPasien;    ?></td>
+                    <td style="text-align: center;"><?php echo round(($row->JumlahPasien / $jumlahdata) * 100, 2); ?> % </td>
+                </tr>
+            <?php endforeach ?>
+
+            <tr style="font-weight: bold; text-align: center;">
+                <td colspan="3">Jumlah</td>
+                <td><?php echo $jumlahdata; ?> </td>
+                <td>100 %</td>
+            </tr>
+
+        </table>
+    <?php } else { ?>
+        <div id="chartContainer" style="float: left; height: 500px; width: 100%;">
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"> </script>
+        <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"> </script>
+        <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxcore.js"></script>
+        <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxdraw.js"></script>
+        <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxchart.core.js"></script>
+        <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxdata.js"></script>
+    <?php } ?>
 </body>
+
+<script>
+    <?php if ($datafilter['kliktombol'] == '2') { ?>
+        var awal = "<?= $datafilter['TglAwal'] ?>";
+        var akhir = "<?= $datafilter['TglAkhir'] ?>";
+        var jenispasien = "<?= $datafilter['JenisPasien'] ?>";
+        var ruangan = "<?= $datafilter['Ruangan'] ?>";
+        var jumlahdata = "<?= $datafilter['JumlahData'] ?>";
+        var instalasi = "<?= $datafilter['Instalasi'] ?>";
+        var kriteria = "<?= $datafilter['Kriteria'] ?>";
+
+        // memanggil data array dengan JSON
+        var source = {
+            datatype: "json",
+            datafields: [{
+                    name: 'hasil'
+                },
+                {
+                    name: 'total'
+                }
+            ],
+            url: "<?= base_url('RekapBesarKematianTen/Grafik') ?>",
+            type: "POST",
+            data: {
+                "awal": awal,
+                "akhir": akhir,
+                "jenispasien": jenispasien,
+                "ruangan": ruangan,
+                "jumlahdata": jumlahdata,
+                "kriteria": kriteria,
+                "instalasi": instalasi
+            },
+        };
+
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            async: false,
+            autoBind: true
+        });
+        // pengaturan jqxChart
+        var settings = {
+            title: "Rekapitulasi 10 Besar Penyakit",
+            description: "",
+            enableAnimations: true,
+            showLegend: true,
+            showBorderLine: true,
+            legendLayout: {
+                left: 10,
+                top: 100,
+                width: 400,
+                height: 500,
+                flow: 'vertical'
+            },
+            padding: {
+                left: 5,
+                top: 5,
+                right: 5,
+                bottom: 5
+            },
+            titlePadding: {
+                left: 0,
+                top: 0,
+                right: 0,
+                bottom: 10
+            },
+            source: dataAdapter,
+            colorScheme: 'scheme03',
+            seriesGroups: [{
+                type: 'pie',
+                showLabels: true,
+                series: [{
+                    dataField: 'total',
+                    displayText: 'hasil',
+                    labelRadius: 120,
+                    initialAngle: 15,
+                    radius: 100,
+                    centerOffset: 0,
+                    formatFunction: function(value) {
+                        if (isNaN(value))
+                            return value;
+                        return parseFloat(value);
+                    },
+                }]
+            }]
+        };
+        // Menampilkan Chart
+        $('#chartContainer').jqxChart(settings);
+    <?php } ?>
+
+    window.print();
+</script>
 
 </html>

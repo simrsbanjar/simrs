@@ -31,6 +31,7 @@ class KunjunganStatusJenisPasien extends CI_Controller
         $bulanawal = $this->input->post('bulanawal');
         $bulanakhir = $this->input->post('bulanakhir');
         $tahun2 = $this->input->post('tahun2');
+        $tahun3 = $this->input->post('tahun3');
         $periode = $this->input->post('periode');
         $instalasi = $this->input->post('instalasi');
 
@@ -43,9 +44,9 @@ class KunjunganStatusJenisPasien extends CI_Controller
             $data['hasil']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $bulanawal, $bulanakhir, $instalasi, $periode, '2');
             $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun1, $bulanawal, $bulanakhir, $instalasi, $periode, '3');
         } else {
-            $data['tanggal']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '1');
-            $data['hasil']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '2');
-            $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tanggalawal, $tanggalakhir, $instalasi, $periode, '3');
+            $data['tanggal']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tahun2, $tahun3, $instalasi, $periode, '1');
+            $data['hasil']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tahun2, $tahun3, $instalasi, $periode, '2');
+            $data['total']    = $this->KunjunganStatusJenisPasienModel->getGrafik($tahun2, $tahun2, $tahun3, $instalasi, $periode, '3');
         }
 
 
