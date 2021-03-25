@@ -14,6 +14,7 @@ class DaftarPasienRajal extends CI_Controller
     public function index()
     {
         $data['title'] = 'Daftar Pasien Rawat Jalan';
+        $data['laporan'] = 'Laporan Daftar Pasien Rawat Jalan';
         $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
         $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
         $this->load->view('templates/header', $data);
