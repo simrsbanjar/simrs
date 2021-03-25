@@ -12,6 +12,7 @@ class RekapBesarKematianTen extends CI_Controller
     public function index()
     {
         $data['title'] = 'Rekapitulasi 10 Besar Kematian';
+        $data['laporan'] = 'Rekapitulasi 10 Besar Kematian';
         $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
         $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
         $this->load->view('templates/header', $data);

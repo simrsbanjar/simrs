@@ -2,7 +2,13 @@
 <div class="container-fluid">
     <div class="container mt-3">
         <!-- Page Heading -->
-        <h1 class="h3 text-gray-900"><?= $title; ?></h1>
+
+        <!-- breadcrumb -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="<?= base_url('User') ?>">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $laporan; ?></li>
+        </ol>
+
         <hr>
         <br>
         <form style="font-size:15px" action="<?php echo base_url('DaftarPasienMeninggal/Cetak') ?>" id="formData" method="POST" target="_blank">
