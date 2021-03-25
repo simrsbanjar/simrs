@@ -208,7 +208,7 @@
         $('#chartContainer').jqxChart(settings);
     <?php } ?>
 
-    window.print();
+    setTimeout(window.print, 500);
 </script>
 
 </html>
