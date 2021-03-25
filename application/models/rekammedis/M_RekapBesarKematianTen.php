@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No Dirext Script Access Allower');
 
-class RekapBesarKematianTenModel extends CI_Model
+class M_RekapBesarKematianTen extends CI_Model
 {
     public function GetRuanganInst($instalasi)
     {

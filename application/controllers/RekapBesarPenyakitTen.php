@@ -6,9 +6,9 @@ class RekapBesarPenyakitTen extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("rekammedis/RekapBesarPenyakitTenModel");
+        $this->load->model("rekammedis/M_RekapBesarPenyakitTen");
         //$this->load->library('mypdf');
-        //$this->mypdf->generate('rekammedis/LapDaftarPasienRajal');
+        //$this->mypdf->generate('rekammedis/laporan/LapDaftarPasienRajal');
     }
 
     public function index()
@@ -26,7 +26,7 @@ class RekapBesarPenyakitTen extends CI_Controller
     function GetRuanganInst()
     {
         $instalasi = $this->input->post('instalasi');
-        $data = $this->RekapBesarPenyakitTenModel->GetRuanganInst($instalasi);
+        $data = $this->M_RekapBesarPenyakitTen->GetRuanganInst($instalasi);
         echo json_encode($data);
     }
 
@@ -40,7 +40,7 @@ class RekapBesarPenyakitTen extends CI_Controller
         $instalasi   = strtoupper($this->input->post('instalasi'));
         $kriteria   = strtoupper($this->input->post('kriteria'));
 
-        $results    = $this->RekapBesarPenyakitTenModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $results    = $this->M_RekapBesarPenyakitTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
 
         $data = [];
         $no = 0;
@@ -55,7 +55,7 @@ class RekapBesarPenyakitTen extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->RekapBesarPenyakitTenModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria),
+            "recordsTotal" => $this->M_RekapBesarPenyakitTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria),
             "data" => $data,
         );
 
@@ -79,7 +79,7 @@ class RekapBesarPenyakitTen extends CI_Controller
             $kriteriatext   = 'BERDASARKAN JUMLAH PASIEN';
         }
 
-        $result['datahasil']    = $this->RekapBesarPenyakitTenModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $result['datahasil']    = $this->M_RekapBesarPenyakitTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
         $result['datafilter']    = [
             'TglAwal' => $awal,
             'TglAkhir' => $akhir,
@@ -91,7 +91,7 @@ class RekapBesarPenyakitTen extends CI_Controller
         ];
 
         if ($result['datahasil']) {
-            $this->load->view('rekammedis/LapRekapBesarPenyakitTen', $result);
+            $this->load->view('rekammedis/laporan/LapRekapBesarPenyakitTen', $result);
         }
     }
 }

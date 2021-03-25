@@ -63,6 +63,7 @@ class KunjunganStatusPenyakitPasien extends CI_Controller
         $bulanakhir = $this->input->post('bulanakhir');
         $tahun2 = $this->input->post('tahun2');
         $nilaifilter = $this->input->post('nilaifilter');
+        $tahun3 = $this->input->post('tahun3');
 
         if ($nilaifilter == 1) {
             $instalasi = $this->input->post('instalasi');
@@ -80,7 +81,7 @@ class KunjunganStatusPenyakitPasien extends CI_Controller
                 'instalasi'   => $instalasi,
                 'nilaifilter' => $nilaifilter
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusPenyakitPasien', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusPenyakitPasien', $data);
         } elseif ($nilaifilter == 2) {
             $instalasi = $this->input->post('instalasi1');
 
@@ -97,23 +98,24 @@ class KunjunganStatusPenyakitPasien extends CI_Controller
                 'bulanakhir'   => $bulanakhir,
                 'nilaifilter' => $nilaifilter
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusPenyakitPasien', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusPenyakitPasien', $data);
         } elseif ($nilaifilter == 3) {
             $instalasi = $this->input->post('instalasi2');
 
             $data['title'] = "Laporan Kunjungan Status dan Kasus Penyakit Pasien Berdasarkan Tahun";
-            $data['subtitle'] =  $tahun2;
+            $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
-            $data['datafilter'] = $this->M_KunjunganStatusPenyakitPasien->filterbytahun($tahun2, $instalasi);
-            $data['penyakitpasien'] = $this->M_KunjunganStatusPenyakitPasien->GetPenyakitPasienTahun($tahun2, $instalasi);
-            $data['statuspasien'] = $this->M_KunjunganStatusPenyakitPasien->GetStatusPasienTahun($tahun2, $instalasi);
-            $data['ruangan'] = $this->M_KunjunganStatusPenyakitPasien->GetRuanganTahun($tahun2, $instalasi);
+            $data['datafilter'] = $this->M_KunjunganStatusPenyakitPasien->filterbytahun($tahun2, $instalasi, $tahun3);
+            $data['penyakitpasien'] = $this->M_KunjunganStatusPenyakitPasien->GetPenyakitPasienTahun($tahun2, $instalasi, $tahun3);
+            $data['statuspasien'] = $this->M_KunjunganStatusPenyakitPasien->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
+            $data['ruangan'] = $this->M_KunjunganStatusPenyakitPasien->GetRuanganTahun($tahun2, $instalasi, $tahun3);
             $data['datafilter'] = [
                 'tahun'   => $tahun2,
                 'instalasi'   => $instalasi,
-                'nilaifilter' => $nilaifilter
+                'nilaifilter' => $nilaifilter,
+                'tahunakhir' => $tahun3
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusPenyakitPasien', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusPenyakitPasien', $data);
         }
     }
 }

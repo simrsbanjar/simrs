@@ -81,34 +81,34 @@ class M_KunjunganKelasStatusPasien extends CI_Model
         return $query->result();
     }
 
-    function filterbytahun($tahun2, $instalasi)
+    function filterbytahun($tahun2, $instalasi, $tahun3)
     {
         $query = $this->db->query("SELECT * FROM V_DataKunjunganPasienMasukBsetatusBKelas 
-        WHERE YEAR(TglPendaftaran) = '$tahun2' AND KdInstalasi ='" . $instalasi . "'  ORDER BY TglPendaftaran ASC ");
+        WHERE YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND KdInstalasi ='" . $instalasi . "'  ORDER BY TglPendaftaran ASC ");
 
         return $query->result();
     }
 
-    function GetKelasPelayananTahun($tahun2, $instalasi)
+    function GetKelasPelayananTahun($tahun2, $instalasi, $tahun3)
     {
         $query = $this->db->query("SELECT Judul, Detail FROM V_DataKunjunganPasienMasukBsetatusBKelas 
-        WHERE YEAR(TglPendaftaran) = '$tahun2' AND Judul = 'Kelas Pelayanan' AND KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
+        WHERE YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND Judul = 'Kelas Pelayanan' AND KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
 
         return $query->result();
     }
 
-    function GetStatusPasienTahun($tahun2, $instalasi)
+    function GetStatusPasienTahun($tahun2, $instalasi, $tahun3)
     {
         $query = $this->db->query("SELECT Judul, Detail FROM V_DataKunjunganPasienMasukBsetatusBKelas 
-        WHERE YEAR(TglPendaftaran) = '$tahun2' AND Judul = 'Status Pasien' AND KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
+        WHERE YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND Judul = 'Status Pasien' AND KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
 
         return $query->result();
     }
 
-    function GetRuanganTahun($tahun2, $instalasi)
+    function GetRuanganTahun($tahun2, $instalasi, $tahun3)
     {
         $query = $this->db->query("SELECT KdRuanganPelayanan, RuanganPelayanan FROM V_DataKunjunganPasienMasukBsetatusBKelas 
-        WHERE YEAR(TglPendaftaran) = '" . $tahun2 . "' AND KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
+        WHERE YEAR(TglPendaftaran) between  '" . $tahun2 . "' and '$tahun3' AND KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
 
         return $query->result();
     }

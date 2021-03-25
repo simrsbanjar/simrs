@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No Dirext Script Access Allower');
 
-class DaftarPasienPulangRanapModel extends CI_Model
+class M_DaftarPasienPulangRanap extends CI_Model
 {
     public function getDataTable()
     {

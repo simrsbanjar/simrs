@@ -106,7 +106,7 @@
                                 <?php $instalasi  = $this->db->query("SELECT * FROM Instalasi  WHERE StatusEnabled = '1' AND (KdInstalasi IN ('01', '02', '03', '04', '06', '08', '09', '10', '11', '16','22')) ORDER BY KdInstalasi ASC")->result(); ?>
                                 <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Instalasi</label></div>
                                 <div class="col-12 col-md-9 ">
-                                    <select name="instalasi" id="instalasi" class="form-control form-control-user">
+                                    <select name="instalasi1" id="instalasi1" class="form-control form-control-user">
                                         <option value="">- Pilih Instalasi -</option>
                                         <?php foreach ($instalasi as $key) { ?>
                                             <option value="<?php echo $key->KdInstalasi ?>"><?php echo $key->NamaInstalasi ?> </option>
@@ -116,7 +116,7 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Pilih Tahun</label></div>
+                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Tahun</label></div>
                                 <div class="col-12 col-md-10">
                                     <select name="tahun1" id="tahun1" class="form-control form-control-user" title="Pilih Tahun">
                                         <option value="">-PILIH-</option>
@@ -130,7 +130,7 @@
 
                             <div class="row form-group">
                                 <div class="col col-md-2">
-                                    <label for="select" class=" form-control-label">Dari tanggal</label>
+                                    <label for="select" class=" form-control-label">Dari Bulan</label>
                                 </div>
                                 <div class="col col-md-4">
                                     <select name="bulanawal" id="bulanawal" class="form-control form-control-user" title="Pilih Bulan">
@@ -150,7 +150,7 @@
                                     </select>
                                 </div>
                                 <div class="col col-md-2">
-                                    <label for="select" class=" form-control-label">Sampai tanggal</label>
+                                    <label for="select" class=" form-control-label">Sampai Bulan</label>
                                 </div>
                                 <div class="col col-md-4">
                                     <select name="bulanakhir" id="bulanakhir" class="form-control form-control-user" title="Pilih Bulan">
@@ -197,7 +197,7 @@
                                 <?php $instalasi  = $this->db->query("SELECT * FROM Instalasi  WHERE StatusEnabled = '1' AND (KdInstalasi IN ('01', '02', '03', '04', '06', '08', '09', '10', '11', '16','22')) ORDER BY KdInstalasi ASC")->result(); ?>
                                 <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Instalasi</label></div>
                                 <div class="col-12 col-md-9 ">
-                                    <select name="instalasi" id="instalasi" class="form-control form-control-user">
+                                    <select name="instalasi2" id="instalasi2" class="form-control form-control-user">
                                         <option value="">- Pilih Instalasi -</option>
                                         <?php foreach ($instalasi as $key) { ?>
                                             <option value="<?php echo $key->KdInstalasi ?>"><?php echo $key->NamaInstalasi ?> </option>
@@ -207,8 +207,8 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Pilih Tahun</label></div>
-                                <div class="col-12 col-md-10">
+                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Tahun Awal </label></div>
+                                <div class="col col-md-4">
                                     <select name="tahun2" id="tahun2" class="form-control form-control-user" title="Pilih Tahun">
                                         <option value="">-PILIH-</option>
                                         <?php foreach ($tahun as $thn) : ?>
@@ -217,8 +217,18 @@
                                     </select>
                                     <small class="help-block form-text"></small>
                                 </div>
-                            </div>
 
+                                <div id="form-tanggal" class="col col-md-2"><label for="select" class=" form-control-label">Tahun Akhir</label></div>
+                                <div class="col col-md-4">
+                                    <select name="tahun3" id="tahun3" class="form-control form-control-user" title="Pilih Tahun">
+                                        <option value="">-PILIH-</option>
+                                        <?php foreach ($tahun as $thn) : ?>
+                                            <option value="<?php echo $thn->tahun; ?>"><?php echo $thn->tahun; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <small class="help-block form-text"></small>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
@@ -274,6 +284,7 @@
             $("#bulanfilter").hide();
             $("#cardbayar").hide();
 
+            $("#instalasi").val('');
             $("#periode").val('');
             $("#tanggalawal").val('');
             $("#tanggalakhir").val('');

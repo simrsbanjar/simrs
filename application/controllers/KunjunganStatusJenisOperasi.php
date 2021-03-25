@@ -30,9 +30,10 @@ class KunjunganStatusJenisOperasi extends CI_Controller
         $bulanakhir = $this->input->post('bulanakhir');
         $tahun2 = $this->input->post('tahun2');
         $nilaifilter = $this->input->post('nilaifilter');
-        $instalasi = $this->input->post('instalasi');
+        $tahun3 = $this->input->post('tahun3');
 
         if ($nilaifilter == 1) {
+            $instalasi = $this->input->post('instalasi');
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Operasi Berdasarkan Tanggal";
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
@@ -47,8 +48,9 @@ class KunjunganStatusJenisOperasi extends CI_Controller
                 'instalasi'   => $instalasi,
                 'nilaifilter' => $nilaifilter
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusJenisOperasi', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusJenisOperasi', $data);
         } elseif ($nilaifilter == 2) {
+            $instalasi = $this->input->post('instalasi1');
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Operasi Berdasarkan Bulan";;
             $data['subtitle'] =  $bulanawal . ' s.d ' . $bulanakhir . ' Tahun : ' . $tahun1;
@@ -63,22 +65,24 @@ class KunjunganStatusJenisOperasi extends CI_Controller
                 'bulanakhir'   => $bulanakhir,
                 'nilaifilter' => $nilaifilter
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusJenisOperasi', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusJenisOperasi', $data);
         } elseif ($nilaifilter == 3) {
+            $instalasi = $this->input->post('instalasi2');
 
             $data['title'] = "Laporan Kunjungan Status dan Jenis Operasi Berdasarkan Tahun";;
-            $data['subtitle'] =  $tahun2;
+            $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
-            $data['datafilter'] = $this->M_KunjunganStatusJenisOperasi->filterbytahun($tahun2, $instalasi);
-            $data['jenisoperasi'] = $this->M_KunjunganStatusJenisOperasi->GetJenisOperasiTahun($tahun2, $instalasi);
-            $data['statuspasien'] = $this->M_KunjunganStatusJenisOperasi->GetStatusPasienTahun($tahun2, $instalasi);
-            $data['ruangan'] = $this->M_KunjunganStatusJenisOperasi->GetRuanganTahun($tahun2, $instalasi);
+            $data['datafilter'] = $this->M_KunjunganStatusJenisOperasi->filterbytahun($tahun2, $instalasi, $tahun3);
+            $data['jenisoperasi'] = $this->M_KunjunganStatusJenisOperasi->GetJenisOperasiTahun($tahun2, $instalasi, $tahun3);
+            $data['statuspasien'] = $this->M_KunjunganStatusJenisOperasi->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
+            $data['ruangan'] = $this->M_KunjunganStatusJenisOperasi->GetRuanganTahun($tahun2, $instalasi, $tahun3);
             $data['datafilter'] = [
                 'tahun'   => $tahun2,
                 'instalasi'   => $instalasi,
-                'nilaifilter' => $nilaifilter
+                'nilaifilter' => $nilaifilter,
+                'tahunakhir' => $tahun3
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusJenisOperasi', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusJenisOperasi', $data);
         }
     }
 }

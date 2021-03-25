@@ -56,6 +56,6 @@ class BukuRegister extends CI_Controller
 
     public function cetak()
     {
-        $this->load->view('rekammedis/LapBukuRegister');
+        $this->load->view('rekammedis/laporan/LapBukuRegister');
     }
 }

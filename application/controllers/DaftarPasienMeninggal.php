@@ -136,7 +136,7 @@ class DaftarPasienMeninggal extends CI_Controller
     {
         $result['pasien']    = $this->M_DaftarPasienMeninggal->getDataTableFilterSurat($nopendaftaran);
 
-        $this->load->view('rekammedis/LapSuratMeninggal', $result);
+        $this->load->view('rekammedis/laporan/LapSuratMeninggal', $result);
     }
 
     public function Cetak()
@@ -158,6 +158,6 @@ class DaftarPasienMeninggal extends CI_Controller
             'CariText' => $caritext
         ];
 
-        $this->load->view('rekammedis/LapDaftarPasienMeninggal', $result);
+        $this->load->view('rekammedis/laporan/LapDaftarPasienMeninggal', $result);
     }
 }

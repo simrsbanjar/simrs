@@ -73,34 +73,34 @@ class M_KunjunganStatusPenyakitPasien extends CI_Model
         return $query->result();
     }
 
-    function filterbytahun($tahun2, $instalasi)
+    function filterbytahun($tahun2, $instalasi, $tahun3)
     {
 
-        $query = $this->db->query("SELECT * from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '$tahun2' and KdInstalasi ='" . $instalasi . "'  ORDER BY TglPendaftaran ASC ");
+        $query = $this->db->query("SELECT * from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' and KdInstalasi ='" . $instalasi . "'  ORDER BY TglPendaftaran ASC ");
 
         return $query->result();
     }
 
-    function GetPenyakitPasienTahun($tahun2, $instalasi)
+    function GetPenyakitPasienTahun($tahun2, $instalasi, $tahun3)
     {
 
-        $query = $this->db->query("SELECT Judul, Detail  from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '$tahun2' AND Judul = 'Kasus Penyakit' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
+        $query = $this->db->query("SELECT Judul, Detail  from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND Judul = 'Kasus Penyakit' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
 
         return $query->result();
     }
 
-    function GetStatusPasienTahun($tahun2, $instalasi)
+    function GetStatusPasienTahun($tahun2, $instalasi, $tahun3)
     {
 
-        $query = $this->db->query("SELECT Judul, Detail  from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '$tahun2' AND Judul = 'Status Pasien' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
+        $query = $this->db->query("SELECT Judul, Detail  from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND Judul = 'Status Pasien' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
 
         return $query->result();
     }
 
-    function GetRuanganTahun($tahun2, $instalasi)
+    function GetRuanganTahun($tahun2, $instalasi, $tahun3)
     {
 
-        $query = $this->db->query("SELECT KdRuanganPelayanan, RuanganPelayanan from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '" . $tahun2 . "' and KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
+        $query = $this->db->query("SELECT KdRuanganPelayanan, RuanganPelayanan from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '" . $tahun2 . "' and '$tahun3' and KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
 
         return $query->result();
     }

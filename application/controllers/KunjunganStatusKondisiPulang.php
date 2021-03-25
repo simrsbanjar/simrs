@@ -61,7 +61,8 @@ class KunjunganStatusKondisiPulang extends CI_Controller
         $bulanakhir = $this->input->post('bulanakhir');
         $tahun2 = $this->input->post('tahun2');
         $nilaifilter = $this->input->post('nilaifilter');
-                
+        $tahun3 = $this->input->post('tahun3');
+
         if ($nilaifilter == 1) {
             $instalasi = $this->input->post('instalasi');
 
@@ -78,7 +79,7 @@ class KunjunganStatusKondisiPulang extends CI_Controller
                 'instalasi'   => $instalasi,
                 'nilaifilter' => $nilaifilter
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusKondisiPulang', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusKondisiPulang', $data);
         } elseif ($nilaifilter == 2) {
             $instalasi = $this->input->post('instalasi1');
 
@@ -88,7 +89,6 @@ class KunjunganStatusKondisiPulang extends CI_Controller
             $data['datafilter'] = $this->M_KunjunganStatusKondisiPulang->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             $data['kondisipasien'] = $this->M_KunjunganStatusKondisiPulang->GetKondisiPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             $data['statuspasien'] = $this->M_KunjunganStatusKondisiPulang->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-            // $data['ruangan'] = $this->M_KunjunganStatusKondisiPulang->GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             $data['periode'] = $this->M_KunjunganStatusKondisiPulang->GetPeriodeBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             $data['datafilter'] = [
                 'tahun'   => $tahun1,
@@ -96,24 +96,24 @@ class KunjunganStatusKondisiPulang extends CI_Controller
                 'bulanakhir'   => $bulanakhir,
                 'nilaifilter' => $nilaifilter
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusKondisiPulang', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusKondisiPulang', $data);
         } elseif ($nilaifilter == 3) {
             $instalasi = $this->input->post('instalasi2');
 
             $data['title'] = "Laporan Kunjungan Status dan Kondisi Pulang Berdasarkan Tahun";
-            $data['subtitle'] =  $tahun2;
+            $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
-            $data['datafilter'] = $this->M_KunjunganStatusKondisiPulang->filterbytahun($tahun2, $instalasi);
-            $data['kondisipasien'] = $this->M_KunjunganStatusKondisiPulang->GetKondisiPasienTahun($tahun2, $instalasi);
-            $data['statuspasien'] = $this->M_KunjunganStatusKondisiPulang->GetStatusPasienTahun($tahun2, $instalasi);
-            // $data['ruangan'] = $this->M_KunjunganStatusKondisiPulang->GetRuanganTahun($tahun2, $instalasi);
-            $data['periode'] = $this->M_KunjunganStatusKondisiPulang->GetPeriodeTahun($tahun2, $instalasi);
+            $data['datafilter'] = $this->M_KunjunganStatusKondisiPulang->filterbytahun($tahun2, $instalasi, $tahun3);
+            $data['kondisipasien'] = $this->M_KunjunganStatusKondisiPulang->GetKondisiPasienTahun($tahun2, $instalasi, $tahun3);
+            $data['statuspasien'] = $this->M_KunjunganStatusKondisiPulang->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
+            $data['periode'] = $this->M_KunjunganStatusKondisiPulang->GetPeriodeTahun($tahun2, $instalasi, $tahun3);
             $data['datafilter'] = [
                 'tahun'   => $tahun2,
                 'instalasi'   => $instalasi,
-                'nilaifilter' => $nilaifilter
+                'nilaifilter' => $nilaifilter,
+                'tahunakhir' => $tahun3
             ];
-            $this->load->view('rekammedis/LapKunjunganStatusKondisiPulang', $data);
+            $this->load->view('rekammedis/laporan/LapKunjunganStatusKondisiPulang', $data);
         }
     }
 }
