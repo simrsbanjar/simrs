@@ -11,7 +11,8 @@ class KunjunganStatusJenisOperasi extends CI_Controller
     {
         $data['tahun'] = $this->M_KunjunganStatusJenisOperasi->gettahun();
 
-        $data['title'] = 'Kunjungan Berdasarkan Kelas Dan Status Pasien';
+        $data['title'] = 'Kunjungan Berdasarkan Status dan Jenis Operasi';
+        $data['laporan'] = 'Laporan Berdasarkan Status dan Jenis Operasi';
         $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
         $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
         $this->load->view('templates/header', $data);

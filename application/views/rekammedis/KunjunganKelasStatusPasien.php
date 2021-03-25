@@ -2,6 +2,13 @@
 <div class="container-fluid">
 
     <div class="container-fluid">
+
+        <!-- breadcrumb -->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="<?= base_url('User') ?>">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $laporan; ?></li>
+        </ol>
+
         <div class="row">
             <!-- row satu  -->
             <div class="col-lg-5">
