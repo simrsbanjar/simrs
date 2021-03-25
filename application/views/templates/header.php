@@ -25,7 +25,8 @@
     <link href="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet"> -->
+    <link href="<?= base_url('assets/'); ?>css/sb-admin-2.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>css/rsubanjar.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>assets/vendor/datatables/jquery.dataTables.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.js"></script>
@@ -38,6 +39,7 @@
     <link href="<?= base_url('assets/'); ?>css/Chart.css">
     <link href="<?= base_url('assets/'); ?>css/Chart.min.css">
     <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
+    <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
 
 </head>
 

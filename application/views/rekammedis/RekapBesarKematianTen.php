@@ -6,7 +6,7 @@
         <hr>
         <br>
 
-        <form style="font-size:15px" action="<?php echo base_url('RekapBesarKematianTen/Cetak') ?>" id="formData" method="POST" target="_blank">
+        <form style="font-size:15px" action="<?php echo base_url('RekapBesarKematianTen/Cetak') ?>" id="formData" name="formData" method="POST" target="_blank">
             <div class="form-inline">
                 <div class="form-group">
                     <label for="awal">Periode</label>
@@ -75,7 +75,8 @@
             <div class="form-inline">
                 <div class="form-group d-flex bd-highlight">
                     <div class="p-3 order-10 bd-highlight">
-                        <buttons type="button" class="btn btn-success mr-2" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
+                        <input type="hidden" name="kliktombol" value="1" />
+                        <buttons type="button" class="btn btn-success mr-2" id="lihat" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
                         <buttons type="button" class="btn btn-success mr-2" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</buttons>
                         <button type="submit" value="1" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
                     </div>
@@ -155,6 +156,7 @@
             var jumlahdata = $('#jumlahdata').val();
             var instalasi = $('#instalasi').val();
             var kriteria = $("input:radio[name=radiokriteria]:checked").val()
+            document.formData.kliktombol.value = '1';
             chart.hide();
             tableData.show();
             tableData.DataTable({
@@ -195,7 +197,7 @@
             var jumlahdata = $('#jumlahdata').val();
             var instalasi = $('#instalasi').val();
             var kriteria = $("input:radio[name=radiokriteria]:checked").val()
-
+            document.formData.kliktombol.value = '2';
             chart.show();
             tableData.hide();
             // memanggil data array dengan JSON

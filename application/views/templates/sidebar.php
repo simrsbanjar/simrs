@@ -6,19 +6,20 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-hospital-alt"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SIMRS</div>
+        <div class="sidebar-brand-text mx-3" style="font-size: 28px;">SIMRS</div>
     </a>
 
     <?php $menu          = $this->db->query("SELECT * FROM ListMenuWeb WHERE StatusEnabled = '1' ")->result();  ?>
 
     <!-- Divider -->
     <br>
+    <br>
     <hr class="sidebar-divider my-0">
     <br>
 
     <?php foreach ($menu as $key) { ?>
 
-        <div class="RSUwarna RSUuppercase" style="font-size: 18px; padding: 0 1rem; font-weight: 800;">
+        <div class="RSUwarna RSUuppercase mt-3" style="font-size: 18px; padding: 0 1rem; font-weight: 800;">
             <?php echo $key->NamaMenu; ?>
         </div>
 

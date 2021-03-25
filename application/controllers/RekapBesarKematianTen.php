@@ -92,6 +92,7 @@ class RekapBesarKematianTen extends CI_Controller
         $jumlahbaris   = strtoupper($this->input->post('jumlahdata'));
         $instalasi   = strtoupper($this->input->post('instalasi'));
         $kriteria   = strtoupper($this->input->post('radiokriteria'));
+        $kliktombol   = $this->input->post('kliktombol');
 
         if ($kriteria == '1') {
             $kriteriatext   = 'BERDASARKAN DIAGNOSA';
@@ -107,8 +108,20 @@ class RekapBesarKematianTen extends CI_Controller
             'Ruangan' => $ruangan,
             'Instalasi' => $instalasi,
             'Kriteria' => $kriteriatext,
-            'JumlahData' => $jumlahbaris
+            'JumlahData' => $jumlahbaris,
+            'kliktombol' => $kliktombol
         ];
+
+        $resultgrafik    = $this->RekapBesarKematianTenModel->getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+
+        foreach ($resultgrafik as $row) {
+
+            $data[] = array(
+                'hasil' => $row->hasil,
+                'total' => $row->total
+            );
+        }
+        $result['datagrafik'] =  $data;
 
         if ($result['datahasil']) {
             $this->load->view('rekammedis/LapRekapBesarKematianTen', $result);

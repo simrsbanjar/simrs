@@ -112,7 +112,7 @@ class KunjunganStatusJenisPasienModel extends CI_Model
         } else if ($status == 'bulan') {
             $query = $this->db->query("EXEC Sp_GrafikKunPasMasukJenisPasienWeb '2'," . $tahun . "," . $tanggalawal . "," . $tanggalakhir . ",'" . $instalasi . "','" . $format . "'");
         } else {
-            $query = $this->db->query("EXEC Sp_GrafikKunPasMasukJenisPasienWeb '3'," . $tahun . ",'','','" . $instalasi . "','" . $format . "'");
+            $query = $this->db->query("EXEC Sp_GrafikKunPasMasukJenisPasienWeb '3'," . $tahun . "," . $tanggalawal . ",'" . $tanggalawal . "','" . $instalasi . "','" . $format . "'");
         }
 
         return $query->result();
