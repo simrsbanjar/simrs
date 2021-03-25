@@ -6,9 +6,9 @@ class DaftarPasienRajal extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("rekammedis/DaftarPasienRajalModel");
-        $this->load->library('mypdf');
-        //$this->mypdf->generate('rekammedis/LapDaftarPasienRajal');
+        $this->load->model("rekammedis/M_DaftarPasienRajal");
+        // $this->load->library('mypdf');
+        //$this->mypdf->generate('rekammedis/laporan/LapDaftarPasienRajal');
     }
 
     public function index()
@@ -25,7 +25,7 @@ class DaftarPasienRajal extends CI_Controller
 
     public function getData()
     {
-        $results = $this->DaftarPasienRajalModel->getDataTable();
+        $results = $this->M_DaftarPasienRajal->getDataTable();
 
         $data = [];
         $no = $_POST['start'];
@@ -48,7 +48,7 @@ class DaftarPasienRajal extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->DaftarPasienRajalModel->getDataTable(),
+            "recordsTotal" => $this->M_DaftarPasienRajal->getDataTable(),
             "data" => $data,
         );
         $this->output->set_content_type('application/json')->set_output(json_encode($output));
@@ -66,7 +66,7 @@ class DaftarPasienRajal extends CI_Controller
             $caritext = '%';
         }
 
-        $results    = $this->DaftarPasienRajalModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        $results    = $this->M_DaftarPasienRajal->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
 
         $data = [];
         $no = 0;
@@ -90,7 +90,7 @@ class DaftarPasienRajal extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->DaftarPasienRajalModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext),
+            "recordsTotal" => $this->M_DaftarPasienRajal->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext),
             "data" => $data,
         );
 
@@ -111,7 +111,7 @@ class DaftarPasienRajal extends CI_Controller
         }
 
 
-        $result['datahasil']    = $this->DaftarPasienRajalModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        $result['datahasil']    = $this->M_DaftarPasienRajal->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
         $result['datafilter']    = [
             'TglAwal' => $awal,
             'TglAkhir' => $akhir,
@@ -121,7 +121,7 @@ class DaftarPasienRajal extends CI_Controller
         ];
 
         if ($result['datahasil']) {
-            $this->load->view('rekammedis/LapDaftarPasienRajal', $result);
+            $this->load->view('rekammedis/laporan/LapDaftarPasienRajal', $result);
         }
     }
 }

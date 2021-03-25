@@ -6,9 +6,9 @@ class DaftarPasienPulangRanap extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("rekammedis/DaftarPasienPulangRanapModel");
+        $this->load->model("rekammedis/M_DaftarPasienPulangRanap");
         //$this->load->library('mypdf');
-        //$this->mypdf->generate('rekammedis/LapDaftarPasienRajal');
+        //$this->mypdf->generate('rekammedis/laporan/LapDaftarPasienRajal');
     }
 
     public function index()
@@ -25,7 +25,7 @@ class DaftarPasienPulangRanap extends CI_Controller
 
     public function getData()
     {
-        $results = $this->DaftarPasienPulangRanapModel->getDataTable();
+        $results = $this->M_DaftarPasienPulangRanap->getDataTable();
 
         $data = [];
         $no = $_POST['start'];
@@ -55,7 +55,7 @@ class DaftarPasienPulangRanap extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->DaftarPasienPulangRanapModel->getDataTable(),
+            "recordsTotal" => $this->M_DaftarPasienPulangRanap->getDataTable(),
             "data" => $data,
         );
         $this->output->set_content_type('application/json')->set_output(json_encode($output));
@@ -74,7 +74,7 @@ class DaftarPasienPulangRanap extends CI_Controller
             $caritext = '%';
         }
 
-        $results    = $this->DaftarPasienPulangRanapModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext,  $kondisipulang);
+        $results    = $this->M_DaftarPasienPulangRanap->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext,  $kondisipulang);
 
         $data = [];
         $no = 0;
@@ -104,7 +104,7 @@ class DaftarPasienPulangRanap extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->DaftarPasienPulangRanapModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext, $kondisipulang),
+            "recordsTotal" => $this->M_DaftarPasienPulangRanap->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext, $kondisipulang),
             "data" => $data,
         );
 
@@ -126,7 +126,7 @@ class DaftarPasienPulangRanap extends CI_Controller
             $caritext = '%';
         }
 
-        $result['datahasil']    = $this->DaftarPasienPulangRanapModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext, $kondisipulang);
+        $result['datahasil']    = $this->M_DaftarPasienPulangRanap->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext, $kondisipulang);
         $result['datafilter']    = [
             'TglAwal' => $awal,
             'TglAkhir' => $akhir,
@@ -137,9 +137,9 @@ class DaftarPasienPulangRanap extends CI_Controller
         if ($result['datahasil']) {
 
             if ($tombolcetak == '1') {
-                $this->load->view('rekammedis/LapDaftarPasienPulang', $result);
+                $this->load->view('rekammedis/laporan/LapDaftarPasienPulang', $result);
             } else {
-                $this->load->view('rekammedis/LapDaftarPasienPulangKonPlg', $result);
+                $this->load->view('rekammedis/laporan/LapDaftarPasienPulangKonPlg', $result);
             }
         }
     }

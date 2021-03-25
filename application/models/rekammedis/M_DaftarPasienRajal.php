@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No Dirext Script Access Allower');
 
-class DaftarPasienRajalModel extends CI_Model
+class M_DaftarPasienRajal extends CI_Model
 {
     var $table  = 'V_LaporanPasienRawatJalan';
     var $column_order = array('NoCM', '[Nama Pasien] AS NamaPasien', 'StatusPasien', 'Umur', 'JK', 'JenisPasien', 'NamaRuangan', 'NamaDiagnosa', 'TglMasuk', 'TglLahir', 'Telepon', 'Alamat', 'KdRuangan');

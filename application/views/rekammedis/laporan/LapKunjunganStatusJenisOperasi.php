@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
 </head>
 
-<body>
+<body onload="window.print()">
     <table style="width: 100%;" class="mb-5">
         <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
@@ -30,7 +30,7 @@
     </table>
     <br>
     <h2>
-        <center><b>Laporan Kunjungan Pasien Berdasarkan Kelas dan Status Pasien</b></center>
+        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Operasi</b></center>
     </h2>
     <div class="mb-3">
         <p align="center">
@@ -39,7 +39,6 @@
             Instalasi : <?= $instalasi->NamaInstalasi  ?>
         </p>
     </div>
-
 
     <?php
     $no = 0;
@@ -52,22 +51,30 @@
         <?php $no1++ ?>
     <?php endforeach ?>
 
-
     <table class="table table-bordered mt-5">
         <tr style="text-align: center;">
             <th rowspan="3">Ruangan</th>
-            <th colspan="<?= ($no * 1) + 1; ?>">Jenis Operasi</th>
-            <th colspan="<?= ($no * 6) + 1; ?>">Status Pasien Cuk</th>
+            <?php if ($no > 0) { ?>
+                <th colspan="<?= ($no * 3) + 1; ?>">Jenis Operasi</th>
+            <?php } ?>
+            <?php if ($no1 > 0) { ?>
+                <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
+            <?php } ?>
         </tr>
+
         <tr style="text-align: center;">
             <?php foreach ($jenisoperasi as $row) : ?>
                 <th colspan="3"><?= $row->Detail; ?></th>
             <?php endforeach ?>
-            <th rowspan="2">Total</th>
+            <?php if ($no > 0) { ?>
+                <th rowspan="2">Total</th>
+            <?php } ?>
             <?php foreach ($statuspasien as $row1) : ?>
                 <th colspan="3"><?= $row1->Detail; ?></th>
             <?php endforeach ?>
-            <th rowspan="2">Total</th>
+            <?php if ($no1 > 0) { ?>
+                <th rowspan="2">Total</th>
+            <?php } ?>
         </tr>
 
         <tr style="text-align: center;">
@@ -95,7 +102,7 @@
                     } else if ($datafilter['nilaifilter'] == '2') {
                         $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "'")->row();
                     } else {
-                        $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "'")->row();
+                        $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "'")->row();
                     }; ?>
                     <td style="text-align: center;"><?= $data->L; ?></td>
                     <td style="text-align: center;"><?= $data->P; ?></td>
@@ -103,7 +110,9 @@
 
                     <?php $sumtotal = $sumtotal + $data->TOTAL  ?>
                 <?php endforeach ?>
-                <td style="text-align: center;"><?= $sumtotal; ?></td>
+                <?php if ($no > 0) { ?>
+                    <td style="text-align: center;"><?= $sumtotal; ?></td>
+                <?php } ?>
                 <?php $sumpastotal = 0; ?>
                 <?php foreach ($statuspasien as $row2) : ?>
                     <?php if ($datafilter['nilaifilter'] == '1') {
@@ -111,7 +120,7 @@
                     } else if ($datafilter['nilaifilter'] == '2') {
                         $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "'")->row();
                     } else {
-                        $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where  YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "'")->row();
+                        $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where  YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "'")->row();
                     }; ?>
                     <td style="text-align: center;"><?= $data1->L; ?></td>
                     <td style="text-align: center;"><?= $data1->P; ?></td>
@@ -119,46 +128,49 @@
 
                     <?php $sumpastotal = $sumpastotal + $data1->TOTAL  ?>
                 <?php endforeach ?>
-                <td style="text-align: center;"><?= $sumpastotal; ?></td>
+                <?php if ($no1 > 0) { ?>
+                    <td style="text-align: center;"><?= $sumpastotal; ?></td>
+                <?php } ?>
             </tr>
         <?php endforeach ?>
 
-
         <th style="text-align: center;">Total</th>
-        <?php $sumtotalall = 0; ?>
-        <?php foreach ($jenisoperasi as $row3) : ?>
-            <?php if ($datafilter['nilaifilter'] == '1') {
-                $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-            } else if ($datafilter['nilaifilter'] == '2') {
-                $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-            } else {
-                $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-            }; ?>
-            <th style="text-align: center;"><?= $data2->L; ?></th>
-            <th style="text-align: center;"><?= $data2->P; ?></th>
-            <th style="text-align: center;"><?= $data2->TOTAL; ?></th>
-            <?php $sumtotalall = $sumtotalall + $data2->TOTAL ?>
-        <?php endforeach ?>
+        <?php if ($no > 0) { ?>
+            <?php $sumtotalall = 0; ?>
+            <?php foreach ($jenisoperasi as $row3) : ?>
+                <?php if ($datafilter['nilaifilter'] == '1') {
+                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
+                } else if ($datafilter['nilaifilter'] == '2') {
+                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
+                } else {
+                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
+                }; ?>
+                <th style="text-align: center;"><?= $data2->L; ?></th>
+                <th style="text-align: center;"><?= $data2->P; ?></th>
+                <th style="text-align: center;"><?= $data2->TOTAL; ?></th>
+                <?php $sumtotalall = $sumtotalall + $data2->TOTAL ?>
+            <?php endforeach ?>
 
 
-
-        <th style="text-align: center;"><?= $sumtotalall; ?></th>
-        <?php $sumtotalallpas = 0; ?>
-        <?php foreach ($statuspasien as $row4) : ?>
-            <?php if ($datafilter['nilaifilter'] == '1') {
-                $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-            } else if ($datafilter['nilaifilter'] == '2') {
-                $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-            } else {
-                $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-            }; ?>
-            <th style="text-align: center;"><?= $data3->L; ?></th>
-            <th style="text-align: center;"><?= $data3->P; ?></th>
-            <th style="text-align: center;"><?= $data3->TOTAL; ?></th>
-            <?php $sumtotalallpas = $sumtotalallpas + $data3->TOTAL ?>
-        <?php endforeach ?>
-        <th style="text-align: center;"><?= $sumtotalallpas; ?></th>
-
+            <th style="text-align: center;"><?= $sumtotalall; ?></th>
+        <?php } ?>
+        <?php if ($no1 > 0) { ?>
+            <?php $sumtotalallpas = 0; ?>
+            <?php foreach ($statuspasien as $row4) : ?>
+                <?php if ($datafilter['nilaifilter'] == '1') {
+                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
+                } else if ($datafilter['nilaifilter'] == '2') {
+                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
+                } else {
+                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienMasukIBSBJenisOperasiBstatus where YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
+                }; ?>
+                <th style="text-align: center;"><?= $data3->L; ?></th>
+                <th style="text-align: center;"><?= $data3->P; ?></th>
+                <th style="text-align: center;"><?= $data3->TOTAL; ?></th>
+                <?php $sumtotalallpas = $sumtotalallpas + $data3->TOTAL ?>
+            <?php endforeach ?>
+            <th style="text-align: center;"><?= $sumtotalallpas; ?></th>
+        <?php } ?>
     </table>
 
 </body>

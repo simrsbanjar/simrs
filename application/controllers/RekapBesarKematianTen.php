@@ -6,7 +6,7 @@ class RekapBesarKematianTen extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("rekammedis/RekapBesarKematianTenModel");
+        $this->load->model("rekammedis/M_RekapBesarKematianTen");
     }
 
     public function index()
@@ -24,7 +24,7 @@ class RekapBesarKematianTen extends CI_Controller
     function GetRuanganInst()
     {
         $instalasi = $this->input->post('instalasi');
-        $data = $this->RekapBesarKematianTenModel->GetRuanganInst($instalasi);
+        $data = $this->M_RekapBesarKematianTen->GetRuanganInst($instalasi);
         echo json_encode($data);
     }
 
@@ -38,7 +38,7 @@ class RekapBesarKematianTen extends CI_Controller
         $instalasi   = strtoupper($this->input->post('instalasi'));
         $kriteria   = strtoupper($this->input->post('kriteria'));
 
-        $results    = $this->RekapBesarKematianTenModel->getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $results    = $this->M_RekapBesarKematianTen->getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
 
         foreach ($results as $row) {
 
@@ -60,7 +60,7 @@ class RekapBesarKematianTen extends CI_Controller
         $instalasi   = strtoupper($this->input->post('instalasi'));
         $kriteria   = strtoupper($this->input->post('kriteria'));
 
-        $results    = $this->RekapBesarKematianTenModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $results    = $this->M_RekapBesarKematianTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
 
         $data = [];
         $no = 0;
@@ -75,7 +75,7 @@ class RekapBesarKematianTen extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->RekapBesarKematianTenModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria),
+            "recordsTotal" => $this->M_RekapBesarKematianTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria),
             "data" => $data,
         );
 
@@ -100,7 +100,7 @@ class RekapBesarKematianTen extends CI_Controller
             $kriteriatext   = 'BERDASARKAN JUMLAH PASIEN';
         }
 
-        $result['datahasil']    = $this->RekapBesarKematianTenModel->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $result['datahasil']    = $this->M_RekapBesarKematianTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
         $result['datafilter']    = [
             'TglAwal' => $awal,
             'TglAkhir' => $akhir,
@@ -112,7 +112,7 @@ class RekapBesarKematianTen extends CI_Controller
             'kliktombol' => $kliktombol
         ];
 
-        $resultgrafik    = $this->RekapBesarKematianTenModel->getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $resultgrafik    = $this->M_RekapBesarKematianTen->getGrafik($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
 
         foreach ($resultgrafik as $row) {
 
@@ -124,7 +124,7 @@ class RekapBesarKematianTen extends CI_Controller
         $result['datagrafik'] =  $data;
 
         if ($result['datahasil']) {
-            $this->load->view('rekammedis/LapRekapBesarKematianTen', $result);
+            $this->load->view('rekammedis/laporan/LapRekapBesarKematianTen', $result);
         }
     }
 }
