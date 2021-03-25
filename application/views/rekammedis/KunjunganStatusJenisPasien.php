@@ -371,40 +371,33 @@
                             label: msg.hasil[i].KELOMPOK,
                             data: datahasil,
                             backgroundColor: `rgba(${r}, ${g}, ${b}, ${a})`,
-                            borderWidth: 0 //,
-                            // yAxisID: 'y-axis-' + msg.hasil[i].KELOMPOK
+                            borderWidth: 0
                         })
-
-                        yaxisdata.push({
-                            id: 'y-axis-' + msg.hasil[i].KELOMPOK
-                        })
-
                     }
 
                     for (var i in msg.tanggal) {
                         tanggaldata.push(msg.tanggal[i].TANGGAL)
                     }
+
+                    var setup = {
+                        title: {
+                            display: true,
+                            text: 'Jumlah',
+                            position: 'left'
+                        }
+                    };
+
+
                     var hasilData = {
                         labels: tanggaldata,
                         datasets: totaldata
                     };
-
-                    // var chartOptions = {
-                    //     scales: {
-                    //         xAxes: [{
-                    //             barPercentage: 1,
-                    //             categoryPercentage: 0.6
-                    //         }],
-                    //         yAxes: yaxisdata
-                    //     }
-                    // };
-
                     var barChart = new Chart(densityCanvas, {
                         type: 'bar',
                         data: hasilData,
-                        //options: chartOptions
-                    });
+                        options: setup
 
+                    });
 
                 }
             });

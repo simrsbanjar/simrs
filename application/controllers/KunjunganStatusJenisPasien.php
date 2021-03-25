@@ -25,6 +25,7 @@ class KunjunganStatusJenisPasien extends CI_Controller
 
     public function Grafik()
     {
+        $this->form_validation->set_rules('instalasi', 'Instalasi', 'trim|required');
         $tanggalawal = $this->input->post('tanggalawal');
         $tanggalakhir = $this->input->post('tanggalakhir');
         $tahun1 = $this->input->post('tahun1');

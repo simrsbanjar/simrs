@@ -18,7 +18,7 @@
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>css/rsubanjar.css" rel="stylesheet">
-
+    <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
 
 </head>
 
@@ -35,7 +35,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-hospital-alt"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SIMRS</div>
+                <div class="sidebar-brand-text mx-3" style="font-size: 28px;">SIMRS</div>
             </a>
 
             <!-- Divider -->
@@ -60,7 +60,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
-                        <span style="font-size: 18px;"><?php echo $key_s->NamaMenu; ?></span>
+                        <span style="font-size: 16px;"><?php echo $key_s->NamaMenu; ?></span>
                     </a>
                     <?php foreach ($mendsub as $key_ds) { ?>
 
@@ -123,6 +123,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
+                        <h2 class="mt-3" style="position: static; font-weight: bold; margin-right: 80px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sistem Informasi Manajemen Rumah Sakit</h2>
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="mr-1 d-none d-lg-inline text-gray-600 small">

@@ -1,0 +1,4 @@
+.bg-gradient-primary{
+    background : url(../img/bg-pattern.png),#7b4397;
+    background : url(../img/bg-pattern.png), linear-gradient(to left, #974343, #4e73df);
+}
