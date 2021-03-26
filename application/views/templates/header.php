@@ -40,7 +40,9 @@
     <link href="<?= base_url('assets/'); ?>css/Chart.min.css">
     <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
     <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
-
+    <!-- Data label -->
+    <script src="<?php echo base_url() ?>assets/css/chartjs-plugin-datalabels.js"></script>
+    <script src="<?php echo base_url() ?>assets/css/chartjs-plugin-datalabels.min.js"></script>
 </head>
 
 <body id="page-top">

@@ -239,22 +239,54 @@
                 }
 
                 var setup = {
-                    title: {
-                        display: true,
-                        text: 'Jumlah',
-                        position: 'left'
-                    }
-                };
 
+                    // title: {
+                    //     display: true,
+                    //     text: 'Jumlah'
+                    // }
+                };
 
                 var hasilData = {
                     labels: tanggaldata,
-                    datasets: totaldata
+                    datasets: totaldata,
                 };
                 var barChart = new Chart(densityCanvas, {
                     type: 'bar',
                     data: hasilData,
-                    options: setup
+                    options: {
+                        // responsive: true,
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Periode'
+                                }
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Jumlah'
+                                }
+                            }]
+                        }
+                    },
+                    showTooltips: false,
+                    onAnimationComplete: function() {
+
+                        var ctx = this.chart.ctx;
+                        ctx.font = this.scale.font;
+                        ctx.fillStyle = this.scale.textColor;
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        this.datasets.forEach(function(dataset) {
+                            dataset.bars.forEach(function(bar) {
+                                ctx.fillText(bar.value, bar.x, bar.y - 5);
+                            });
+                        })
+                    }
 
                 });
 
@@ -262,7 +294,7 @@
         });
     <?php } ?>
 
-    setTimeout(window.print, 5000);
+    // setTimeout(window.print, 5000);
 </script>
 
 </html>
