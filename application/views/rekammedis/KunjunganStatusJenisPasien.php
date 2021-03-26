@@ -86,13 +86,30 @@
                                 <div class="col col-md-4">
                                     <input name="tanggalakhir" value="<?= date('Y-m-d') ?>" type="date" class="form-control" placeholder="Inputkan Jenis Bayar" id="tanggalakhir" required="">
                                 </div>
+
+                                <div class="col col-md-2">
+                                    <label for="select" class=" form-control-label">Format</label>
+                                </div>
+                                <div class="col col-md-9 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Speadsheet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Grafik
+                                        </label>
+                                    </div>
+                                </div>
                                 <small class="help-block form-text"></small>
                             </div>
 
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
-                            <button type="button" class="btn btn-sm btn-success" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</button>
                         </div>
                     </form>
                 </div>
@@ -176,6 +193,24 @@
                                         <option value="12">DESEMBER</option>
                                     </select>
                                 </div>
+
+                                <div class="col col-md-2">
+                                    <label for="select" class=" form-control-label">Format</label>
+                                </div>
+                                <div class="col col-md-9 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Speadsheet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Grafik
+                                        </label>
+                                    </div>
+                                </div>
                                 <small class="help-block form-text"></small>
 
                             </div>
@@ -183,8 +218,6 @@
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
-                            <button type="button" class="btn btn-sm btn-success" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</button>
-
                         </div>
                     </form>
                 </div>
@@ -236,12 +269,28 @@
                                     </select>
                                     <small class="help-block form-text"></small>
                                 </div>
+
+                                <div class="col col-md-2">
+                                    <label for="select" class=" form-control-label">Format</label>
+                                </div>
+                                <div class="col col-md-9 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Speadsheet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Grafik
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
-                            <button type="button" class="btn btn-sm btn-success" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</button>
-
                         </div>
                     </form>
                 </div>
@@ -251,16 +300,7 @@
 
     </div>
 
-    <div style="width:auto;">
-        <canvas id="myChart"></canvas>
-    </div>
-
-
-    <script src="<?php echo base_url() . 'assets/js/raphael-min.js' ?>"></script>
-    <script src="<?php echo base_url() . 'assets/js/morris.min.js' ?>"></script>
-
     <script type="text/javascript">
-        var chart = $('#chartContainer');
         /*digunakan untuk menyembunyikan form tanggal, bulan dan tahun saat halaman di load */
         $(document).ready(function() {
 
@@ -268,7 +308,6 @@
             $("#tahunfilter").hide();
             $("#bulanfilter").hide();
             $("#cardbayar").hide();
-            chart.hide();
 
         });
 
@@ -313,102 +352,6 @@
             $("#bulanakhir").val('');
             $("#tahun2").val('');
             $("#targetbayar").empty();
-            chart.hide();
-        }
-
-        function Grafik() {
-            chart.show();
-
-            var periode = $("[name='periode']").val();
-            if (periode == 'tanggal') {
-                var instalasi = $('#instalasi').val();
-            } else if (periode == 'bulan') {
-                var instalasi = $('#instalasi1').val();
-            } else {
-                var instalasi = $('#instalasi2').val();
-            }
-
-            var tanggalawal = $('#tanggalawal').val();
-            var tanggalakhir = $('#tanggalakhir').val();
-            var tahun1 = $('#tahun1').val();
-            var bulanawal = $('#bulanawal').val();
-            var bulanakhir = $('#bulanakhir').val();
-            var tahun2 = $('#tahun2').val();
-            var tahun3 = $('#tahun3').val();
-            var dataparm = {
-                "tanggalawal": tanggalawal,
-                "tanggalakhir": tanggalakhir,
-                "periode": periode,
-                "instalasi": instalasi,
-                "tahun1": tahun1,
-                "bulanawal": bulanawal,
-                "bulanakhir": bulanakhir,
-                "tahun2": tahun2,
-                "tahun3": tahun3,
-            };
-
-            $.ajax({
-                url: "<?= base_url('KunjunganStatusJenisPasien/Grafik') ?>",
-                type: "POST",
-                dataType: "json",
-                data: dataparm,
-                success: function(msg) {
-                    var densityCanvas = document.getElementById("myChart");
-
-                    var totaldata = [];
-                    var tanggaldata = [];
-                    var yaxisdata = [];
-                    var dataawal = [];
-
-                    // console.log(datahasil);
-                    for (var i in msg.hasil) {
-
-                        var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
-                        var datahasil = [];
-                        for (var ii in dataawal) {
-                            datahasil.push(dataawal[ii].JUMLAH)
-                        }
-
-                        const r = parseInt(Math.random() * 255);
-                        const g = parseInt(Math.random() * 255);
-                        const b = parseInt(Math.random() * 255);
-                        const a = Math.random();
-
-                        totaldata.push({
-                            label: msg.hasil[i].KELOMPOK,
-                            data: datahasil,
-                            backgroundColor: `rgba(${r}, ${g}, ${b}, ${a})`,
-                            borderWidth: 0
-                        })
-                    }
-
-                    for (var i in msg.tanggal) {
-                        tanggaldata.push(msg.tanggal[i].TANGGAL)
-                    }
-
-                    var setup = {
-                        title: {
-                            display: true,
-                            text: 'Jumlah',
-                            position: 'left'
-                        }
-                    };
-
-
-                    var hasilData = {
-                        labels: tanggaldata,
-                        datasets: totaldata
-                    };
-                    var barChart = new Chart(densityCanvas, {
-                        type: 'bar',
-                        data: hasilData,
-                        options: setup
-
-                    });
-
-                }
-            });
-
         }
     </script>
 
