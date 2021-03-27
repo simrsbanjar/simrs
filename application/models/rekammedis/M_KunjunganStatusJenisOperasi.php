@@ -126,27 +126,27 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                                ORDER BY CONVERT(DATE,TglPendaftaran) ");
             } else if ($format == '2') {
                 $query = $this->db->query("SELECT DISTINCT 
-                                                KDKELOMPOK = B.KdKelompokPasien,
+                                                KDKELOMPOK = B.KdJenisOperasi,
                                                 KELOMPOK = A.Detail
-                                        FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, KelompokPasien B
+                                        FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, JenisOperasi B
                                         WHERE A.TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' 
                                             and '" . $tanggalakhir . " 23:59:59' 
                                             and A.KdInstalasi ='" . $instalasi . "'
-                                            AND A.Detail	= B.JenisPasien
-                                            ORDER BY B.KdKelompokPasien, A.Detail ");
+                                            AND A.Detail	= B.JenisOperasi
+                                            ORDER BY B.KdJenisOperasi, A.Detail ");
             } else {
                 $query = $this->db->query("SELECT DISTINCT 
                                                   TANGGAL = CONVERT(DATE,A.TglPendaftaran), 
-                                                  KDKELOMPOK = B.KdKelompokPasien,
+                                                  KDKELOMPOK = B.KdJenisOperasi,
                                                   KELOMPOK = A.Detail,
                                                   JUMLAH	= SUM(A.JmlPasien) 
-                                              FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, KelompokPasien B
+                                              FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, JenisOperasi B
                                              WHERE A.TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' 
                                                and '" . $tanggalakhir . " 23:59:59' 
                                                and A.KdInstalasi ='" . $instalasi . "'
-                                               AND A.Detail	= B.JenisPasien
-                                               GROUP BY CONVERT(DATE,A.TglPendaftaran),B.KdKelompokPasien,A.Detail
-                                            ORDER BY A.Detail,B.KdKelompokPasien,CONVERT(DATE,A.TglPendaftaran) ");
+                                               AND A.Detail	= B.JenisOperasi
+                                               GROUP BY CONVERT(DATE,A.TglPendaftaran),B.KdJenisOperasi,A.Detail
+                                            ORDER BY A.Detail,B.KdJenisOperasi,CONVERT(DATE,A.TglPendaftaran) ");
             }
             // format bulan    
         } else if ($status == 2) {
@@ -174,29 +174,29 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                                ORDER BY CONVERT(CHAR(2),TglPendaftaran,101) ");
             } else if ($format == '2') {
                 $query = $this->db->query("SELECT DISTINCT 
-                                                KDKELOMPOK = B.KdKelompokPasien,
+                                                KDKELOMPOK = B.KdJenisOperasi,
                                                 KELOMPOK = A.Detail
-                                        FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, KelompokPasien B
+                                        FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, JenisOperasi B
                                         WHERE YEAR(TglPendaftaran) = '$tahun'
                                             and MONTH(TglPendaftaran) BETWEEN '" . $tanggalawal . "' 
                                             and '" . $tanggalakhir . "' 
                                             and A.KdInstalasi ='" . $instalasi . "'
-                                            AND A.Detail	= B.JenisPasien
-                                            ORDER BY B.KdKelompokPasien, A.Detail ");
+                                            AND A.Detail	= B.JenisOperasi
+                                            ORDER BY B.KdJenisOperasi, A.Detail ");
             } else {
                 $query = $this->db->query("SELECT DISTINCT 
                                                   TANGGAL = CONVERT(CHAR(2),A.TglPendaftaran,101), 
-                                                  KDKELOMPOK = B.KdKelompokPasien,
+                                                  KDKELOMPOK = B.KdJenisOperasi,
                                                   KELOMPOK = A.Detail,
                                                   JUMLAH	= SUM(A.JmlPasien) 
-                                              FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, KelompokPasien B
+                                              FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, JenisOperasi B
                                               WHERE YEAR(TglPendaftaran) = '$tahun'
                                                and MONTH(TglPendaftaran) BETWEEN '" . $tanggalawal . "' 
                                                and '" . $tanggalakhir . "' 
                                                and A.KdInstalasi ='" . $instalasi . "'
-                                               AND A.Detail	= B.JenisPasien
-                                               GROUP BY CONVERT(CHAR(2),A.TglPendaftaran,101),B.KdKelompokPasien,A.Detail
-                                            ORDER BY A.Detail,B.KdKelompokPasien,CONVERT(CHAR(2),A.TglPendaftaran,101) ");
+                                               AND A.Detail	= B.JenisOperasi
+                                               GROUP BY CONVERT(CHAR(2),A.TglPendaftaran,101),B.KdJenisOperasi,A.Detail
+                                            ORDER BY A.Detail,B.KdJenisOperasi,CONVERT(CHAR(2),A.TglPendaftaran,101) ");
             }
             // format tahun
         } else {
@@ -210,27 +210,27 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                                ORDER BY CONVERT(CHAR(4),TglPendaftaran,102) ");
             } else if ($format == '2') {
                 $query = $this->db->query("SELECT DISTINCT 
-                                                KDKELOMPOK = B.KdKelompokPasien,
+                                                KDKELOMPOK = B.KdJenisOperasi,
                                                 KELOMPOK = A.Detail
-                                        FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, KelompokPasien B
+                                        FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, JenisOperasi B
                                         WHERE YEAR(TglPendaftaran) BETWEEN '" . $tanggalawal . "' 
                                             and '" . $tanggalakhir . "' 
                                             and A.KdInstalasi ='" . $instalasi . "'
-                                            AND A.Detail	= B.JenisPasien
-                                            ORDER BY B.KdKelompokPasien, A.Detail ");
+                                            AND A.Detail	= B.JenisOperasi
+                                            ORDER BY B.KdJenisOperasi, A.Detail ");
             } else {
                 $query = $this->db->query("SELECT DISTINCT 
                                                   TANGGAL = CONVERT(CHAR(4),A.TglPendaftaran,102), 
-                                                  KDKELOMPOK = B.KdKelompokPasien,
+                                                  KDKELOMPOK = B.KdJenisOperasi,
                                                   KELOMPOK = A.Detail,
                                                   JUMLAH	= SUM(A.JmlPasien) 
-                                              FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, KelompokPasien B
+                                              FROM V_DataKunjunganPasienMasukIBSBJenisOperasi A, JenisOperasi B
                                               WHERE YEAR(TglPendaftaran) BETWEEN '" . $tanggalawal . "' 
                                                and '" . $tanggalakhir . "' 
                                                and A.KdInstalasi ='" . $instalasi . "'
-                                               AND A.Detail	= B.JenisPasien
-                                               GROUP BY CONVERT(CHAR(4),A.TglPendaftaran,102),B.KdKelompokPasien,A.Detail
-                                            ORDER BY A.Detail,B.KdKelompokPasien,CONVERT(CHAR(4),A.TglPendaftaran,102) ");
+                                               AND A.Detail	= B.JenisOperasi
+                                               GROUP BY CONVERT(CHAR(4),A.TglPendaftaran,102),B.KdJenisOperasi,A.Detail
+                                            ORDER BY A.Detail,B.KdJenisOperasi,CONVERT(CHAR(4),A.TglPendaftaran,102) ");
             }
         }
 
