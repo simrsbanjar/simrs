@@ -12,8 +12,6 @@
     <?php $menu          = $this->db->query("SELECT * FROM ListMenuWeb WHERE StatusEnabled = '1' ")->result();  ?>
 
     <!-- Divider -->
-    <br>
-    <br>
     <hr class="sidebar-divider my-0">
     <br>
 

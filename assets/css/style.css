@@ -2,5 +2,5 @@ body{
     position: relative;
     width: 100%;
     background : url(../img/bg-pattern.png),#7b4397;
-    background : url(../img/bg-pattern.png), linear-gradient(to left, #7b4397, #cf4015);
+    background : url(../img/bg-pattern.png), linear-gradient(to left, #504397, #cf4015);
 }
