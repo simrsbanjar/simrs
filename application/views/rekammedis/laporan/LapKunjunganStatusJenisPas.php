@@ -254,10 +254,10 @@
                 var barChart = new Chart(densityCanvas, {
                     type: 'bar',
                     data: hasilData,
-                    options: setup
+                    options: setup,
+                    showTooltips: false
 
                 });
-
             }
         });
     <?php } ?>
