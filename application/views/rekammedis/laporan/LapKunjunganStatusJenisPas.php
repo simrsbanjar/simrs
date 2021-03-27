@@ -168,7 +168,7 @@
             <canvas id="myChart"></canvas>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+        <script src=" https://code.jquery.com/jquery-3.5.1.js"> </script>
 
     <?php } ?>
 
@@ -257,8 +257,9 @@
                             datasets.forEach(function(dataset, i) {
                                 ctx.font = "12px Lobster Two";
                                 ctx.fillStyle = "#4F4C4D";
+
                                 chart.getDatasetMeta(i).data.forEach(function(p, j) {
-                                    ctx.fillText(datasets[i].data[j], p._model.x, p._model.y - 20);
+                                    ctx.fillText(datasets[i].data[j], p._model.x, p._model.y - 10);
                                 });
                             });
                         }
@@ -277,19 +278,82 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Periode'
+                                labelString: 'Periode',
+                                fontStyle: 'bold'
                             }
                         }],
                         yAxes: [{
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Jumlah'
+                                labelString: 'Jumlah',
+                                fontStyle: 'bold'
                             }
                         }]
                     }
                 };
 
+                // Memunculkan Spasi Antara Grafik dan Legend
+                function getBoxWidth(labelOpts, fontSize) {
+                    return labelOpts.usePointStyle ?
+                        fontSize * Math.SQRT2 :
+                        labelOpts.boxWidth;
+                };
+                Chart.NewLegend = Chart.Legend.extend({
+                    afterFit: function() {
+                        // Tinggi / Pendeknya Spasi Antara Grafik dan Legend
+                        this.height = this.height + 20;
+                    },
+                });
+
+                function createNewLegendAndAttach(chartInstance, legendOpts) {
+                    var legend = new Chart.NewLegend({
+                        ctx: chartInstance.chart.ctx,
+                        options: legendOpts,
+                        chart: chartInstance
+                    });
+
+                    if (chartInstance.legend) {
+                        Chart.layoutService.removeBox(chartInstance, chartInstance.legend);
+                        delete chartInstance.newLegend;
+                    }
+
+                    chartInstance.newLegend = legend;
+                    Chart.layoutService.addBox(chartInstance, legend);
+                }
+
+                // Registrasi/Memanggil Plugin Legend
+                Chart.plugins.register({
+                    beforeInit: function(chartInstance) {
+                        var legendOpts = chartInstance.options.legend;
+
+                        if (legendOpts) {
+                            createNewLegendAndAttach(chartInstance, legendOpts);
+                        }
+                    },
+                    beforeUpdate: function(chartInstance) {
+                        var legendOpts = chartInstance.options.legend;
+
+                        if (legendOpts) {
+                            legendOpts = Chart.helpers.configMerge(Chart.defaults.global.legend, legendOpts);
+
+                            if (chartInstance.newLegend) {
+                                chartInstance.newLegend.options = legendOpts;
+                            } else {
+                                createNewLegendAndAttach(chartInstance, legendOpts);
+                            }
+                        } else {
+                            Chart.layoutService.removeBox(chartInstance, chartInstance.newLegend);
+                            delete chartInstance.newLegend;
+                        }
+                    },
+                    afterEvent: function(chartInstance, e) {
+                        var legend = chartInstance.newLegend;
+                        if (legend) {
+                            legend.handleEvent(e);
+                        }
+                    }
+                });
                 var hasilData = {
                     labels: tanggaldata,
                     datasets: totaldata,
