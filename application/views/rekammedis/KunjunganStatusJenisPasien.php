@@ -345,8 +345,8 @@
 
             $("#instalasi").val('');
             $("#periode").val('');
-            $("#tanggalawal").val('');
-            $("#tanggalakhir").val('');
+            $("#tanggalawal").val('<?= date('Y-m-d') ?>');
+            $("#tanggalakhir").val('<?= date('Y-m-d') ?>');
             $("#tahun1").val('');
             $("#bulanawal").val('');
             $("#bulanakhir").val('');

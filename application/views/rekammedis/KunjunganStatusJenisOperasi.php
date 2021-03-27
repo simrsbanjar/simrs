@@ -86,6 +86,24 @@
                                 <div class="col col-md-4">
                                     <input name="tanggalakhir" value="<?= date('Y-m-d') ?>" type="date" class="form-control" placeholder="Inputkan Jenis Bayar" id="tanggalakhir" required="">
                                 </div>
+
+                                <div class="col col-md-2">
+                                    <label for="select" class=" form-control-label">Format</label>
+                                </div>
+                                <div class="col col-md-9 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Speadsheet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Grafik
+                                        </label>
+                                    </div>
+                                </div>
                                 <small class="help-block form-text"></small>
                             </div>
 
@@ -176,6 +194,24 @@
                                         <option value="12">DESEMBER</option>
                                     </select>
                                 </div>
+
+                                <div class="col col-md-2">
+                                    <label for="select" class=" form-control-label">Format</label>
+                                </div>
+                                <div class="col col-md-9 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Speadsheet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Grafik
+                                        </label>
+                                    </div>
+                                </div>
                                 <small class="help-block form-text"></small>
 
                             </div>
@@ -235,6 +271,24 @@
                                     </select>
                                     <small class="help-block form-text"></small>
                                 </div>
+
+                                <div class="col col-md-2">
+                                    <label for="select" class=" form-control-label">Format</label>
+                                </div>
+                                <div class="col col-md-9 ">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="1" id="flexRadioDefault1" checked>
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Speadsheet
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="2" id="flexRadioDefault2">
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Grafik
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer">
@@ -293,8 +347,8 @@
 
             $("#instalasi").val('');
             $("#periode").val('');
-            $("#tanggalawal").val('');
-            $("#tanggalakhir").val('');
+            $("#tanggalawal").val('<?= date('Y-m-d') ?>');
+            $("#tanggalakhir").val('<?= date('Y-m-d') ?>');
             $("#tahun1").val('');
             $("#bulanawal").val('');
             $("#bulanakhir").val('');
