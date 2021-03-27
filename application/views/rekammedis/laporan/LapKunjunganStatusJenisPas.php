@@ -239,11 +239,55 @@
                 }
 
                 var setup = {
+                    events: false,
+                    legend: {
+                        display: true
+                    },
+                    tooltips: {
+                        enabled: false
+                    },
+                    animation: {
+                        onComplete: function() {
+                            var ctx = this.chart.ctx;
+                            ctx.textAlign = "center";
+                            ctx.textBaseline = "middle";
+                            var chart = this;
+                            var datasets = this.config.data.datasets;
 
-                    // title: {
-                    //     display: true,
-                    //     text: 'Jumlah'
-                    // }
+                            datasets.forEach(function(dataset, i) {
+                                ctx.font = "12px Lobster Two";
+                                ctx.fillStyle = "#4F4C4D";
+                                chart.getDatasetMeta(i).data.forEach(function(p, j) {
+                                    ctx.fillText(datasets[i].data[j], p._model.x, p._model.y - 20);
+                                });
+                            });
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            barPercentage: 0.6,
+                            gridLines: {
+                                display: false
+                            }
+                        }]
+                    },
+                    responsive: true,
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Periode'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Jumlah'
+                            }
+                        }]
+                    }
                 };
 
                 var hasilData = {
@@ -253,25 +297,7 @@
                 var barChart = new Chart(densityCanvas, {
                     type: 'bar',
                     data: hasilData,
-                    options: {
-                        responsive: true,
-                        scales: {
-                            xAxes: [{
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: 'Periode'
-                                }
-                            }],
-                            yAxes: [{
-                                display: true,
-                                scaleLabel: {
-                                    display: true,
-                                    labelString: 'Jumlah'
-                                }
-                            }]
-                        }
-                    }
+                    options: setup
                 });
             }
         });
