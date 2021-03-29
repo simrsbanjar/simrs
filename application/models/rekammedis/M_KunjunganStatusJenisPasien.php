@@ -11,6 +11,39 @@ class M_KunjunganStatusJenisPasien extends CI_Model
         return $query->result();
     }
 
+    //////////////////////////////////
+    function GetDataTgl($tanggalawal, $tanggalakhir, $instalasi)
+    {
+
+        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '1'
+                                    from V_DataKunjunganPasienMasukBJenisPasien 
+                                    where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
+                                      and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                UNION ALL
+                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '2'
+                                    from V_DataKunjunganPasienMasukBStatusPasien 
+                                    where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
+                                      and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail");
+
+        return $query->result();
+    }
+
+    ///////////////////////////////////////
+
     function filterbytanggal($tanggalawal, $tanggalakhir, $instalasi)
     {
 

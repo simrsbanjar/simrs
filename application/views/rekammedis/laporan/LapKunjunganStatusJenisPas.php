@@ -51,16 +51,32 @@
     </div>
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
+        $ruangan[] = '';
+        $ruangan_old = '';
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php if (($ruangan_old = '') or ($ruangan_old != $ruangan)) { ?>
+                    <?php $ruangan == $row->RuanganPelayanan; ?>
+                <?php } ?>
+                <?php $ruangan_old == $ruangan;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+        <?php var_dump($ruangan); ?>
+
+        <?php
         $no = 0;
-        foreach ($jenispasien as $row) : ?>
-            <?php $no++ ?>
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php $no++ ?>
+            <?php } ?>
         <?php endforeach ?>
         <?php
         $no1 = 0;
-        foreach ($statuspasien as $row) : ?>
-            <?php $no1++ ?>
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '2') { ?>
+                <?php $no1++ ?>
+            <?php } ?>
         <?php endforeach ?>
-
         <table class="table table-bordered mt-5">
             <tr style="text-align: center;">
                 <th rowspan="3">Ruangan</th>
