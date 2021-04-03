@@ -32,10 +32,11 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-hospital-alt"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3" style="font-size: 28px;">SIMRS</div>
+                <!-- <div class="sidebar-brand-icon rotate-n-15"> -->
+                <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="mb-auto col-5"></img>
+                <!-- <i class="fas fa-hospital-alt"></i> -->
+                <!-- </div> -->
+                <div class="mb-auto sidebar-brand-text mx-3" style="font-size: 28px;">SIMRS</div>
             </a>
 
             <!-- Divider -->
