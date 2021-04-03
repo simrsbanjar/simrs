@@ -246,7 +246,7 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                                   KDKELOMPOK = B.KdKondisiPulang,
                                                   KELOMPOK = A.Detail,
                                                   JUMLAH	= SUM(A.JmlPasien) 
-                                              FROM V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus A, KelompokPasien B
+                                              FROM V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus A, KondisiPulang B
                                               WHERE YEAR(TglKeluar) BETWEEN '" . $tanggalawal . "' 
                                                and '" . $tanggalakhir . "' 
                                                and A.KdInstalasi ='" . $instalasi . "'
