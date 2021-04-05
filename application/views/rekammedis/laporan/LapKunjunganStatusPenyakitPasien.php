@@ -64,7 +64,7 @@
         <table class="table table-bordered mt-5">
             <tr style="text-align: center;">
                 <th rowspan="3">Ruangan</th>
-                <th colspan="<?= ($no * 3) + 1; ?>">Asal Rujukan</th>
+                <th colspan="<?= ($no * 3) + 1; ?>">Kasus Penyakit</th>
                 <th colspan="<?= ($no * 3) + 1; ?>">Status Pasien</th>
             </tr>
             <tr style="text-align: center;">
@@ -123,14 +123,15 @@
                         <td style="text-align: center;"><?= $data1->L; ?></td>
                         <td style="text-align: center;"><?= $data1->P; ?></td>
                         <td style="text-align: center;"><?= $data1->TOTAL; ?></td>
-
                         <?php $sumpastotal = $sumpastotal + $data1->TOTAL  ?>
+                        <? console.log($sumpastotal);?>
                     <?php endforeach ?>
                     <td style="text-align: center;"><?= $sumpastotal; ?></td>
                 </tr>
             <?php endforeach ?>
 
             <th style="text-align: center;">Total</th>
+
             <?php $sumtotalall = 0; ?>
             <?php foreach ($penyakitpasien as $row3) : ?>
                 <?php if ($datafilter['nilaifilter'] == '1') {
@@ -238,9 +239,12 @@
                 }
 
                 var setup = {
+                    responsive: true,
                     events: false,
                     legend: {
-                        display: true
+                        labels: {
+                            usePointStyle: false
+                        }
                     },
                     tooltips: {
                         enabled: false
@@ -271,7 +275,6 @@
                             }
                         }]
                     },
-                    responsive: true,
                     scales: {
                         xAxes: [{
                             display: true,
@@ -291,68 +294,6 @@
                         }]
                     }
                 };
-
-                // Memunculkan Spasi Antara Grafik dan Legend
-                function getBoxWidth(labelOpts, fontSize) {
-                    return labelOpts.usePointStyle ?
-                        fontSize * Math.SQRT2 :
-                        labelOpts.boxWidth;
-                };
-                Chart.NewLegend = Chart.Legend.extend({
-                    afterFit: function() {
-                        // Tinggi / Pendeknya Spasi Antara Grafik dan Legend
-                        this.height = this.height + 20;
-                    },
-                });
-
-                function createNewLegendAndAttach(chartInstance, legendOpts) {
-                    var legend = new Chart.NewLegend({
-                        ctx: chartInstance.chart.ctx,
-                        options: legendOpts,
-                        chart: chartInstance
-                    });
-
-                    if (chartInstance.legend) {
-                        Chart.layoutService.removeBox(chartInstance, chartInstance.legend);
-                        delete chartInstance.newLegend;
-                    }
-
-                    chartInstance.newLegend = legend;
-                    Chart.layoutService.addBox(chartInstance, legend);
-                }
-
-                // Registrasi/Memanggil Plugin Legend
-                Chart.plugins.register({
-                    beforeInit: function(chartInstance) {
-                        var legendOpts = chartInstance.options.legend;
-
-                        if (legendOpts) {
-                            createNewLegendAndAttach(chartInstance, legendOpts);
-                        }
-                    },
-                    beforeUpdate: function(chartInstance) {
-                        var legendOpts = chartInstance.options.legend;
-
-                        if (legendOpts) {
-                            legendOpts = Chart.helpers.configMerge(Chart.defaults.global.legend, legendOpts);
-
-                            if (chartInstance.newLegend) {
-                                chartInstance.newLegend.options = legendOpts;
-                            } else {
-                                createNewLegendAndAttach(chartInstance, legendOpts);
-                            }
-                        } else {
-                            Chart.layoutService.removeBox(chartInstance, chartInstance.newLegend);
-                            delete chartInstance.newLegend;
-                        }
-                    },
-                    afterEvent: function(chartInstance, e) {
-                        var legend = chartInstance.newLegend;
-                        if (legend) {
-                            legend.handleEvent(e);
-                        }
-                    }
-                });
                 var hasilData = {
                     labels: tanggaldata,
                     datasets: totaldata,
@@ -360,6 +301,14 @@
                 var barChart = new Chart(densityCanvas, {
                     type: 'bar',
                     data: hasilData,
+                    plugins: [{
+                        beforeInit: function(chart, options) {
+                            chart.legend.afterFit = function() {
+                                // Tinggi / Pendeknya Spasi Antara Grafik dan Legend
+                                this.height = this.height + 20;
+                            };
+                        }
+                    }],
                     options: setup
                 });
             }
