@@ -51,116 +51,234 @@
     </div>
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
+        $ruangan_old = '';
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php if ($ruangan_old != $row->RuanganPelayanan) { ?>
+                    <?php $ruangan[] = [
+                        'KdRuanganPelayanan' => $row->KdRuanganPelayanan,
+                        'RuanganPelayanan' => $row->RuanganPelayanan
+                    ]; ?>
+                <?php } ?>
+                <?php $ruangan_old = $row->RuanganPelayanan;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+
+        <?php
+        $jenispasien_old = '';
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php if ($jenispasien_old != $row->Detail) { ?>
+                    <?php $jenispasien[] = $row->Detail ?>
+                <?php } ?>
+                <?php $jenispasien_old = $row->Detail;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+        <?php $jenispasien    = array_values(array_unique($jenispasien)); ?>
+
+        <?php
+        $row = 1;
+        while ($row <= 2) {
+            if ($row == 1) {
+                $ketstspas  = 'Baru';
+            } else {
+                $ketstspas  = 'Lama';
+            };
+
+            $statuspasien[] = $ketstspas;
+            $row++;
+        }
+        ?>
+
+        <?php
         $no = 0;
         foreach ($jenispasien as $row) : ?>
             <?php $no++ ?>
         <?php endforeach ?>
+
         <?php
         $no1 = 0;
-        foreach ($statuspasien as $row) : ?>
-            <?php $no1++ ?>
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '2') { ?>
+                <?php if ($ruangan_old != $row->RuanganPelayanan) { ?>
+                    <?php $no1++ ?>
+                <?php } ?>
+            <?php } ?>
         <?php endforeach ?>
 
         <table class="table table-bordered mt-5">
             <tr style="text-align: center;">
                 <th rowspan="3">Ruangan</th>
                 <th colspan="<?= ($no * 3) + 1; ?>">Jenis Pasien</th>
-                <th colspan="<?= ($no * 3) + 1; ?>">Status Pasien</th>
+                <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
             </tr>
             <tr style="text-align: center;">
                 <?php foreach ($jenispasien as $row) : ?>
-                    <th colspan="3"><?= $row->Detail; ?></th>
+                    <th colspan="3"><?= $row; ?></th>
                 <?php endforeach ?>
                 <th rowspan="2">Total</th>
                 <?php foreach ($statuspasien as $row1) : ?>
-                    <th colspan="3"><?= $row1->Detail; ?></th>
+                    <th colspan="3"><?= $row1; ?></th>
                 <?php endforeach ?>
                 <th rowspan="2">Total</th>
-            </tr>
-            <tr style="text-align: center;">
-                <?php foreach ($jenispasien as $row) : ?>
-                    <th>L</th>
-                    <th>P</th>
-                    <th>Total</th>
-                <?php endforeach ?>
-                <?php foreach ($statuspasien as $row1) : ?>
-                    <th>L</th>
-                    <th>P</th>
-                    <th>Total</th>
-                <?php endforeach ?>
             </tr>
 
+            <tr style="text-align: center;">
+                <?php foreach ($jenispasien as $row) : ?>
+                    <th>L</th>
+                    <th>P</th>
+                    <th>Total</th>
+                <?php endforeach ?>
+                <?php foreach ($statuspasien as $row1) : ?>
+                    <th>L</th>
+                    <th>P</th>
+                    <th>Total</th>
+                <?php endforeach ?>
+            </tr>
             <?php
-            $sumtotal = 0;
-            foreach ($ruangan as $row) : ?>
+            $row = 0;
+            while ($row <= count($ruangan) - 1) { ?>
                 <tr>
                     <?php $sumtotal = 0; ?>
-                    <td style="text-align: center;"><?php echo $row->RuanganPelayanan;            ?></td>
-                    <?php foreach ($jenispasien as $row1) : ?>
-                        <?php if ($datafilter['nilaifilter'] == '1') {
-                            $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "'")->row();
-                        } else if ($datafilter['nilaifilter'] == '2') {
-                            $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "'")->row();
-                        } else {
-                            $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "'")->row();
-                        }; ?>
-                        <td style="text-align: center;"><?= $data->L; ?></td>
-                        <td style="text-align: center;"><?= $data->P; ?></td>
-                        <td style="text-align: center;"><?= $data->TOTAL; ?></td>
+                    <td style="text-align: center;"><?= $ruangan[$row]['RuanganPelayanan'];            ?></td>
 
-                        <?php $sumtotal = $sumtotal + $data->TOTAL  ?>
-                    <?php endforeach ?>
+                    <?php
+                    $row1 = 0;
+                    while ($row1 <= count($jenispasien) - 1) { ?>
+                        <?php
+                        $row2 = 0;
+                        $count = 0;
+                        while ($row2 <= count($jumlah) - 1) {
+                            if (
+                                $jumlah[$row2]->Detail == $jenispasien[$row1] and
+                                $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
+                            ) { ?>
+                                <td style="text-align: center;"><?= $jumlah[$row2]->L; ?></td>
+                                <td style="text-align: center;"><?= $jumlah[$row2]->P; ?></td>
+                                <td style="text-align: center;"><?= $jumlah[$row2]->TOTAL; ?></td>
+
+                                <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
+                                <?php $count++ ?>
+                            <?php
+                            }
+
+                            $row2++;
+                        }
+                        if ($count == 0) { ?>
+                            <td style="text-align: center;">0</td>
+                            <td style="text-align: center;">0</td>
+                            <td style="text-align: center;">0</td>
+                    <?php }
+                        $row1++;
+                    }; ?>
                     <td style="text-align: center;"><?= $sumtotal; ?></td>
                     <?php $sumpastotal = 0; ?>
-                    <?php foreach ($statuspasien as $row2) : ?>
-                        <?php if ($datafilter['nilaifilter'] == '1') {
-                            $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "'")->row();
-                        } else if ($datafilter['nilaifilter'] == '2') {
-                            $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "'")->row();
-                        } else {
-                            $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where  YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "'")->row();
-                        }; ?>
-                        <td style="text-align: center;"><?= $data1->L; ?></td>
-                        <td style="text-align: center;"><?= $data1->P; ?></td>
-                        <td style="text-align: center;"><?= $data1->TOTAL; ?></td>
+                    <?php
+                    $row1 = 0;
+                    while ($row1 <= count($statuspasien) - 1) { ?>
+                        <?php
+                        $row2 = 0;
+                        $count = 0;
+                        while ($row2 <= count($jumlah) - 1) {
+                            if (
+                                $jumlah[$row2]->Detail == $statuspasien[$row1] and
+                                $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
+                            ) { ?>
+                                <td style="text-align: center;"><?= $jumlah[$row2]->L; ?></td>
+                                <td style="text-align: center;"><?= $jumlah[$row2]->P; ?></td>
+                                <td style="text-align: center;"><?= $jumlah[$row2]->TOTAL; ?></td>
 
-                        <?php $sumpastotal = $sumpastotal + $data1->TOTAL  ?>
-                    <?php endforeach ?>
+                                <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
+                                <?php $count++ ?>
+                            <?php
+                            }
+
+                            $row2++;
+                        }
+                        if ($count == 0) { ?>
+                            <td style="text-align: center;">0</td>
+                            <td style="text-align: center;">0</td>
+                            <td style="text-align: center;">0</td>
+                    <?php }
+                        $row1++;
+                    }; ?>
                     <td style="text-align: center;"><?= $sumpastotal; ?></td>
                 </tr>
-            <?php endforeach ?>
+                <?php $row++; ?>
+            <?php }; ?>
 
             <th style="text-align: center;">Total</th>
-            <?php $sumtotalall = 0; ?>
-            <?php foreach ($jenispasien as $row3) : ?>
-                <?php if ($datafilter['nilaifilter'] == '1') {
-                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-                } else if ($datafilter['nilaifilter'] == '2') {
-                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-                } else {
-                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-                }; ?>
-                <th style="text-align: center;"><?= $data2->L; ?></th>
-                <th style="text-align: center;"><?= $data2->P; ?></th>
-                <th style="text-align: center;"><?= $data2->TOTAL; ?></th>
-                <?php $sumtotalall = $sumtotalall + $data2->TOTAL ?>
-            <?php endforeach ?>
 
-            <th style="text-align: center;"><?= $sumtotalall; ?></th>
-            <?php $sumtotalallpas = 0; ?>
-            <?php foreach ($statuspasien as $row4) : ?>
-                <?php if ($datafilter['nilaifilter'] == '1') {
-                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where TglPendaftaran BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-                } else if ($datafilter['nilaifilter'] == '2') {
-                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) = '" . $datafilter['tahun'] . "' and MONTH(TglPendaftaran) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-                } else {
-                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DatakunjunganPasienMasukBjenisBstausPasien where YEAR(TglPendaftaran) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
+            <?php
+            $sumtotalall = 0;
+            $row1 = 0;
+            while ($row1 <= count($jenispasien) - 1) { ?>
+                <?php
+                $row2 = 0;
+                $count = 0;
+                $totalL = 0;
+                $totalP = 0;
+                $sumtotal = 0;
+                while ($row2 <= count($jumlah) - 1) {
+                    if (
+                        $jumlah[$row2]->Detail == $jenispasien[$row1]
+                    ) {
+                        $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
+                        $totalL = $totalL + $jumlah[$row2]->L;
+                        $totalP = $totalP + $jumlah[$row2]->P;
+                        $sumtotalall = $sumtotalall + $jumlah[$row2]->TOTAL;
+                        $count++;
+                    };
+                    $row2++;
                 }; ?>
-                <th style="text-align: center;"><?= $data3->L; ?></th>
-                <th style="text-align: center;"><?= $data3->P; ?></th>
-                <th style="text-align: center;"><?= $data3->TOTAL; ?></th>
-                <?php $sumtotalallpas = $sumtotalallpas + $data3->TOTAL ?>
-            <?php endforeach ?>
+
+                <th style="text-align: center;"><?= $totalL; ?></th>
+                <th style="text-align: center;"><?= $totalP; ?></th>
+                <th style="text-align: center;"><?= $sumtotal; ?></th>
+
+                <?php if ($count == 0) { ?>
+                    <th style="text-align: center;">0</th>
+                    <th style="text-align: center;">0</th>
+                    <th style="text-align: center;">0</th>
+            <?php }
+                $row1++;
+            }; ?>
+            <th style="text-align: center;"><?= $sumtotalall; ?></th>
+
+            <?php
+            $sumtotalallpas = 0;
+            $row1 = 0;
+            while ($row1 <= count($statuspasien) - 1) { ?>
+                <?php
+                $row2 = 0;
+                $count = 0;
+                $totalL = 0;
+                $totalP = 0;
+                $sumtotal = 0;
+                while ($row2 <= count($jumlah) - 1) {
+                    if (
+                        $jumlah[$row2]->Detail == $statuspasien[$row1]
+                    ) {
+                        $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
+                        $totalL = $totalL + $jumlah[$row2]->L;
+                        $totalP = $totalP + $jumlah[$row2]->P;
+                        $sumtotalallpas = $sumtotalallpas + $jumlah[$row2]->TOTAL;
+                        $count++;
+                    };
+                    $row2++;
+                }; ?>
+
+                <th style="text-align: center;"><?= $totalL; ?></th>
+                <th style="text-align: center;"><?= $totalP; ?></th>
+                <th style="text-align: center;"><?= $sumtotal; ?></th>
+
+                <?php if ($count == 0) { ?>
+                    <th style="text-align: center;">0</th>
+                    <th style="text-align: center;">0</th>
+                    <th style="text-align: center;">0</th>
+            <?php }
+                $row1++;
+            }; ?>
             <th style="text-align: center;"><?= $sumtotalallpas; ?></th>
         </table>
     <?php } else { ?>
@@ -216,8 +334,16 @@
 
                     var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
                     var datahasil = [];
-                    for (var ii in dataawal) {
-                        datahasil.push(dataawal[ii].JUMLAH)
+
+                    for (var iii in msg.tanggal) {
+                        var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK && KELOMPOK.TANGGAL == msg.tanggal[iii].TANGGAL);
+                        if (dataawal.length > 0) {
+                            for (var ii in dataawal) {
+                                datahasil.push(dataawal[ii].JUMLAH)
+                            }
+                        } else {
+                            datahasil.push(0)
+                        }
                     }
 
                     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
@@ -225,7 +351,6 @@
                     const g = randomBetween(0, 255);
                     const b = randomBetween(0, 255);
                     const a = randomBetween(0, 255);
-
                     totaldata.push({
                         label: msg.hasil[i].KELOMPOK,
                         data: datahasil,
@@ -241,7 +366,10 @@
                 var setup = {
                     events: false,
                     legend: {
-                        display: true
+                        display: true,
+                        labels: {
+                            boxWidth: 20
+                        }
                     },
                     tooltips: {
                         enabled: false
@@ -358,6 +486,7 @@
                     labels: tanggaldata,
                     datasets: totaldata,
                 };
+                console.log(hasilData);
                 var barChart = new Chart(densityCanvas, {
                     type: 'bar',
                     data: hasilData,
