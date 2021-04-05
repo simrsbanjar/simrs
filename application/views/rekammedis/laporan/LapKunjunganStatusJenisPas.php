@@ -153,9 +153,9 @@
                                 $jumlah[$row2]->Detail == $jenispasien[$row1] and
                                 $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
                             ) { ?>
-                                <td style="text-align: center;"><?= $jumlah[$row2]->L; ?></td>
-                                <td style="text-align: center;"><?= $jumlah[$row2]->P; ?></td>
-                                <td style="text-align: center;"><?= $jumlah[$row2]->TOTAL; ?></td>
+                                <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                 <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
                                 <?php $count++ ?>
@@ -171,7 +171,7 @@
                     <?php }
                         $row1++;
                     }; ?>
-                    <td style="text-align: center;"><?= $sumtotal; ?></td>
+                    <td style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
                     <?php $sumpastotal = 0; ?>
                     <?php
                     $row1 = 0;
@@ -184,9 +184,9 @@
                                 $jumlah[$row2]->Detail == $statuspasien[$row1] and
                                 $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
                             ) { ?>
-                                <td style="text-align: center;"><?= $jumlah[$row2]->L; ?></td>
-                                <td style="text-align: center;"><?= $jumlah[$row2]->P; ?></td>
-                                <td style="text-align: center;"><?= $jumlah[$row2]->TOTAL; ?></td>
+                                <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                 <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
                                 <?php $count++ ?>
@@ -202,7 +202,7 @@
                     <?php }
                         $row1++;
                     }; ?>
-                    <td style="text-align: center;"><?= $sumpastotal; ?></td>
+                    <td style="text-align: center;"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
                 </tr>
                 <?php $row++; ?>
             <?php }; ?>
@@ -232,9 +232,9 @@
                     $row2++;
                 }; ?>
 
-                <th style="text-align: center;"><?= $totalL; ?></th>
-                <th style="text-align: center;"><?= $totalP; ?></th>
-                <th style="text-align: center;"><?= $sumtotal; ?></th>
+                <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
 
                 <?php if ($count == 0) { ?>
                     <th style="text-align: center;">0</th>
@@ -243,7 +243,7 @@
             <?php }
                 $row1++;
             }; ?>
-            <th style="text-align: center;"><?= $sumtotalall; ?></th>
+            <th style="text-align: center;"><?= number_format($sumtotalall, 0, ',', '.'); ?></th>
 
             <?php
             $sumtotalallpas = 0;
@@ -268,9 +268,9 @@
                     $row2++;
                 }; ?>
 
-                <th style="text-align: center;"><?= $totalL; ?></th>
-                <th style="text-align: center;"><?= $totalP; ?></th>
-                <th style="text-align: center;"><?= $sumtotal; ?></th>
+                <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
 
                 <?php if ($count == 0) { ?>
                     <th style="text-align: center;">0</th>
@@ -279,7 +279,7 @@
             <?php }
                 $row1++;
             }; ?>
-            <th style="text-align: center;"><?= $sumtotalallpas; ?></th>
+            <th style="text-align: center;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
         </table>
     <?php } else { ?>
         <div style="width:auto;">
@@ -316,6 +316,28 @@
             "tahun3": tahun3
         };
 
+        function convertToJumlah(number) {
+            if (number) {
+                var jumlah = "";
+                var numberrev = number
+                    .toString()
+                    .split("")
+                    .reverse()
+                    .join("");
+
+                for (var i = 0; i < numberrev.length; i++)
+                    if (i % 3 == 0) jumlah += numberrev.substr(i, 3) + ".";
+                return (
+                    jumlah
+                    .split("", jumlah.length - 1)
+                    .reverse()
+                    .join("")
+                );
+            } else {
+                return number;
+            }
+        }
+
         $.ajax({
             url: "<?= base_url('KunjunganStatusJenisPasien/Grafik') ?>",
             type: "POST",
@@ -336,10 +358,11 @@
                     var datahasil = [];
 
                     for (var iii in msg.tanggal) {
-                        var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK && KELOMPOK.TANGGAL == msg.tanggal[iii].TANGGAL);
+                        var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK && KELOMPOK.TANGGAL == msg.tanggal[iii].IDTANGGAL);
+
                         if (dataawal.length > 0) {
                             for (var ii in dataawal) {
-                                datahasil.push(dataawal[ii].JUMLAH)
+                                datahasil.push(convertToJumlah(dataawal[ii].JUMLAH))
                             }
                         } else {
                             datahasil.push(0)
@@ -358,7 +381,6 @@
                         borderWidth: 0
                     })
                 }
-
                 for (var i in msg.tanggal) {
                     tanggaldata.push(msg.tanggal[i].TANGGAL)
                 }
@@ -486,7 +508,7 @@
                     labels: tanggaldata,
                     datasets: totaldata,
                 };
-                console.log(hasilData);
+
                 var barChart = new Chart(densityCanvas, {
                     type: 'bar',
                     data: hasilData,
