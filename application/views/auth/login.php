@@ -26,7 +26,7 @@
 
                                 <?= $this->session->flashdata('message'); ?>
 
-                                <form class=" user" method="post" action="<?= base_url('auth'); ?>">
+                                <form class="user" name="user" method="post" action="<?= base_url('auth'); ?>">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Username" value="<?= set_value('username'); ?>">
                                         <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -70,3 +70,13 @@
 
 
 </div>
+
+<script>
+    document.onkeydown = function(evt) {
+        var keyCode = evt ? (evt.which ? evt.which : evt.keyCode) : event.keyCode;
+        if (keyCode == 13) {
+            //your function call here
+            document.user.submit();
+        }
+    }
+</script>

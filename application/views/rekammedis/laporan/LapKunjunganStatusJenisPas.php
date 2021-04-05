@@ -74,7 +74,7 @@
                 <?php $jenispasien_old = $row->Detail;  ?>
             <?php } ?>
         <?php endforeach ?>
-        <?php $jenispasien    = array_unique($jenispasien); ?>
+        <?php $jenispasien    = array_values(array_unique($jenispasien)); ?>
 
         <?php
         $row = 1;
@@ -135,7 +135,6 @@
                     <th>Total</th>
                 <?php endforeach ?>
             </tr>
-
             <?php
             $row = 0;
             while ($row <= count($ruangan) - 1) { ?>
