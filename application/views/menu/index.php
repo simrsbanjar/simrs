@@ -19,6 +19,15 @@
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>css/rsubanjar.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
+    <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <style>
+        .line-title {
+            border: 0;
+            border-style: inset;
+            border-top: 1px solid #000;
+        }
+    </style>
 
 </head>
 
@@ -31,12 +40,12 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <!-- <div class="sidebar-brand-icon rotate-n-15"> -->
-                <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="mb-auto col-5"></img>
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="col-5 m-md-auto"></img>
+                <!-- <div class="sidebar-brand-icon"> -->
                 <!-- <i class="fas fa-hospital-alt"></i> -->
                 <!-- </div> -->
-                <div class="mb-auto sidebar-brand-text mx-3" style="font-size: 28px;">SIMRS</div>
+                <div class="mb-auto col-auto" style="font-size: 28px; color: whitesmoke;">SIMRS</div>
             </a>
 
             <!-- Divider -->
@@ -124,7 +133,7 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - User Information -->
-                        <h2 class="mt-3" style="position: static; font-weight: bold; margin-right: 80px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sistem Informasi Manajemen Rumah Sakit</h2>
+                        <!-- <h2 class="mt-3" style="position: static; font-weight: bold; margin-right: 80px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sistem Informasi Manajemen Rumah Sakit</h2> -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="mr-1 d-none d-lg-inline text-gray-600 small">
@@ -159,19 +168,22 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
-                    <div class="card mb-3" style="max-width: 540px;">
+                    <div class="card mb-3" style="max-width: 640px;">
                         <div class="row g-0">
                             <div class="col-md-4">
                                 <img src="<?= base_url('assets/img/profile/default.png'); ?>">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title"><?= $datapegawai['NamaLengkap']; ?></h5>
-                                    <p class="card-text">Jenis Kelamin : <?= $datapegawai['JenisKelamin']; ?></p>
-                                    <p class="card-text">Tempat Tangal Lahir : <?= $datapegawai['TempatLahir'] . ', ' . date('d-m-Y', strtotime($datapegawai['TglLahir'])); ?></p>
+                                    <h3 class="card-title"><b><?= $datapegawai['NamaLengkap']; ?></b></h3>
+                                    <p class="card-text">Jenis Kelamin : <?php if ($datapegawai['JenisKelamin'] = 'L') {
+                                                                                echo  'Laki-laki';
+                                                                            } else {
+                                                                                echo 'Perempuan';
+                                                                            } ?></p>
+                                    <p class="card-text">Tempat & Tangal Lahir : <?= $datapegawai['TempatLahir'] . ', ' . date('d-m-Y', strtotime($datapegawai['TglLahir'])); ?></p>
                                 </div>
                             </div>
                         </div>

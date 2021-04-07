@@ -362,7 +362,8 @@
 
                         if (dataawal.length > 0) {
                             for (var ii in dataawal) {
-                                datahasil.push(convertToJumlah(dataawal[ii].JUMLAH))
+                                // datahasil.push(convertToJumlah(dataawal[ii].JUMLAH))
+                                datahasil.push(dataawal[ii].JUMLAH)
                             }
                         } else {
                             datahasil.push(0)
@@ -409,7 +410,7 @@
                                 ctx.fillStyle = "#4F4C4D";
 
                                 chart.getDatasetMeta(i).data.forEach(function(p, j) {
-                                    ctx.fillText(datasets[i].data[j], p._model.x, p._model.y - 10);
+                                    ctx.fillText(convertToJumlah(datasets[i].data[j]), p._model.x, p._model.y - 10);
                                 });
                             });
                         }

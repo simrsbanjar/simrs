@@ -3,16 +3,18 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="mb-auto col-5"></img>
-        <!-- <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-hospital-alt"></i>
-        </div> -->
-        <div class="sidebar-brand-text mx-3" style="font-size: 28px;">SIMRS</div>
+        <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="col-5 m-md-auto ml-sm-0"></img>
+        <!-- <div class="sidebar-brand-icon"> -->
+        <!-- <i class="fas fa-hospital-alt"></i> -->
+        <!-- </div> -->
+        <div class="mb-auto col-6 m-2 ml-sm-0" style="font-size: 28px;">SIMRS</div>
     </a>
 
     <?php $menu          = $this->db->query("SELECT * FROM ListMenuWeb WHERE StatusEnabled = '1' ")->result();  ?>
 
     <!-- Divider -->
+    <br>
+    <br>
     <hr class="sidebar-divider my-0">
     <br>
 
