@@ -214,8 +214,16 @@
 
                     var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
                     var datahasil = [];
-                    for (var ii in dataawal) {
-                        datahasil.push(dataawal[ii].JUMLAH)
+
+                    for (var iii in msg.tanggal) {
+                        var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK && KELOMPOK.TANGGAL == msg.tanggal[iii].IDTANGGAL);
+                        if (dataawal.length > 0) {
+                            for (var ii in dataawal) {
+                                datahasil.push(dataawal[ii].JUMLAH)
+                            }
+                        } else {
+                            datahasil.push(0)
+                        }
                     }
 
                     const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
