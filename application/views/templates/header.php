@@ -43,6 +43,14 @@
     <!-- Data label -->
     <script src="<?php echo base_url() ?>assets/css/chartjs-plugin-datalabels.js"></script>
     <script src="<?php echo base_url() ?>assets/css/chartjs-plugin-datalabels.min.js"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <style>
+        .line-title {
+            border: 0;
+            border-style: inset;
+            border-top: 1px solid #000;
+        }
+    </style>
 </head>
 
 <body id="page-top">

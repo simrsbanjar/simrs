@@ -42,8 +42,10 @@ class Auth extends CI_Controller
         $password       =   $this->input->post('password');
         $ruangan        =   $this->input->post('ruangan');
 
-        $user           = $this->db->query("SELECT * FROM Login WHERE cast(Username as varchar)= '" . $username . "'")->row_array();
-        $pwd_decript     = $this->_decript($user['Password']);
+        $user           =   $this->db->query("SELECT * FROM Login WHERE cast(Username as varchar)= '" . $username . "'")->row_array();
+        $pwd_decript     =  $this->_decript($user['Password']);
+        $ip             =   $this->getIp();
+        $hostname        =  gethostbyaddr($ip);
 
         if ($ruangan    == '0') {
             $this->session->set_flashdata(
@@ -57,7 +59,8 @@ class Auth extends CI_Controller
                     $data = [
                         'idpegawai' => $user['IdPegawai'],
                         'ruangan'   => $ruangan,
-                        'password' => $password
+                        'password' => $password,
+                        'hostname'  => $hostname
                     ];
 
                     $loginaplikasi           = $this->db->get_where('LoginAplikasi', ['IdPegawai' => $user['IdPegawai']])->row_array();
@@ -132,5 +135,23 @@ class Auth extends CI_Controller
             '<div class="alert alert-success" role="alert">Anda berhasil keluar.</div>'
         );
         redirect('auth');
+    }
+
+    public function getIp()
+    {
+        if (getenv('HTTP_CLIENT_IP')) {
+            $ip = getenv('HTTP_CLIENT_IP');
+        } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+            $ip = getenv('HTTP_X_FORWARDED_FOR');
+        } elseif (getenv('HTTP_X_FORWARDED')) {
+            $ip = getenv('HTTP_X_FORWARDED');
+        } elseif (getenv('HTTP_FORWARDED_FOR')) {
+            $ip = getenv('HTTP_FORWARDED_FOR');
+        } elseif (getenv('HTTP_FORWARDED')) {
+            $ip = getenv('HTTP_FORWARDED');
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        return $ip;
     }
 }

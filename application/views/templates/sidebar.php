@@ -14,9 +14,8 @@
 
     <!-- Divider -->
     <br>
-    <br>
     <hr class="sidebar-divider my-0">
-    <br>
+
 
     <?php foreach ($menu as $key) { ?>
 

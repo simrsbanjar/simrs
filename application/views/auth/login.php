@@ -19,10 +19,9 @@
 
                                 <center>
                                     <!-- <h4 class="shadow-sm p-3 bg-white" style="color: black;">Sistem Informasi Manajamen Rumah Sakit</h4> -->
-                                    <h4><img src="<?= base_url('assets/'); ?>img/simrs/kata simrs.png"> Sistem Informasi Manajamen Rumah Sakit</h4>
+                                    <h4><img src="<?= base_url('assets/'); ?>img/simrs/kata simrs.png">Sistem Informasi Manajamen Rumah Sakit</h4>
                                 </center>
                                 <br>
-
 
                                 <?= $this->session->flashdata('message'); ?>
 
@@ -57,7 +56,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>
@@ -66,8 +64,6 @@
             <span style="color: white;">Copyright &copy; SIMRS RSU Kota Banjar <?= date('Y'); ?></span>
         </div>
     </div>
-
-
 
 </div>
 
