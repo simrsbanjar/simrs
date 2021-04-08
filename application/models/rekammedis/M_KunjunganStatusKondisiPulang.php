@@ -140,7 +140,7 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
         if ($status == 1) {
             if ($format == '1') {
                 $query = $this->db->query("SELECT DISTINCT 
-                                                IDTANGGAL = CONVERT(DATE,TglKeluar)
+                                                IDTANGGAL = CONVERT(DATE,TglKeluar),
                                                    TANGGAL = CONVERT(DATE,TglKeluar)
                                               FROM V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus 
                                              WHERE TglKeluar BETWEEN '" . $tanggalawal . " 00:00:00" . "' 

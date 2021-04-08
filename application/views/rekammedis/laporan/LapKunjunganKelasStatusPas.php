@@ -201,6 +201,29 @@
             "tahun2": tahun2,
             "tahun3": tahun3
         };
+
+        function convertToJumlah(number) {
+            if (number) {
+                var jumlah = "";
+                var numberrev = number
+                    .toString()
+                    .split("")
+                    .reverse()
+                    .join("");
+
+                for (var i = 0; i < numberrev.length; i++)
+                    if (i % 3 == 0) jumlah += numberrev.substr(i, 3) + ".";
+                return (
+                    jumlah
+                    .split("", jumlah.length - 1)
+                    .reverse()
+                    .join("")
+                );
+            } else {
+                return number;
+            }
+        }
+
         $.ajax({
             url: "<?= base_url('KunjunganKelasStatusPasien/Grafik') ?>",
             type: "POST",
@@ -224,7 +247,7 @@
                         var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK && KELOMPOK.TANGGAL == msg.tanggal[iii].IDTANGGAL);
                         if (dataawal.length > 0) {
                             for (var ii in dataawal) {
-                                datahasil.push(dataawal[ii].JUMLAH)
+                                datahasil.push(convertToJumlah(dataawal[ii].JUMLAH))
                             }
                         } else {
                             datahasil.push(0)
@@ -274,14 +297,6 @@
                                 });
                             });
                         }
-                    },
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 0.6,
-                            gridLines: {
-                                display: false
-                            }
-                        }]
                     },
                     responsive: true,
                     scales: {
