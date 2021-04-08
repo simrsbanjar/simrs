@@ -197,6 +197,28 @@
             "tahun3": tahun3
         };
 
+        function convertToJumlah(number) {
+            if (number) {
+                var jumlah = "";
+                var numberrev = number
+                    .toString()
+                    .split("")
+                    .reverse()
+                    .join("");
+
+                for (var i = 0; i < numberrev.length; i++)
+                    if (i % 3 == 0) jumlah += numberrev.substr(i, 3) + ".";
+                return (
+                    jumlah
+                    .split("", jumlah.length - 1)
+                    .reverse()
+                    .join("")
+                );
+            } else {
+                return number;
+            }
+        }
+
         $.ajax({
             url: "<?= base_url('KunjunganStatusRujukanPasien/Grafik') ?>",
             type: "POST",
@@ -265,7 +287,7 @@
                                 ctx.fillStyle = "#4F4C4D";
 
                                 chart.getDatasetMeta(i).data.forEach(function(p, j) {
-                                    ctx.fillText(datasets[i].data[j], p._model.x, p._model.y - 10);
+                                    ctx.fillText(convertToJumlah(datasets[i].data[j]), p._model.x, p._model.y - 10);
                                 });
                             });
                         }
