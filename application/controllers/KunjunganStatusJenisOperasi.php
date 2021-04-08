@@ -71,11 +71,8 @@ class KunjunganStatusJenisOperasi extends CI_Controller
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusJenisOperasi->filterbytanggal($tanggalawal, $tanggalakhir, $instalasi);
-                $data['jenisoperasi'] = $this->M_KunjunganStatusJenisOperasi->GetJenisOperasiTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganStatusJenisOperasi->GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganStatusJenisOperasi->GetRuanganTgl($tanggalawal, $tanggalakhir, $instalasi);
-            }
+                $data['jumlah'] = $this->M_KunjunganStatusJenisOperasi->GetDataTgl($tanggalawal, $tanggalakhir, $instalasi);
+            };
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
                 'tanggalakhir'   => $tanggalakhir,
@@ -94,15 +91,66 @@ class KunjunganStatusJenisOperasi extends CI_Controller
         } elseif ($nilaifilter == 2) {
             $instalasi = $this->input->post('instalasi1');
 
-            $data['title'] = "Laporan Kunjungan Status dan Jenis Operasi Berdasarkan Bulan";;
-            $data['subtitle'] =  $bulanawal . ' s.d ' . $bulanakhir . ' Tahun : ' . $tahun1;
-            $data['instalasi'] = $instalasi;
-            if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusJenisOperasi->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['jenisoperasi'] = $this->M_KunjunganStatusJenisOperasi->GetJenisOperasiBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganStatusJenisOperasi->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganStatusJenisOperasi->GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+            if ($bulanawal == '1') {
+                $bulanawaltext = 'Januari';
+            } else if ($bulanawal == '2') {
+                $bulanawaltext = 'Februari';
+            } else if ($bulanawal == '3') {
+                $bulanawaltext = 'Maret';
+            } else if ($bulanawal == '4') {
+                $bulanawaltext = 'April';
+            } else if ($bulanawal == '5') {
+                $bulanawaltext = 'Mei';
+            } else if ($bulanawal == '6') {
+                $bulanawaltext = 'Juni';
+            } else if ($bulanawal == '7') {
+                $bulanawaltext = 'Juli';
+            } else if ($bulanawal == '8') {
+                $bulanawaltext = 'Agustus';
+            } else if ($bulanawal == '9') {
+                $bulanawaltext = 'September';
+            } else if ($bulanawal == '10') {
+                $bulanawaltext = 'Oktober';
+            } else if ($bulanawal == '11') {
+                $bulanawaltext = 'November';
+            } else {
+                $bulanawaltext = 'Desember';
             }
+
+            if ($bulanakhir == '1') {
+                $bulanakhirtext = 'Januari';
+            } else if ($bulanakhir == '2') {
+                $bulanakhirtext = 'Februari';
+            } else if ($bulanakhir == '3') {
+                $bulanakhirtext = 'Maret';
+            } else if ($bulanakhir == '4') {
+                $bulanakhirtext = 'April';
+            } else if ($bulanakhir == '5') {
+                $bulanakhirtext = 'Mei';
+            } else if ($bulanakhir == '6') {
+                $bulanakhirtext = 'Juni';
+            } else if ($bulanakhir == '7') {
+                $bulanakhirtext = 'Juli';
+            } else if ($bulanakhir == '8') {
+                $bulanakhirtext = 'Agustus';
+            } else if ($bulanakhir == '9') {
+                $bulanakhirtext = 'September';
+            } else if ($bulanakhir == '10') {
+                $bulanakhirtext = 'Oktober';
+            } else if ($bulanakhir == '11') {
+                $bulanakhirtext = 'November';
+            } else {
+                $bulanakhirtext = 'Desember';
+            }
+
+            $data['title'] = "Laporan Kunjungan Status dan Jenis Pasien Berdasarkan Bulan";
+            $data['subtitle'] =  $bulanawaltext . ' s.d ' . $bulanakhirtext . ' Tahun : ' . $tahun1;
+            $data['instalasi'] = $instalasi;
+
+            if ($format == '1') {
+                $data['jumlah'] = $this->M_KunjunganStatusJenisOperasi->GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+            }
+
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
                 'tanggalakhir'   => $tanggalakhir,
@@ -125,10 +173,7 @@ class KunjunganStatusJenisOperasi extends CI_Controller
             $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusJenisOperasi->filterbytahun($tahun2, $instalasi, $tahun3);
-                $data['jenisoperasi'] = $this->M_KunjunganStatusJenisOperasi->GetJenisOperasiTahun($tahun2, $instalasi, $tahun3);
-                $data['statuspasien'] = $this->M_KunjunganStatusJenisOperasi->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['ruangan'] = $this->M_KunjunganStatusJenisOperasi->GetRuanganTahun($tahun2, $instalasi, $tahun3);
+                $data['jumlah'] = $this->M_KunjunganStatusJenisOperasi->GetDataTahun($tahun2, $instalasi, $tahun3);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,

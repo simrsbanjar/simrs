@@ -17,7 +17,7 @@
                 <!-- Nav Item - User Information -->
 
                 <!-- Judul Sistem Informasi Manajemen Rumah Sakit -->
-                <h2 class="mt-3" style="position: static; font-weight: bold; margin-right: 100px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sistem Informasi Manajemen Rumah Sakit</h2>
+                <!-- <h2 class="mt-3" style="position: static; font-weight: bold; margin-right: 100px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sistem Informasi Manajemen Rumah Sakit</h2> -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <div class="mr-1 d-none d-lg-inline text-gray-600 small">
