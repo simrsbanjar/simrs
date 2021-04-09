@@ -72,10 +72,7 @@ class KunjunganKelasStatusPasien extends CI_Controller
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganKelasStatusPasien->filterbytanggal($tanggalawal, $tanggalakhir, $instalasi);
-                $data['kelaspelayanan'] = $this->M_KunjunganKelasStatusPasien->GetKelasPelayananTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganKelasStatusPasien->GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganKelasStatusPasien->GetRuanganTgl($tanggalawal, $tanggalakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganKelasStatusPasien->GetDataTgl($tanggalawal, $tanggalakhir, $instalasi);
             };
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -152,10 +149,7 @@ class KunjunganKelasStatusPasien extends CI_Controller
             $data['subtitle'] =  $bulanawaltext . ' s.d ' . $bulanakhirtext . ' Tahun : ' . $tahun1;
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganKelasStatusPasien->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['kelaspelayanan'] = $this->M_KunjunganKelasStatusPasien->GetKelasPelayananBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganKelasStatusPasien->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganKelasStatusPasien->GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganKelasStatusPasien->GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -179,10 +173,7 @@ class KunjunganKelasStatusPasien extends CI_Controller
             $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganKelasStatusPasien->filterbytahun($tahun2, $instalasi, $tahun3);
-                $data['kelaspelayanan'] = $this->M_KunjunganKelasStatusPasien->GetKelasPelayananTahun($tahun2, $instalasi, $tahun3);
-                $data['statuspasien'] = $this->M_KunjunganKelasStatusPasien->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['ruangan'] = $this->M_KunjunganKelasStatusPasien->GetRuanganTahun($tahun2, $instalasi, $tahun3);
+                $data['jumlah'] = $this->M_KunjunganKelasStatusPasien->GetDataTahun($tahun2, $instalasi, $tahun3);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
