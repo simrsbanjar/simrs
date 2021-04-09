@@ -78,10 +78,7 @@ class KunjunganStatusRujukanPasien extends CI_Controller
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusRujukanPasien->filterbytanggal($tanggalawal, $tanggalakhir, $instalasi);
-                $data['asalpasien'] = $this->M_KunjunganStatusRujukanPasien->GetAsalPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganStatusRujukanPasien->GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganStatusRujukanPasien->GetRuanganTgl($tanggalawal, $tanggalakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganStatusRujukanPasien->GetDataTgl($tanggalawal, $tanggalakhir, $instalasi);
             };
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -158,10 +155,7 @@ class KunjunganStatusRujukanPasien extends CI_Controller
             $data['instalasi'] = $instalasi;
 
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusRujukanPasien->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['asalpasien'] = $this->M_KunjunganStatusRujukanPasien->GetAsalPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganStatusRujukanPasien->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganStatusRujukanPasien->GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganStatusRujukanPasien->GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -186,10 +180,7 @@ class KunjunganStatusRujukanPasien extends CI_Controller
             $data['instalasi'] = $instalasi;
 
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusRujukanPasien->filterbytahun($tahun2, $instalasi, $tahun3);
-                $data['asalpasien'] = $this->M_KunjunganStatusRujukanPasien->GetAsalPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['statuspasien'] = $this->M_KunjunganStatusRujukanPasien->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['ruangan'] = $this->M_KunjunganStatusRujukanPasien->GetRuanganTahun($tahun2, $instalasi, $tahun3);
+                $data['jumlah'] = $this->M_KunjunganStatusRujukanPasien->GetDataTahun($tahun2, $instalasi, $tahun3);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
