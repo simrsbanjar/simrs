@@ -72,10 +72,7 @@ class KunjunganKelasStatusPasien extends CI_Controller
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganKelasStatusPasien->filterbytanggal($tanggalawal, $tanggalakhir, $instalasi);
-                $data['kelaspelayanan'] = $this->M_KunjunganKelasStatusPasien->GetKelasPelayananTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganKelasStatusPasien->GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganKelasStatusPasien->GetRuanganTgl($tanggalawal, $tanggalakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganKelasStatusPasien->GetDataTgl($tanggalawal, $tanggalakhir, $instalasi);
             };
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -95,14 +92,64 @@ class KunjunganKelasStatusPasien extends CI_Controller
         } elseif ($nilaifilter == 2) {
             $instalasi = $this->input->post('instalasi1');
 
+            if ($bulanawal == '1') {
+                $bulanawaltext = 'Januari';
+            } else if ($bulanawal == '2') {
+                $bulanawaltext = 'Februari';
+            } else if ($bulanawal == '3') {
+                $bulanawaltext = 'Maret';
+            } else if ($bulanawal == '4') {
+                $bulanawaltext = 'April';
+            } else if ($bulanawal == '5') {
+                $bulanawaltext = 'Mei';
+            } else if ($bulanawal == '6') {
+                $bulanawaltext = 'Juni';
+            } else if ($bulanawal == '7') {
+                $bulanawaltext = 'Juli';
+            } else if ($bulanawal == '8') {
+                $bulanawaltext = 'Agustus';
+            } else if ($bulanawal == '9') {
+                $bulanawaltext = 'September';
+            } else if ($bulanawal == '10') {
+                $bulanawaltext = 'Oktober';
+            } else if ($bulanawal == '11') {
+                $bulanawaltext = 'November';
+            } else {
+                $bulanawaltext = 'Desember';
+            }
+
+            if ($bulanakhir == '1') {
+                $bulanakhirtext = 'Januari';
+            } else if ($bulanakhir == '2') {
+                $bulanakhirtext = 'Februari';
+            } else if ($bulanakhir == '3') {
+                $bulanakhirtext = 'Maret';
+            } else if ($bulanakhir == '4') {
+                $bulanakhirtext = 'April';
+            } else if ($bulanakhir == '5') {
+                $bulanakhirtext = 'Mei';
+            } else if ($bulanakhir == '6') {
+                $bulanakhirtext = 'Juni';
+            } else if ($bulanakhir == '7') {
+                $bulanakhirtext = 'Juli';
+            } else if ($bulanakhir == '8') {
+                $bulanakhirtext = 'Agustus';
+            } else if ($bulanakhir == '9') {
+                $bulanakhirtext = 'September';
+            } else if ($bulanakhir == '10') {
+                $bulanakhirtext = 'Oktober';
+            } else if ($bulanakhir == '11') {
+                $bulanakhirtext = 'November';
+            } else {
+                $bulanakhirtext = 'Desember';
+            }
+
+
             $data['title'] = "Laporan Kunjungan Kelas dan Status Pasien Berdasarkan Bulan";;
-            $data['subtitle'] =  $bulanawal . ' s.d ' . $bulanakhir . ' Tahun : ' . $tahun1;
+            $data['subtitle'] =  $bulanawaltext . ' s.d ' . $bulanakhirtext . ' Tahun : ' . $tahun1;
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganKelasStatusPasien->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['kelaspelayanan'] = $this->M_KunjunganKelasStatusPasien->GetKelasPelayananBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganKelasStatusPasien->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['ruangan'] = $this->M_KunjunganKelasStatusPasien->GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganKelasStatusPasien->GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -126,10 +173,7 @@ class KunjunganKelasStatusPasien extends CI_Controller
             $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganKelasStatusPasien->filterbytahun($tahun2, $instalasi, $tahun3);
-                $data['kelaspelayanan'] = $this->M_KunjunganKelasStatusPasien->GetKelasPelayananTahun($tahun2, $instalasi, $tahun3);
-                $data['statuspasien'] = $this->M_KunjunganKelasStatusPasien->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['ruangan'] = $this->M_KunjunganKelasStatusPasien->GetRuanganTahun($tahun2, $instalasi, $tahun3);
+                $data['jumlah'] = $this->M_KunjunganKelasStatusPasien->GetDataTahun($tahun2, $instalasi, $tahun3);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
