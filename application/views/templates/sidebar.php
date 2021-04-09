@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('User'); ?>">
         <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="col-5 m-md-auto ml-sm-0"></img>
         <!-- <div class="sidebar-brand-icon"> -->
         <!-- <i class="fas fa-hospital-alt"></i> -->
