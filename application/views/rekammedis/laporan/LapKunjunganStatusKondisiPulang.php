@@ -51,8 +51,60 @@
     </div>
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
+        $periode_old = '';
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php if ($periode_old != $row->TANGGAL) { ?>
+                    <?php $periode[] = $row->TANGGAL; ?>
+                <?php } ?>
+                <?php $periode_old = $row->TANGGAL;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+
+        <?php
+        $ruangan_old = '';
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php if ($ruangan_old != $row->RuanganPelayanan) { ?>
+                    <?php $ruangan[] = $row->RuanganPelayanan; ?>
+                <?php } ?>
+                <?php $ruangan_old = $row->RuanganPelayanan;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+        <?php array_splice($ruangan, 0, 1); ?>
+        <?php $ruangan    = array_values(array_unique($ruangan)); ?>
+
+        <?php
+        $kondisipulang_old = '';
+        $kondisipulang[] = '';
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '1') { ?>
+                <?php if ($kondisipulang_old != $row->Detail) { ?>
+                    <?php $kondisipulang[] = $row->Detail ?>
+                <?php } ?>
+                <?php $kondisipulang_old = $row->Detail;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+        <?php array_splice($kondisipulang, 0, 1); ?>
+        <?php $kondisipulang    = array_values(array_unique($kondisipulang)); ?>
+
+        <?php
+        $statuspasien[] = null;
+        $statuspasien_old = null;
+        foreach ($jumlah as $row) : ?>
+            <?php if ($row->STS_FORMAT == '2') { ?>
+                <?php if ($statuspasien_old != $row->Detail) { ?>
+                    <?php $statuspasien[] = $row->Detail; ?>
+                <?php } ?>
+                <?php $statuspasien_old = $row->Detail;  ?>
+            <?php } ?>
+        <?php endforeach ?>
+        <?php array_splice($statuspasien, 0, 1); ?>
+        <?php $statuspasien    = array_values(array_unique($statuspasien)); ?>
+
+        <?php
         $no = 0;
-        foreach ($kondisipasien as $row) : ?>
+        foreach ($kondisipulang as $row) : ?>
             <?php $no++ ?>
         <?php endforeach ?>
         <?php
@@ -65,21 +117,23 @@
             <tr style="text-align: center;">
                 <th rowspan="3">Periode</th>
                 <th rowspan="3">Ruangan</th>
-                <th colspan="<?= ($no * 3) + 1; ?>">Kondisi Pasien</th>
-                <th colspan="<?= ($no * 3) + 1; ?>">Status Pasien</th>
+                <th colspan="<?= ($no * 3) + 1; ?>">Kondisi Pulang</th>
+                <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
             </tr>
+
             <tr style="text-align: center;">
-                <?php foreach ($kondisipasien as $row) : ?>
-                    <th colspan="3"><?= $row->Detail; ?></th>
+                <?php foreach ($kondisipulang as $row) : ?>
+                    <th colspan="3"><?= $row; ?></th>
                 <?php endforeach ?>
                 <th rowspan="2">Total</th>
                 <?php foreach ($statuspasien as $row1) : ?>
-                    <th colspan="3"><?= $row1->Detail; ?></th>
+                    <th colspan="3"><?= $row1; ?></th>
                 <?php endforeach ?>
                 <th rowspan="2">Total</th>
             </tr>
+
             <tr style="text-align: center;">
-                <?php foreach ($kondisipasien as $row) : ?>
+                <?php foreach ($kondisipulang as $row) : ?>
                     <th>L</th>
                     <th>P</th>
                     <th>Total</th>
@@ -91,108 +145,214 @@
                 <?php endforeach ?>
             </tr>
 
-            <?php foreach ($periode as $rowperiode) : ?>
-
-                <?php if ($datafilter['nilaifilter'] == '1') {
-                    $ruangan = $this->M_KunjunganStatusKondisiPulang->GetRuanganTgl($datafilter['tanggalawal'], $datafilter['tanggalakhir'], $instalasi->KdInstalasi, $rowperiode->TglKeluar);
-                } else if ($datafilter['nilaifilter'] == '2') {
-                    $ruangan = $this->M_KunjunganStatusKondisiPulang->GetRuanganBulan($datafilter['tahun'], $datafilter['bulanawal'], $datafilter['bulanakhir'], $instalasi->KdInstalasi, $rowperiode->TglKeluar);
-                } else {
-                    $ruangan = $this->M_KunjunganStatusKondisiPulang->GetRuanganTahun($datafilter['tahun'], $instalasi->KdInstalasi, $rowperiode->TglKeluar, $datafilter['tahunakhir']);
-                }; ?>
-
+            <?php
+            $row3 = 0;
+            while ($row3    <= count($periode) - 1) { ?>
                 <?php
+                if ($datafilter['nilaifilter'] == '2') {
+                    if ($periode[$row3] == '01') {
+                        $periode[$row3] = 'JANUARI';
+                    } else if ($periode[$row3] == '02') {
+                        $periode[$row3] = 'FEBRUARI';
+                    } else if ($periode[$row3] == '03') {
+                        $periode[$row3] = 'MARET';
+                    } else if ($periode[$row3] == '04') {
+                        $periode[$row3] = 'APRIL';
+                    } else if ($periode[$row3] == '05') {
+                        $periode[$row3] = 'MEI';
+                    } else if ($periode[$row3] == '06') {
+                        $periode[$row3] = 'JUNI';
+                    } else if ($periode[$row3] == '07') {
+                        $periode[$row3] = 'JULI';
+                    } else if ($periode[$row3] == '08') {
+                        $periode[$row3] = 'AGUSTUS';
+                    } else if ($periode[$row3] == '09') {
+                        $periode[$row3] = 'SEPTEMBER';
+                    } else if ($periode[$row3] == '10') {
+                        $periode[$row3] = 'OKTOBER';
+                    } else if ($periode[$row3] == '11') {
+                        $periode[$row3] = 'NOVEMBER';
+                    } else {
+                        $periode[$row3] = 'DESEMBER';
+                    }
+                }
+
                 $noruangan = 0;
                 foreach ($ruangan as $rowruangan) : ?>
                     <?php $noruangan++ ?>
                 <?php endforeach ?>
 
-                <?php if ($datafilter['nilaifilter'] == '2') { ?>
-                    <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $rowperiode->Bulan;            ?></td>
-                <?php } else { ?>
-                    <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $rowperiode->TglKeluar;            ?></td>
-                <?php } ?>
-
+                <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $periode[$row3];            ?></td>
                 <?php
-                $sumtotal = 0;
-                foreach ($ruangan as $row) : ?>
+                $row = 0;
+
+                while ($row <= count($ruangan) - 1) { ?>
                     <tr>
                         <?php $sumtotal = 0; ?>
-                        <td style="text-align: center;"><?php echo $row->RuanganPelayanan;            ?></td>
-                        <?php foreach ($kondisipasien as $row1) : ?>
-                            <?php if ($datafilter['nilaifilter'] == '1') {
-                                $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where TglKeluar BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "' and convert(DATE,TglKeluar) = '" . $rowperiode->TglKeluar . "'")->row();
-                            } else if ($datafilter['nilaifilter'] == '2') {
-                                $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) = '" . $datafilter['tahun'] . "' and MONTH(TglKeluar) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "' and MONTH(TglKeluar) = '" . $rowperiode->TglKeluar . "'")->row();
-                            } else {
-                                $data = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row1->Detail . "' and YEAR(TglKeluar) ='" . $rowperiode->TglKeluar . "'")->row();
-                            }; ?>
-                            <td style="text-align: center;"><?= $data->L; ?></td>
-                            <td style="text-align: center;"><?= $data->P; ?></td>
-                            <td style="text-align: center;"><?= $data->TOTAL; ?></td>
+                        <td style="text-align: center;"><?= $ruangan[$row];            ?></td>
 
-                            <?php $sumtotal = $sumtotal + $data->TOTAL  ?>
-                        <?php endforeach ?>
-                        <td style="text-align: center;"><?= $sumtotal; ?></td>
-                        <?php $sumpastotal = 0; ?>
-                        <?php foreach ($statuspasien as $row2) : ?>
-                            <?php if ($datafilter['nilaifilter'] == '1') {
-                                $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where TglKeluar BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "' and convert(DATE,TglKeluar) = '" . $rowperiode->TglKeluar . "'")->row();
-                            } else if ($datafilter['nilaifilter'] == '2') {
-                                $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) = '" . $datafilter['tahun'] . "' and MONTH(TglKeluar) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "' and MONTH(TglKeluar) = '" . $rowperiode->TglKeluar . "'")->row();
-                            } else {
-                                $data1 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where  YEAR(TglKeluar) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND KdRuanganPelayanan = '" . $row->KdRuanganPelayanan . "' AND Detail = '" . $row2->Detail . "' and YEAR(TglKeluar) ='" . $rowperiode->TglKeluar . "'")->row();
-                            }; ?>
-                            <td style="text-align: center;"><?= $data1->L; ?></td>
-                            <td style="text-align: center;"><?= $data1->P; ?></td>
-                            <td style="text-align: center;"><?= $data1->TOTAL; ?></td>
+                        <?php if ($no > 0) { ?>
+                            <?php
+                            $row1 = 0;
+                            while ($row1 <= count($kondisipulang) - 1) { ?>
+                                <?php
+                                $row2 = 0;
+                                $count = 0;
+                                while ($row2 <= count($jumlah) - 1) {
+                                    if (
+                                        $jumlah[$row2]->Detail == $kondisipulang[$row1] and
+                                        $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
+                                        $jumlah[$row2]->TANGGAL == $periode[$row3]
+                                    ) { ?>
+                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
-                            <?php $sumpastotal = $sumpastotal + $data1->TOTAL  ?>
-                        <?php endforeach ?>
-                        <td style="text-align: center;"><?= $sumpastotal; ?></td>
+                                        <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
+                                        <?php $count++ ?>
+                                    <?php
+                                    }
+
+                                    $row2++;
+                                }
+                                if ($count == 0) { ?>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: center;">0</td>
+                            <?php }
+                                $row1++;
+                            }; ?>
+                            <td style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
+                        <?php } ?>
+
+                        <?php if ($no1 > 0) { ?>
+                            <?php $sumpastotal = 0; ?>
+                            <?php
+                            $row1 = 0;
+                            while ($row1 <= count($statuspasien) - 1) { ?>
+                                <?php
+                                $row2 = 0;
+                                $count = 0;
+                                while ($row2 <= count($jumlah) - 1) {
+                                    if (
+                                        $jumlah[$row2]->Detail == $statuspasien[$row1] and
+                                        $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
+                                        $jumlah[$row2]->TANGGAL == $periode[$row3]
+                                    ) { ?>
+                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+
+                                        <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
+                                        <?php $count++ ?>
+                                    <?php
+                                    }
+
+                                    $row2++;
+                                }
+                                if ($count == 0) { ?>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: center;">0</td>
+                            <?php }
+                                $row1++;
+                            }; ?>
+                            <td style="text-align: center;"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
+
+                        <?php } ?>
                     </tr>
-                <?php endforeach ?>
-            <?php endforeach ?>
+                    <?php $row++; ?>
+                <?php }; ?>
+
+            <?php $row3++;
+            } ?>
 
             <th style="text-align: center;" colspan="2">Total</th>
-            <?php $sumtotalall = 0; ?>
-            <?php foreach ($kondisipasien as $row3) : ?>
-                <?php if ($datafilter['nilaifilter'] == '1') {
-                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where TglKeluar BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-                } else if ($datafilter['nilaifilter'] == '2') {
-                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) = '" . $datafilter['tahun'] . "' and MONTH(TglKeluar) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-                } else {
-                    $data2 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row3->Detail . "'")->row();
-                }; ?>
-                <th style="text-align: center;"><?= $data2->L; ?></th>
-                <th style="text-align: center;"><?= $data2->P; ?></th>
-                <th style="text-align: center;"><?= $data2->TOTAL; ?></th>
-                <?php $sumtotalall = $sumtotalall + $data2->TOTAL ?>
-            <?php endforeach ?>
 
-            <th style="text-align: center;"><?= $sumtotalall; ?></th>
-            <?php $sumtotalallpas = 0; ?>
-            <?php foreach ($statuspasien as $row4) : ?>
-                <?php if ($datafilter['nilaifilter'] == '1') {
-                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where TglKeluar BETWEEN '" . $datafilter['tanggalawal'] . " 00:00:00" . "' and '" . $datafilter['tanggalakhir'] . " 23:59:59' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-                } else if ($datafilter['nilaifilter'] == '2') {
-                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) = '" . $datafilter['tahun'] . "' and MONTH(TglKeluar) BETWEEN '" . $datafilter['bulanawal'] . "' and '" . $datafilter['bulanakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
-                } else {
-                    $data3 = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), TOTAL	= ISNULL(SUM(JmlPasien),0) from V_DataKunjunganPasienKeluarBKondisiPulang_Bstatus where YEAR(TglKeluar) between '" . $datafilter['tahun'] . "' and '" . $datafilter['tahunakhir'] . "' and KdInstalasi ='" . $instalasi->KdInstalasi . "' AND Detail = '" . $row4->Detail . "'")->row();
+            <?php
+            if ($no > 0) {
+                $sumtotalall = 0;
+                $row1 = 0;
+                while ($row1 <= count($kondisipulang) - 1) { ?>
+                    <?php
+                    $row2 = 0;
+                    $count = 0;
+                    $totalL = 0;
+                    $totalP = 0;
+                    $sumtotal = 0;
+                    while ($row2 <= count($jumlah) - 1) {
+                        if (
+                            $jumlah[$row2]->Detail == $kondisipulang[$row1]
+                        ) {
+                            $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
+                            $totalL = $totalL + $jumlah[$row2]->L;
+                            $totalP = $totalP + $jumlah[$row2]->P;
+                            $sumtotalall = $sumtotalall + $jumlah[$row2]->TOTAL;
+                            $count++;
+                        };
+                        $row2++;
+                    }; ?>
+
+                    <?php if ($count == 0) { ?>
+                        <th style="text-align: center;">0</th>
+                        <th style="text-align: center;">0</th>
+                        <th style="text-align: center;">0</th>
+                    <?php } else { ?>
+                        <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                        <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                        <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
+                    <?php } ?>
+                <?php $row1++;
                 }; ?>
-                <th style="text-align: center;"><?= $data3->L; ?></th>
-                <th style="text-align: center;"><?= $data3->P; ?></th>
-                <th style="text-align: center;"><?= $data3->TOTAL; ?></th>
-                <?php $sumtotalallpas = $sumtotalallpas + $data3->TOTAL ?>
-            <?php endforeach ?>
-            <th style="text-align: center;"><?= $sumtotalallpas; ?></th>
+                <th style="text-align: center;"><?= number_format($sumtotalall, 0, ',', '.'); ?></th>
+            <?php } ?>
+
+            <?php if ($no1 > 0) { ?>
+                <?php
+                $sumtotalallpas = 0;
+                $row1 = 0;
+                while ($row1 <= count($statuspasien) - 1) { ?>
+                    <?php
+                    $row2 = 0;
+                    $count = 0;
+                    $totalL = 0;
+                    $totalP = 0;
+                    $sumtotal = 0;
+                    while ($row2 <= count($jumlah) - 1) {
+                        if (
+                            $jumlah[$row2]->Detail == $statuspasien[$row1]
+                        ) {
+                            $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
+                            $totalL = $totalL + $jumlah[$row2]->L;
+                            $totalP = $totalP + $jumlah[$row2]->P;
+                            $sumtotalallpas = $sumtotalallpas + $jumlah[$row2]->TOTAL;
+                            $count++;
+                        };
+                        $row2++;
+                    }; ?>
+
+                    <?php if ($count == 0) { ?>
+                        <th style="text-align: center;">0</th>
+                        <th style="text-align: center;">0</th>
+                        <th style="text-align: center;">0</th>
+                    <?php } else { ?>
+                        <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                        <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                        <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
+                <?php }
+                    $row1++;
+                }; ?>
+
+                <th style="text-align: center;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
+            <?php } ?>
         </table>
+
     <?php } else { ?>
         <div style="width:auto;">
             <canvas id="myChart"></canvas>
         </div>
 
-        <script src=" https://code.jquery.com/jquery-3.5.1.js"> </script>
+        <script src="<?= base_url('assets/js/'); ?>jquery-3.5.1.js"> </script>
 
     <?php } ?>
 

@@ -78,10 +78,7 @@ class KunjunganStatusKondisiPulang extends CI_Controller
             $data['subtitle'] = date('d-m-Y', strtotime($tanggalawal)) . ' s.d : ' . date('d-m-Y', strtotime($tanggalakhir));
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusKondisiPulang->filterbytanggal($tanggalawal, $tanggalakhir, $instalasi);
-                $data['kondisipasien'] = $this->M_KunjunganStatusKondisiPulang->GetKondisiPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganStatusKondisiPulang->GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi);
-                $data['periode'] = $this->M_KunjunganStatusKondisiPulang->GetPeriodeTgl($tanggalawal, $tanggalakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganStatusKondisiPulang->GetDataTgl($tanggalawal, $tanggalakhir, $instalasi);
             };
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
@@ -160,10 +157,7 @@ class KunjunganStatusKondisiPulang extends CI_Controller
             $data['instalasi'] = $instalasi;
 
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusKondisiPulang->filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['kondisipasien'] = $this->M_KunjunganStatusKondisiPulang->GetKondisiPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['statuspasien'] = $this->M_KunjunganStatusKondisiPulang->GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
-                $data['periode'] = $this->M_KunjunganStatusKondisiPulang->GetPeriodeBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
+                $data['jumlah'] = $this->M_KunjunganStatusKondisiPulang->GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             }
 
             $data['datafilter'] = [
@@ -188,10 +182,7 @@ class KunjunganStatusKondisiPulang extends CI_Controller
             $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
             if ($format == '1') {
-                $data['datafilter'] = $this->M_KunjunganStatusKondisiPulang->filterbytahun($tahun2, $instalasi, $tahun3);
-                $data['kondisipasien'] = $this->M_KunjunganStatusKondisiPulang->GetKondisiPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['statuspasien'] = $this->M_KunjunganStatusKondisiPulang->GetStatusPasienTahun($tahun2, $instalasi, $tahun3);
-                $data['periode'] = $this->M_KunjunganStatusKondisiPulang->GetPeriodeTahun($tahun2, $instalasi, $tahun3);
+                $data['jumlah'] = $this->M_KunjunganStatusKondisiPulang->GetDataTahun($tahun2, $instalasi, $tahun3);
             }
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,

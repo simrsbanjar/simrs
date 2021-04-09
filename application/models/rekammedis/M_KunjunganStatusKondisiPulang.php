@@ -14,7 +14,8 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
     function GetDataTgl($tanggalawal, $tanggalakhir, $instalasi)
     {
 
-        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+        $query = $this->db->query("SELECT TANGGAL	= CONVERT(DATE,TglKeluar),
+                                          L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
                                           P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
                                           TOTAL	= ISNULL(SUM(JmlPasien),0) ,
                                           KdRuanganPelayanan,
@@ -24,9 +25,10 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                     from V_DataKunjunganPasienKeluarBKondisiPulang 
                                     where TglKeluar BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
                                       and KdInstalasi ='" . $instalasi . "'
-                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 GROUP BY CONVERT(DATE,TglKeluar),KdRuanganPelayanan,RuanganPelayanan,Detail
                                 UNION ALL
-                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                SELECT    TANGGAL	= CONVERT(DATE,TglKeluar),
+                                          L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
                                           P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
                                           TOTAL	= ISNULL(SUM(JmlPasien),0) ,
                                           KdRuanganPelayanan,
@@ -36,8 +38,8 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                     from V_DataKunjunganPasienKeluarBStatusPasien 
                                     where TglKeluar BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
                                       and KdInstalasi ='" . $instalasi . "'
-                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
+                                 GROUP BY CONVERT(DATE,TglKeluar),KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 ORDER BY CONVERT(DATE,TglKeluar),RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
@@ -45,7 +47,8 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
     function GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi)
     {
 
-        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+        $query = $this->db->query("SELECT TANGGAL = CONVERT(CHAR(2),TglKeluar,101),
+                                          L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
                                           P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
                                           TOTAL	= ISNULL(SUM(JmlPasien),0) ,
                                           KdRuanganPelayanan,
@@ -57,9 +60,10 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                     and MONTH(TglKeluar) BETWEEN '$bulanawal' 
                                     and '$bulanakhir' 
                                     and KdInstalasi ='" . $instalasi . "'
-                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 GROUP BY CONVERT(CHAR(2),TglKeluar,101),KdRuanganPelayanan,RuanganPelayanan,Detail
                                 UNION ALL
-                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                SELECT    TANGGAL = CONVERT(CHAR(2),TglKeluar,101),
+                                          L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
                                           P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
                                           TOTAL	= ISNULL(SUM(JmlPasien),0) ,
                                           KdRuanganPelayanan,
@@ -71,8 +75,8 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                     and MONTH(TglKeluar) BETWEEN '$bulanawal' 
                                     and '$bulanakhir' 
                                     and KdInstalasi ='" . $instalasi . "'
-                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
+                                 GROUP BY CONVERT(CHAR(2),TglKeluar,101),KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 ORDER BY CONVERT(CHAR(2),TglKeluar,101),RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
@@ -80,7 +84,8 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
     function GetDataTahun($tahun2, $instalasi, $tahun3)
     {
 
-        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+        $query = $this->db->query("SELECT TANGGAL = CONVERT(CHAR(4),TglKeluar,102),
+                                          L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
                                           P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
                                           TOTAL	= ISNULL(SUM(JmlPasien),0) ,
                                           KdRuanganPelayanan,
@@ -91,9 +96,10 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                     where YEAR(TglKeluar) BETWEEN '" . $tahun2 . "' 
                                     and '$tahun3' 
                                     and KdInstalasi ='" . $instalasi . "'
-                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 GROUP BY CONVERT(CHAR(4),TglKeluar,102),KdRuanganPelayanan,RuanganPelayanan,Detail
                                 UNION ALL
-                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                SELECT    TANGGAL = CONVERT(CHAR(4),TglKeluar,102),
+                                          L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
                                           P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
                                           TOTAL	= ISNULL(SUM(JmlPasien),0) ,
                                           KdRuanganPelayanan,
@@ -104,8 +110,8 @@ class M_KunjunganStatusKondisiPulang extends CI_Model
                                     where YEAR(TglKeluar) BETWEEN '" . $tahun2 . "' 
                                     and '$tahun3' 
                                     and KdInstalasi ='" . $instalasi . "'
-                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY KdRuanganPelayanan,RuanganPelayanan,Detail");
+                                 GROUP BY CONVERT(CHAR(4),TglKeluar,102),KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 ORDER BY CONVERT(CHAR(4),TglKeluar,102),KdRuanganPelayanan,RuanganPelayanan,Detail");
 
         return $query->result();
     }
