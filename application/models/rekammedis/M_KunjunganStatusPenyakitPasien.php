@@ -11,96 +11,101 @@ class M_KunjunganStatusPenyakitPasien extends CI_Model
         return $query->result();
     }
 
-    function filterbytanggal($tanggalawal, $tanggalakhir, $instalasi)
+    function GetDataTgl($tanggalawal, $tanggalakhir, $instalasi)
     {
 
-        $query = $this->db->query("SELECT * from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' and KdInstalasi ='" . $instalasi . "' ORDER BY TglPendaftaran ASC ");
+        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '1'
+                                    from V_DataKunjunganPasienMasukBKasusPenyakit 
+                                    where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
+                                      and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                UNION ALL
+                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '2'
+                                    from V_DataKunjunganPasienMasukBStatusPasien 
+                                    where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
+                                      and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
 
-    function GetPenyakitPasienTgl($tanggalawal, $tanggalakhir, $instalasi)
+    function GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi)
     {
 
-        $query = $this->db->query("SELECT Judul, Detail from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' AND Judul = 'Kasus Penyakit' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
-
-        return $query->result();
-    }
-    function GetStatusPasienTgl($tanggalawal, $tanggalakhir, $instalasi)
-    {
-
-        $query = $this->db->query("SELECT Judul, Detail from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' AND Judul = 'Status Pasien' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
-
-        return $query->result();
-    }
-
-    function GetRuanganTgl($tanggalawal, $tanggalakhir, $instalasi)
-    {
-
-        $query = $this->db->query("SELECT KdRuanganPelayanan, RuanganPelayanan from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' and KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
-
-        return $query->result();
-    }
-
-    function filterbybulan($tahun1, $bulanawal, $bulanakhir, $instalasi)
-    {
-
-        $query = $this->db->query("SELECT * from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '$tahun1' and MONTH(TglPendaftaran) BETWEEN '$bulanawal' and '$bulanakhir' and KdInstalasi ='" . $instalasi . "' ORDER BY TglPendaftaran ASC ");
-
-        return $query->result();
-    }
-
-    function GetPenyakitPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi)
-    {
-
-        $query = $this->db->query("SELECT Judul, Detail from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '$tahun1' and MONTH(TglPendaftaran) BETWEEN '$bulanawal' and '$bulanakhir' and KdInstalasi ='" . $instalasi . "' AND Judul = 'Kasus Penyakit' GROUP BY Judul, Detail ORDER BY Judul, Detail");
-
-        return $query->result();
-    }
-    function GetStatusPasienBulan($tahun1, $bulanawal, $bulanakhir, $instalasi)
-    {
-
-        $query = $this->db->query("SELECT Judul, Detail from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '$tahun1' and MONTH(TglPendaftaran) BETWEEN '$bulanawal' and '$bulanakhir' and KdInstalasi ='" . $instalasi . "' AND Judul = 'Status Pasien' GROUP BY Judul, Detail ORDER BY Judul, Detail");
+        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '1'
+                                    from V_DataKunjunganPasienMasukBKasusPenyakit 
+                                    where YEAR(TglPendaftaran) = '$tahun1' 
+                                    and MONTH(TglPendaftaran) BETWEEN '$bulanawal' 
+                                    and '$bulanakhir' 
+                                    and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                UNION ALL
+                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '2'
+                                    from V_DataKunjunganPasienMasukBStatusPasien 
+                                    where YEAR(TglPendaftaran) = '$tahun1' 
+                                    and MONTH(TglPendaftaran) BETWEEN '$bulanawal' 
+                                    and '$bulanakhir' 
+                                    and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
 
-    function GetRuanganBulan($tahun1, $bulanawal, $bulanakhir, $instalasi)
+    function GetDataTahun($tahun2, $instalasi, $tahun3)
     {
 
-        $query = $this->db->query("SELECT KdRuanganPelayanan, RuanganPelayanan from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) = '" . $tahun1 . "' and MONTH(TglPendaftaran) BETWEEN '" . $bulanawal . "' and '" . $bulanakhir . "' and KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
-
-        return $query->result();
-    }
-
-    function filterbytahun($tahun2, $instalasi, $tahun3)
-    {
-
-        $query = $this->db->query("SELECT * from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' and KdInstalasi ='" . $instalasi . "'  ORDER BY TglPendaftaran ASC ");
-
-        return $query->result();
-    }
-
-    function GetPenyakitPasienTahun($tahun2, $instalasi, $tahun3)
-    {
-
-        $query = $this->db->query("SELECT Judul, Detail  from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND Judul = 'Kasus Penyakit' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
-
-        return $query->result();
-    }
-
-    function GetStatusPasienTahun($tahun2, $instalasi, $tahun3)
-    {
-
-        $query = $this->db->query("SELECT Judul, Detail  from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '$tahun2' and '$tahun3' AND Judul = 'Status Pasien' and KdInstalasi ='" . $instalasi . "' GROUP BY Judul, Detail ORDER BY Judul, Detail");
-
-        return $query->result();
-    }
-
-    function GetRuanganTahun($tahun2, $instalasi, $tahun3)
-    {
-
-        $query = $this->db->query("SELECT KdRuanganPelayanan, RuanganPelayanan from V_DataKunjunganPasienMasukBstatusBkasusPenyakit where YEAR(TglPendaftaran) between '" . $tahun2 . "' and '$tahun3' and KdInstalasi ='" . $instalasi . "' GROUP BY KdRuanganPelayanan, RuanganPelayanan");
+        $query = $this->db->query("SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '1'
+                                    from V_DataKunjunganPasienMasukBKasusPenyakit 
+                                    where YEAR(TglPendaftaran) BETWEEN '" . $tahun2 . "' 
+                                    and '$tahun3' 
+                                    and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                UNION ALL
+                                SELECT L		= ISNULL(SUM(CASE WHEN JK = 'L' THEN   JmlPasien ELSE 0 END),0), 
+                                          P 		= ISNULL(SUM(CASE WHEN JK = 'P' THEN   JmlPasien ELSE 0 END),0), 
+                                          TOTAL	= ISNULL(SUM(JmlPasien),0) ,
+                                          KdRuanganPelayanan,
+                                          RuanganPelayanan,
+                                          Detail,
+                                          STS_FORMAT	 = '2'
+                                    from V_DataKunjunganPasienMasukBStatusPasien 
+                                    where YEAR(TglPendaftaran) BETWEEN '" . $tahun2 . "' 
+                                    and '$tahun3' 
+                                    and KdInstalasi ='" . $instalasi . "'
+                                 GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
