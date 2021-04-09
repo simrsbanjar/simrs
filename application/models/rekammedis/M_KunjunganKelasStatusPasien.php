@@ -104,7 +104,7 @@ class M_KunjunganKelasStatusPasien extends CI_Model
                                     and '$tahun3' 
                                     and KdInstalasi ='" . $instalasi . "'
                                  GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY KdRuanganPelayanan,RuanganPelayanan,Detail");
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
