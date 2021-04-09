@@ -36,7 +36,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                     where TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' and '" . $tanggalakhir . " 23:59:59' 
                                       and KdInstalasi ='" . $instalasi . "'
                                  GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY KdRuanganPelayanan,RuanganPelayanan,Detail");
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
@@ -71,7 +71,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                     and '$bulanakhir' 
                                     and KdInstalasi ='" . $instalasi . "'
                                  GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY KdRuanganPelayanan,RuanganPelayanan,Detail");
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
@@ -104,7 +104,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                     and '$tahun3' 
                                     and KdInstalasi ='" . $instalasi . "'
                                  GROUP BY KdRuanganPelayanan,RuanganPelayanan,Detail
-                                 ORDER BY KdRuanganPelayanan,RuanganPelayanan,Detail");
+                                 ORDER BY RuanganPelayanan,KdRuanganPelayanan,Detail");
 
         return $query->result();
     }
