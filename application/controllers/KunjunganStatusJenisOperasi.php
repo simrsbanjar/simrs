@@ -6,20 +6,25 @@ class KunjunganStatusJenisOperasi extends CI_Controller
     {
         parent::__construct();
         $this->load->model('rekammedis/M_KunjunganStatusJenisOperasi');
+        $this->load->library('session');
     }
     function index()
     {
-        $data['tahun'] = $this->M_KunjunganStatusJenisOperasi->gettahun();
+        if ($this->session->userdata('idpegawai')) {
+            $data['tahun'] = $this->M_KunjunganStatusJenisOperasi->gettahun();
 
-        $data['title'] = 'Kunjungan Berdasarkan Status dan Jenis Operasi';
-        $data['laporan'] = 'Laporan Berdasarkan Status dan Jenis Operasi';
-        $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
-        $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('rekammedis/KunjunganStatusJenisOperasi', $data);
-        $this->load->view('templates/footer');
+            $data['title'] = 'Kunjungan Berdasarkan Status dan Jenis Operasi';
+            $data['laporan'] = 'Laporan Berdasarkan Status dan Jenis Operasi';
+            $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
+            $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('rekammedis/KunjunganStatusJenisOperasi', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('auth');
+        }
     }
 
     public function Grafik()

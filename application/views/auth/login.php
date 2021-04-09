@@ -12,14 +12,15 @@
                         <div class="col-lg">
 
                             <div class="text-center">
-                                <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px" class="mb-3 col col-auto"><img>
+                                <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px"><img>
                             </div>
                             <!-- <hr> -->
                             <div class="p-2">
 
                                 <center>
                                     <!-- <h4 class="shadow-sm p-3 bg-white" style="color: black;">Sistem Informasi Manajamen Rumah Sakit</h4> -->
-                                    <h4><img src="<?= base_url('assets/'); ?>img/simrs/kata simrs.png">Sistem Informasi Manajamen Rumah Sakit</h4>
+                                    <img src="<?= base_url('assets/'); ?>img/simrs/kata simrs.png">
+                                    <h4>Sistem Informasi Manajamen Rumah Sakit</h4>
                                 </center>
                                 <br>
 

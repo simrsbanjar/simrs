@@ -7,21 +7,26 @@ class DaftarPasienRajal extends CI_Controller
     {
         parent::__construct();
         $this->load->model("rekammedis/M_DaftarPasienRajal");
+        $this->load->library('session');
         // $this->load->library('mypdf');
         //$this->mypdf->generate('rekammedis/laporan/LapDaftarPasienRajal');
     }
 
     public function index()
     {
-        $data['title'] = 'Daftar Pasien Rawat Jalan';
-        $data['laporan'] = 'Laporan Daftar Pasien Rawat Jalan';
-        $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
-        $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('rekammedis/DaftarPasienRajal', $data);
-        $this->load->view('templates/footer');
+        if ($this->session->userdata('idpegawai')) {
+            $data['title'] = 'Daftar Pasien Rawat Jalan';
+            $data['laporan'] = 'Laporan Daftar Pasien Rawat Jalan';
+            $data['datapegawai']    = $this->db->get_where('dataPegawai', ['IdPegawai' => $this->session->userdata('idpegawai')])->row_array();
+            $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('rekammedis/DaftarPasienRajal', $data);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('auth');
+        }
     }
 
     public function getData()
