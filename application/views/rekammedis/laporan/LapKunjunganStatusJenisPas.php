@@ -286,7 +286,7 @@
             <canvas id="myChart"></canvas>
         </div>
 
-        <script src=" https://code.jquery.com/jquery-3.5.1.js"> </script>
+        <script src="<?= base_url('assets/js/'); ?>jquery-3.5.1.js"> </script>
 
     <?php } ?>
 
