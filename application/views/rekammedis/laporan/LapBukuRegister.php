@@ -18,7 +18,7 @@
             <table id="myTable" class="table table-striped table-bordered" style="width:100%">
                 <div class="card-body">
                     <thead>
-                        <tr style="text-align: center;">
+                        <tr style="text-align: center;" class="align-middle">
                             <th>Kode Status</th>
                             <th>Status</th>
                             <th>QStatus</th>

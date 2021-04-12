@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Daftar Pulang Rawat Inap</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
     <style>
         .line-title {
             border: 0;
@@ -44,8 +44,8 @@
             Periode : <?= date('d-m-Y', strtotime($datafilter['TglAwal'])) ?> s.d <?= date('d-m-Y', strtotime($datafilter['TglAkhir'])) ?>
         </p>
     </div>
-    <table class="table table-bordered mt-5">
-        <tr style="text-align: center;">
+    <table class="table table-bordered mt-5 border border-dark">
+        <tr style="text-align: center;" class="align-middle">
             <th>No. Urut</th>
             <th>No. CM</th>
             <th>Nama Pasien</th>

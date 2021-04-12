@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Laporan Kunjungan Pasien Berdasarkan Status dan Kondisi Pasien</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
     <!-- Chart Plugin -->
     <script src="<?php echo base_url(); ?>assets/css/Chart.bundle.js"></script>
     <script src="<?php echo base_url(); ?>assets/css/Chart.bundle.min.js"></script>
@@ -71,7 +71,6 @@
                 <?php $ruangan_old = $row->RuanganPelayanan;  ?>
             <?php } ?>
         <?php endforeach ?>
-        <?php array_splice($ruangan, 0, 1); ?>
         <?php $ruangan    = array_values(array_unique($ruangan)); ?>
 
         <?php
@@ -113,37 +112,39 @@
             <?php $no1++ ?>
         <?php endforeach ?>
 
-        <table class="table table-bordered mt-5">
-            <tr style="text-align: center;">
-                <th rowspan="3">Periode</th>
-                <th rowspan="3">Ruangan</th>
-                <th colspan="<?= ($no * 3) + 1; ?>">Kondisi Pulang</th>
-                <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
-            </tr>
+        <table class="table table-bordered mt-5 border border-dark">
+            <thead>
+                <tr style="text-align: center;" class="align-middle">
+                    <th rowspan="3">Periode</th>
+                    <th rowspan="3">Ruangan</th>
+                    <th colspan="<?= ($no * 3) + 1; ?>">Kondisi Pulang</th>
+                    <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
+                </tr>
 
-            <tr style="text-align: center;">
-                <?php foreach ($kondisipulang as $row) : ?>
-                    <th colspan="3"><?= $row; ?></th>
-                <?php endforeach ?>
-                <th rowspan="2">Total</th>
-                <?php foreach ($statuspasien as $row1) : ?>
-                    <th colspan="3"><?= $row1; ?></th>
-                <?php endforeach ?>
-                <th rowspan="2">Total</th>
-            </tr>
+                <tr style="text-align: center;" class="align-middle">
+                    <?php foreach ($kondisipulang as $row) : ?>
+                        <th colspan="3"><?= $row; ?></th>
+                    <?php endforeach ?>
+                    <th rowspan="2">Total</th>
+                    <?php foreach ($statuspasien as $row1) : ?>
+                        <th colspan="3"><?= $row1; ?></th>
+                    <?php endforeach ?>
+                    <th rowspan="2">Total</th>
+                </tr>
 
-            <tr style="text-align: center;">
-                <?php foreach ($kondisipulang as $row) : ?>
-                    <th>L</th>
-                    <th>P</th>
-                    <th>Total</th>
-                <?php endforeach ?>
-                <?php foreach ($statuspasien as $row1) : ?>
-                    <th>L</th>
-                    <th>P</th>
-                    <th>Total</th>
-                <?php endforeach ?>
-            </tr>
+                <tr style="text-align: center;" class="align-middle">
+                    <?php foreach ($kondisipulang as $row) : ?>
+                        <th>L</th>
+                        <th>P</th>
+                        <th>Total</th>
+                    <?php endforeach ?>
+                    <?php foreach ($statuspasien as $row1) : ?>
+                        <th>L</th>
+                        <th>P</th>
+                        <th>Total</th>
+                    <?php endforeach ?>
+                </tr>
+            </thead>
 
             <?php
             $row3 = 0;
@@ -151,29 +152,29 @@
                 <?php
                 if ($datafilter['nilaifilter'] == '2') {
                     if ($periode[$row3] == '01') {
-                        $periode[$row3] = 'JANUARI';
+                        $periodebln = 'JANUARI';
                     } else if ($periode[$row3] == '02') {
-                        $periode[$row3] = 'FEBRUARI';
+                        $periodebln = 'FEBRUARI';
                     } else if ($periode[$row3] == '03') {
-                        $periode[$row3] = 'MARET';
+                        $periodebln = 'MARET';
                     } else if ($periode[$row3] == '04') {
-                        $periode[$row3] = 'APRIL';
+                        $periodebln = 'APRIL';
                     } else if ($periode[$row3] == '05') {
-                        $periode[$row3] = 'MEI';
+                        $periodebln = 'MEI';
                     } else if ($periode[$row3] == '06') {
-                        $periode[$row3] = 'JUNI';
+                        $periodebln = 'JUNI';
                     } else if ($periode[$row3] == '07') {
-                        $periode[$row3] = 'JULI';
+                        $periodebln = 'JULI';
                     } else if ($periode[$row3] == '08') {
-                        $periode[$row3] = 'AGUSTUS';
+                        $periodebln = 'AGUSTUS';
                     } else if ($periode[$row3] == '09') {
-                        $periode[$row3] = 'SEPTEMBER';
+                        $periodebln = 'SEPTEMBER';
                     } else if ($periode[$row3] == '10') {
-                        $periode[$row3] = 'OKTOBER';
+                        $periodebln = 'OKTOBER';
                     } else if ($periode[$row3] == '11') {
-                        $periode[$row3] = 'NOVEMBER';
+                        $periodebln = 'NOVEMBER';
                     } else {
-                        $periode[$row3] = 'DESEMBER';
+                        $periodebln = 'DESEMBER';
                     }
                 }
 
@@ -182,14 +183,17 @@
                     <?php $noruangan++ ?>
                 <?php endforeach ?>
 
-                <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $periode[$row3];            ?></td>
-                <?php
+                <?php if ($datafilter['nilaifilter'] == '2') { ?>
+                    <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $periodebln;            ?></td>
+                <?php } else { ?>
+                    <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $periode[$row3];            ?></td>
+                <?php }
                 $row = 0;
 
                 while ($row <= count($ruangan) - 1) { ?>
                     <tr>
                         <?php $sumtotal = 0; ?>
-                        <td style="text-align: center;"><?= $ruangan[$row];            ?></td>
+                        <td style="text-align: center;" class="align-middle"><?= $ruangan[$row];            ?></td>
 
                         <?php if ($no > 0) { ?>
                             <?php
@@ -204,9 +208,9 @@
                                         $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
                                         $jumlah[$row2]->TANGGAL == $periode[$row3]
                                     ) { ?>
-                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                         <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
                                         <?php $count++ ?>
@@ -216,13 +220,13 @@
                                     $row2++;
                                 }
                                 if ($count == 0) { ?>
-                                    <td style="text-align: center;">0</td>
-                                    <td style="text-align: center;">0</td>
-                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: center;" class="align-middle">0</td>
+                                    <td style="text-align: center;" class="align-middle">0</td>
+                                    <td style="text-align: center;" class="align-middle">0</td>
                             <?php }
                                 $row1++;
                             }; ?>
-                            <td style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
+                            <td style="text-align: center;" class="align-middle"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
                         <?php } ?>
 
                         <?php if ($no1 > 0) { ?>
@@ -239,9 +243,9 @@
                                         $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
                                         $jumlah[$row2]->TANGGAL == $periode[$row3]
                                     ) { ?>
-                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                         <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
                                         <?php $count++ ?>
@@ -251,13 +255,13 @@
                                     $row2++;
                                 }
                                 if ($count == 0) { ?>
-                                    <td style="text-align: center;">0</td>
-                                    <td style="text-align: center;">0</td>
-                                    <td style="text-align: center;">0</td>
+                                    <td style="text-align: center;" class="align-middle">0</td>
+                                    <td style="text-align: center;" class="align-middle">0</td>
+                                    <td style="text-align: center;" class="align-middle">0</td>
                             <?php }
                                 $row1++;
                             }; ?>
-                            <td style="text-align: center;"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
+                            <td style="text-align: center;" class="align-middle"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
 
                         <?php } ?>
                     </tr>
@@ -346,7 +350,6 @@
                 <th style="text-align: center;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
             <?php } ?>
         </table>
-
     <?php } else { ?>
         <div style="width:auto;">
             <canvas id="myChart"></canvas>

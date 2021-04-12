@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Laporan Daftar Pasien Meninggal</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
 
 </head>
 
@@ -38,9 +38,9 @@
             Tanggal Meninggal : <?= date('d-m-Y', strtotime($datafilter['TglAwal'])) ?> s.d <?= date('d-m-Y', strtotime($datafilter['TglAkhir'])) ?>
         </p>
     </div>
-    <table class="table table-bordered mt-5">
+    <table class="table table-bordered mt-5 border border-dark">
         <thead>
-            <tr style="text-align: center;">
+            <tr style="text-align: center;" class="align-middle">
                 <th>No</th>
                 <th>No. CM</th>
                 <th>Nama Pasien</th>
@@ -61,7 +61,7 @@
             <?php $TglMeninggal = date('d-m-Y', strtotime($row->TglMeninggal)) ?>
 
             <tr>
-                <td style="text-align: center;"><?php echo $no++; ?></td>
+                <td style="text-align: center;" class="align-middle"><?php echo $no++; ?></td>
                 <td><?php echo $row->NoCM ?></td>
                 <td><?php echo $row->NamaPasien ?></td>
                 <td><?php echo $row->Umur ?></td>

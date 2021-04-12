@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Operasi</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
     <!-- Chart Plugin -->
     <script src="<?php echo base_url(); ?>assets/css/Chart.bundle.js"></script>
     <script src="<?php echo base_url(); ?>assets/css/Chart.bundle.min.js"></script>
@@ -120,8 +120,8 @@
         <?php endforeach ?>
 
 
-        <table class="table table-bordered mt-5">
-            <tr style="text-align: center;">
+        <table class="table table-bordered mt-5 border border-dark">
+            <tr style="text-align: center;" class="align-middle">
                 <th rowspan="3">Ruangan</th>
                 <?php if ($no > 0) { ?>
                     <th colspan="<?= ($no * 3) + 1; ?>">Jenis Operasi</th>
@@ -130,7 +130,7 @@
                     <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
                 <?php } ?>
             </tr>
-            <tr style="text-align: center;">
+            <tr style="text-align: center;" class="align-middle">
                 <?php if ($no > 0) { ?>
                     <?php foreach ($jenisoperasi as $row) : ?>
                         <th colspan="3"><?= $row; ?></th>
@@ -145,7 +145,7 @@
                 <?php } ?>
             </tr>
 
-            <tr style="text-align: center;">
+            <tr style="text-align: center;" class="align-middle">
                 <?php if ($no > 0) { ?>
                     <?php foreach ($jenisoperasi as $row) : ?>
                         <th>L</th>
@@ -167,7 +167,7 @@
             while ($row <= count($ruangan) - 1) { ?>
                 <tr>
                     <?php $sumtotal = 0; ?>
-                    <td style="text-align: center;"><?= $ruangan[$row]['RuanganPelayanan'];            ?></td>
+                    <td style="text-align: center;" class="align-middle"><?= $ruangan[$row]['RuanganPelayanan'];            ?></td>
 
                     <?php if ($no > 0) { ?>
                         <?php
@@ -181,9 +181,9 @@
                                     $jumlah[$row2]->Detail == $jenisoperasi[$row1] and
                                     $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
                                 ) { ?>
-                                    <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                     <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
                                     <?php $count++ ?>
@@ -193,13 +193,13 @@
                                 $row2++;
                             }
                             if ($count == 0) { ?>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;" class="align-middle">0</td>
+                                <td style="text-align: center;" class="align-middle">0</td>
+                                <td style="text-align: center;" class="align-middle">0</td>
                         <?php }
                             $row1++;
                         }; ?>
-                        <td style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
+                        <td style="text-align: center;" class="align-middle"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
                     <?php } ?>
 
                     <?php if ($no1 > 0) { ?>
@@ -215,9 +215,9 @@
                                     $jumlah[$row2]->Detail == $statuspasien[$row1] and
                                     $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
                                 ) { ?>
-                                    <td style="text-align: center;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                     <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
                                     <?php $count++ ?>
@@ -227,13 +227,13 @@
                                 $row2++;
                             }
                             if ($count == 0) { ?>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: center;">0</td>
-                                <td style="text-align: center;">0</td>
+                                <td style="text-align: center;" class="align-middle">0</td>
+                                <td style="text-align: center;" class="align-middle">0</td>
+                                <td style="text-align: center;" class="align-middle">0</td>
                         <?php }
                             $row1++;
                         }; ?>
-                        <td style="text-align: center;"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
+                        <td style="text-align: center;" class="align-middle"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
 
                     <?php } ?>
                 </tr>

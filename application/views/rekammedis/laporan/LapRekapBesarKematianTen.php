@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Rekapitulasi 10 Besar</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
     <style>
         .line-title {
             border: 0;
@@ -69,8 +69,8 @@
     </div>
 
     <?php if ($datafilter['kliktombol'] == '1') { ?>
-        <table class="table table-bordered mt-5">
-            <tr style="text-align: center;">
+        <table class="table table-bordered mt-5 border border-dark">
+            <tr style="text-align: center;" class="align-middle">
                 <th>No. Urut</th>
                 <th>Kd. Diagnosa</th>
                 <th>Diagnosa</th>
@@ -88,11 +88,11 @@
             $no = 1;
             foreach ($datahasil as $row) : ?>
                 <tr>
-                    <td style="text-align: center;"><?php echo $no++;                 ?></td>
-                    <td style="text-align: center;"><?php echo $row->KdDiagnosa;            ?></td>
+                    <td style="text-align: center;" class="align-middle"><?php echo $no++;                 ?></td>
+                    <td style="text-align: center;" class="align-middle"><?php echo $row->KdDiagnosa;            ?></td>
                     <td><?php echo $row->Diagnosa;    ?></td>
-                    <td style="text-align: center;"><?php echo $row->JumlahPasien;    ?></td>
-                    <td style="text-align: center;"><?php echo round(($row->JumlahPasien / $jumlahdata) * 100, 2); ?> % </td>
+                    <td style="text-align: center;" class="align-middle"><?php echo $row->JumlahPasien;    ?></td>
+                    <td style="text-align: center;" class="align-middle"><?php echo round(($row->JumlahPasien / $jumlahdata) * 100, 2); ?> % </td>
                 </tr>
             <?php endforeach ?>
 

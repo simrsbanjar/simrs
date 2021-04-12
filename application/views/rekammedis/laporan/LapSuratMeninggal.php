@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
     <title>Surat Meninggal</title>
 </head>
 
@@ -14,7 +14,7 @@
     <?php $profil = $this->db->query("SELECT * FROM ProfilRS")->row(); ?>
     <table style="width: 100%;">
         <tr>
-            <td style="text-align: center;">
+            <td style="text-align: center;" class="align-middle">
                 <span style="line-height: 1.6; font-weight: bold; font-size: 16px;">
                     <?= $profil->NamaRS ?>
                     <br>
