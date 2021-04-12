@@ -25,7 +25,6 @@
     <link href="<?php echo base_url(); ?>assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <!-- <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet"> -->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.css" rel="stylesheet">
     <link href="<?= base_url('assets/'); ?>css/rsubanjar.css" rel="stylesheet">
     <script src="<?php echo base_url(); ?>assets/vendor/datatables/jquery.dataTables.js"></script>
@@ -40,10 +39,11 @@
     <link href="<?= base_url('assets/'); ?>css/Chart.min.css">
     <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
     <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
+
     <!-- Data label -->
     <script src="<?php echo base_url() ?>assets/css/chartjs-plugin-datalabels.js"></script>
     <script src="<?php echo base_url() ?>assets/css/chartjs-plugin-datalabels.min.js"></script>
-    <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap.min.css">
+
     <style>
         .line-title {
             border: 0;
