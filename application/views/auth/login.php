@@ -12,7 +12,7 @@
                         <div class="col-lg">
 
                             <div class="text-center">
-                                <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="320px"><img>
+                                <img src="<?= base_url('assets/') ?>img/simrs/logo.png" width="90%"><img>
                             </div>
                             <!-- <hr> -->
                             <div class="p-2">

@@ -21,6 +21,7 @@ class UbahPassword extends CI_Controller
         $data['title']          = 'Ubah Password';
         $data['ruangan']        = $this->db->get_where('ruangan', ['KdRuangan' => $this->session->userdata('ruangan')])->row_array();
         $data['menu']           = $this->db->query("SELECT * FROM ListMenuWeb WHERE StatusEnabled = '1' ORDER BY NoUrut")->result();
+        $data['laporan'] = 'Ubah Password';
 
         $this->form_validation->set_rules('currentpassword', 'Password Lama', 'required|trim');
         $this->form_validation->set_rules('newpassword1', 'Password Baru', 'required|trim|min_length[3]|matches[newpassword2]');
