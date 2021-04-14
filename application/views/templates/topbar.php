@@ -6,7 +6,9 @@
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+            <div class="mr-1 d-none d-lg-inline text-gray-600">
+                <h4 id="demo"></h4>
+            </div>
             <!-- Sidebar Toggle (Topbar) -->
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                 <i class="fa fa-bars"></i>
@@ -15,7 +17,6 @@
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
                 <!-- Nav Item - User Information -->
-
                 <!-- Judul Sistem Informasi Manajemen Rumah Sakit -->
                 <!-- <h2 class="mt-3" style="position: static; font-weight: bold; margin-right: 100px; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">Sistem Informasi Manajemen Rumah Sakit</h2> -->
                 <li class="nav-item dropdown no-arrow">

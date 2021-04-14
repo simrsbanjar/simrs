@@ -124,6 +124,9 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div class="mr-1 d-none d-lg-inline text-gray-600">
+                        <h4 id="demo"></h4>
+                    </div>
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -245,5 +248,14 @@
     <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
 </body>
+
+<script>
+    var myVar = setInterval(myTimer, 1000);
+
+    function myTimer() {
+        var d = new Date();
+        document.getElementById("demo").innerHTML = d.toLocaleDateString("id") + ' ' + d.toLocaleTimeString();
+    }
+</script>
 
 </html>
