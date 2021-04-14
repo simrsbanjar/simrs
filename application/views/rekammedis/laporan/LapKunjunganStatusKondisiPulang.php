@@ -16,7 +16,6 @@
     <link href="<?= base_url('assets/'); ?>css/Chart.min.css">
     <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
     <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
-
 </head>
 
 <body>
@@ -49,6 +48,7 @@
             Instalasi : <?= $instalasi->NamaInstalasi  ?>
         </p>
     </div>
+
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
         $periode_old = '';
@@ -358,11 +358,10 @@
         <script src="<?= base_url('assets/js/'); ?>jquery-3.5.1.js"> </script>
 
     <?php } ?>
-
 </body>
 
 <script>
-    <?php if ($datafilter['format'] = '2') { ?>
+    <?php if ($datafilter['format'] == '2') { ?>
         var periode = "<?= $datafilter['nilaifilter'] ?>";
         var instalasi = "<?= $datafilter['instalasi'] ?>";
 
@@ -373,6 +372,8 @@
         var bulanakhir = "<?= $datafilter['bulanakhir'] ?>";
         var tahun2 = "<?= $datafilter['tahun2'] ?>";
         var tahun3 = "<?= $datafilter['tahun3'] ?>";
+        var tampil = null;
+
         var dataparm = {
             "tanggalawal": tanggalawal,
             "tanggalakhir": tanggalakhir,
@@ -414,7 +415,7 @@
             data: dataparm,
             success: function(msg) {
                 var densityCanvas = document.getElementById("myChart");
-
+                tampil = msg.hasil;
                 var totaldata = [];
                 var tanggaldata = [];
                 var yaxisdata = [];
@@ -522,9 +523,20 @@
                 });
             }
         });
-    <?php } ?>
 
-    // setTimeout(window.print, 5000);
+        if (tampil === null) {
+            var myVar = setInterval(myMethod, 500);
+        }
+
+        function myMethod() {
+            if (tampil != null) {
+                window.print();
+                clearInterval(myVar);
+            }
+        }
+    <?php } else { ?>
+        window.print();
+    <?php } ?>
 </script>
 
 </html>
