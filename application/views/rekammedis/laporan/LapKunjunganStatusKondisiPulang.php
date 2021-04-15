@@ -421,7 +421,6 @@
                 var yaxisdata = [];
                 var dataawal = [];
 
-                // console.log(datahasil);
                 for (var i in msg.hasil) {
 
                     var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
