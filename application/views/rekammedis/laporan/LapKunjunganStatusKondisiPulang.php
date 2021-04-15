@@ -415,7 +415,7 @@
             data: dataparm,
             success: function(msg) {
                 var densityCanvas = document.getElementById("myChart");
-                tampil = msg.hasil;
+
                 var totaldata = [];
                 var tanggaldata = [];
                 var yaxisdata = [];
@@ -521,6 +521,7 @@
                     }],
                     options: setup
                 });
+                tampil = msg.hasil;
             }
         });
 
