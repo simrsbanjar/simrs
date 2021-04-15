@@ -415,13 +415,12 @@
             data: dataparm,
             success: function(msg) {
                 var densityCanvas = document.getElementById("myChart");
-                tampil = msg.hasil;
+
                 var totaldata = [];
                 var tanggaldata = [];
                 var yaxisdata = [];
                 var dataawal = [];
 
-                // console.log(datahasil);
                 for (var i in msg.hasil) {
 
                     var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
@@ -521,6 +520,7 @@
                     }],
                     options: setup
                 });
+                tampil = msg.hasil;
             }
         });
 
