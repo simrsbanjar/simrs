@@ -63,7 +63,8 @@
 
     function myTimer() {
         var date = new Date();
-        document.getElementById("demo").innerHTML = getharitanggal(date, '1') + '<br>' + getharitanggal(date, '2');
+        document.getElementById("demo").innerHTML = '<font size = "5">' + getharitanggal(date, '1') + '</font>' + '<br>' + '<div class="mt-1">' +
+            '<font size = "3">' + getharitanggal(date, '2') + '</font>' + '</div>';
     }
 
     function getharitanggal(date, status) {

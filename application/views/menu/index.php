@@ -124,11 +124,12 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <div class="btn btn-app btn-danger btn-xs mr-1 d-none d-lg-inline" style="min-width:127px">
-                        <i class="far fa-calendar-alt" style="float: left; padding-top:0.5rem; padding-bottom:0.5rem; padding-right:0.25rem; padding-left:0;"></i>
-                        <span style="font-size: 14px; float: left; padding-left: 5px; line-height: 16px; text-align: left;">
-                            <h4 id="demo" style="font-size: 16px"></h4>
-                        </span>
+                    <div class="btn btn-danger btn-xs mr-1 d-none d-lg-inline" style="min-width:210px;">
+                        <div style="font-size: 20px;">
+                            <i class="far fa-calendar-alt fa-lg" style="float: left; padding-top:0.5rem; padding-bottom:0.5rem; padding-right:0.25rem; padding-left:0;"></i>
+                        </div>
+                        <span style="font-size: 14px; float: left; padding-left: 5px; line-height: 50px; text-align: left;">
+                            <span id="demo" style="font-size: 16px; float:left; padding-left: 5px; line-height: 16px;text-align: left;"></span>
                     </div>
 
                     <!-- Sidebar Toggle (Topbar) -->
@@ -258,7 +259,8 @@
 
     function myTimer() {
         var date = new Date();
-        document.getElementById("demo").innerHTML = getharitanggal(date, '1') + '<br>' + getharitanggal(date, '2');
+        document.getElementById("demo").innerHTML = '<font size = "5">' + getharitanggal(date, '1') + '</font>' + '<br>' + '<div class="mt-1">' +
+            '<font size = "3">' + getharitanggal(date, '2') + '</font>' + '</div>';
     }
 
     function getharitanggal(date, status) {
