@@ -121,46 +121,49 @@
 
 
         <table class="table table-bordered mt-5 border border-dark">
-            <tr style="text-align: center;" class="align-middle">
-                <th rowspan="3">Ruangan</th>
-                <?php if ($no > 0) { ?>
-                    <th colspan="<?= ($no * 3) + 1; ?>">Jenis Operasi</th>
-                <?php } ?>
-                <?php if ($no1 > 0) { ?>
-                    <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
-                <?php } ?>
-            </tr>
-            <tr style="text-align: center;" class="align-middle">
-                <?php if ($no > 0) { ?>
-                    <?php foreach ($jenisoperasi as $row) : ?>
-                        <th colspan="3"><?= $row; ?></th>
-                    <?php endforeach ?>
-                    <th rowspan="2">Total</th>
-                <?php } ?>
-                <?php if ($no1 > 0) { ?>
-                    <?php foreach ($statuspasien as $row1) : ?>
-                        <th colspan="3"><?= $row1; ?></th>
-                    <?php endforeach ?>
-                    <th rowspan="2">Total</th>
-                <?php } ?>
-            </tr>
+            <!-- repeat header dengan thead -->
+            <thead>
+                <tr style="text-align: center;" class="align-middle">
+                    <th rowspan="3">Ruangan</th>
+                    <?php if ($no > 0) { ?>
+                        <th colspan="<?= ($no * 3) + 1; ?>">Jenis Operasi</th>
+                    <?php } ?>
+                    <?php if ($no1 > 0) { ?>
+                        <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
+                    <?php } ?>
+                </tr>
+                <tr style="text-align: center;" class="align-middle">
+                    <?php if ($no > 0) { ?>
+                        <?php foreach ($jenisoperasi as $row) : ?>
+                            <th colspan="3"><?= $row; ?></th>
+                        <?php endforeach ?>
+                        <th rowspan="2">Total</th>
+                    <?php } ?>
+                    <?php if ($no1 > 0) { ?>
+                        <?php foreach ($statuspasien as $row1) : ?>
+                            <th colspan="3"><?= $row1; ?></th>
+                        <?php endforeach ?>
+                        <th rowspan="2">Total</th>
+                    <?php } ?>
+                </tr>
 
-            <tr style="text-align: center;" class="align-middle">
-                <?php if ($no > 0) { ?>
-                    <?php foreach ($jenisoperasi as $row) : ?>
-                        <th>L</th>
-                        <th>P</th>
-                        <th>Total</th>
-                    <?php endforeach ?>
-                <?php } ?>
-                <?php if ($no1 > 0) { ?>
-                    <?php foreach ($statuspasien as $row1) : ?>
-                        <th>L</th>
-                        <th>P</th>
-                        <th>Total</th>
-                    <?php endforeach ?>
-                <?php } ?>
-            </tr>
+                <tr style="text-align: center;" class="align-middle">
+                    <?php if ($no > 0) { ?>
+                        <?php foreach ($jenisoperasi as $row) : ?>
+                            <th>L</th>
+                            <th>P</th>
+                            <th>Total</th>
+                        <?php endforeach ?>
+                    <?php } ?>
+                    <?php if ($no1 > 0) { ?>
+                        <?php foreach ($statuspasien as $row1) : ?>
+                            <th>L</th>
+                            <th>P</th>
+                            <th>Total</th>
+                        <?php endforeach ?>
+                    <?php } ?>
+                </tr>
+            </thead>
 
             <?php
             $row = 0;
@@ -334,7 +337,7 @@
 </body>
 
 <script>
-    <?php if ($datafilter['format'] = '2') { ?>
+    <?php if ($datafilter['format'] == '2') { ?>
         var periode = "<?= $datafilter['nilaifilter'] ?>";
         var instalasi = "<?= $datafilter['instalasi'] ?>";
 
@@ -345,6 +348,8 @@
         var bulanakhir = "<?= $datafilter['bulanakhir'] ?>";
         var tahun2 = "<?= $datafilter['tahun2'] ?>";
         var tahun3 = "<?= $datafilter['tahun3'] ?>";
+        var tampil = null;
+
         var dataparm = {
             "tanggalawal": tanggalawal,
             "tanggalakhir": tanggalakhir,
@@ -502,11 +507,22 @@
                     }],
                     options: setup
                 });
+                tampil = msg.hasil;
             }
         });
-    <?php } ?>
+        if (tampil === null) {
+            var myVar = setInterval(myMethod, 500);
+        }
 
-    // setTimeout(window.print, 5000);
+        function myMethod() {
+            if (tampil != null) {
+                window.print();
+                clearInterval(myVar);
+            }
+        }
+    <?php } else { ?>
+        window.print();
+    <?php } ?>
 </script>
 
 </html>

@@ -19,7 +19,7 @@
 
 </head>
 
-<body onload="window.print()">
+<body>
     <table style="width: 100%;" class="mb-5">
         <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
@@ -106,35 +106,38 @@
         <?php endforeach ?>
 
         <table class="table table-bordered mt-5 border border-dark">
-            <tr style="text-align: center;" class="align-middle">
-                <th rowspan="3">Ruangan</th>
-                <th colspan="<?= ($no * 3) + 1; ?>">Status Penyakit</th>
-                <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
-            </tr>
+            <!-- repeat header dengan thead -->
+            <thead>
+                <tr style="text-align: center;" class="align-middle">
+                    <th rowspan="3">Ruangan</th>
+                    <th colspan="<?= ($no * 3) + 1; ?>">Status Penyakit</th>
+                    <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
+                </tr>
 
-            <tr style="text-align: center;" class="align-middle">
-                <?php foreach ($statuspenyakit as $row) : ?>
-                    <th colspan="3"><?= $row; ?></th>
-                <?php endforeach ?>
-                <th rowspan="2">Total</th>
-                <?php foreach ($statuspasien as $row1) : ?>
-                    <th colspan="3"><?= $row1; ?></th>
-                <?php endforeach ?>
-                <th rowspan="2">Total</th>
-            </tr>
+                <tr style="text-align: center;" class="align-middle">
+                    <?php foreach ($statuspenyakit as $row) : ?>
+                        <th colspan="3"><?= $row; ?></th>
+                    <?php endforeach ?>
+                    <th rowspan="2">Total</th>
+                    <?php foreach ($statuspasien as $row1) : ?>
+                        <th colspan="3"><?= $row1; ?></th>
+                    <?php endforeach ?>
+                    <th rowspan="2">Total</th>
+                </tr>
 
-            <tr style="text-align: center;" class="align-middle">
-                <?php foreach ($statuspenyakit as $row) : ?>
-                    <th>L</th>
-                    <th>P</th>
-                    <th>Total</th>
-                <?php endforeach ?>
-                <?php foreach ($statuspasien as $row1) : ?>
-                    <th>L</th>
-                    <th>P</th>
-                    <th>Total</th>
-                <?php endforeach ?>
-            </tr>
+                <tr style="text-align: center;" class="align-middle">
+                    <?php foreach ($statuspenyakit as $row) : ?>
+                        <th>L</th>
+                        <th>P</th>
+                        <th>Total</th>
+                    <?php endforeach ?>
+                    <?php foreach ($statuspasien as $row1) : ?>
+                        <th>L</th>
+                        <th>P</th>
+                        <th>Total</th>
+                    <?php endforeach ?>
+                </tr>
+            </thead>
             <?php
             $row = 0;
 
@@ -305,7 +308,7 @@
 </body>
 
 <script>
-    <?php if ($datafilter['format'] = '2') { ?>
+    <?php if ($datafilter['format'] == '2') { ?>
         var periode = "<?= $datafilter['nilaifilter'] ?>";
         var instalasi = "<?= $datafilter['instalasi'] ?>";
 
@@ -316,6 +319,8 @@
         var bulanakhir = "<?= $datafilter['bulanakhir'] ?>";
         var tahun2 = "<?= $datafilter['tahun2'] ?>";
         var tahun3 = "<?= $datafilter['tahun3'] ?>";
+        var tampil = null;
+
         var dataparm = {
             "tanggalawal": tanggalawal,
             "tanggalakhir": tanggalakhir,
@@ -363,7 +368,6 @@
                 var yaxisdata = [];
                 var dataawal = [];
 
-                // console.log(datahasil);
                 for (var i in msg.hasil) {
 
                     var dataawal = msg.total.filter((KELOMPOK) => KELOMPOK.KDKELOMPOK == msg.hasil[i].KDKELOMPOK);
@@ -462,11 +466,23 @@
                     }],
                     options: setup
                 });
+                tampil = msg.hasil;
             }
         });
-    <?php } ?>
 
-    // setTimeout(window.print, 5000);
+        if (tampil === null) {
+            var myVar = setInterval(myMethod, 600);
+        }
+
+        function myMethod() {
+            if (tampil != null) {
+                window.print();
+                clearInterval(myVar);
+            }
+        }
+    <?php } else { ?>
+        window.print();
+    <?php } ?>
 </script>
 
 </html>
