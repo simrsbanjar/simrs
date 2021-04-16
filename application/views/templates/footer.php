@@ -67,6 +67,10 @@
             '<font size = "3">' + getharitanggal(date, '2') + '</font>' + '</div>';
     }
 
+    String.prototype.paddingLeft = function(paddingValue) {
+        return String(paddingValue + this).slice(-paddingValue.length);
+    };
+
     function getharitanggal(date, status) {
         var tahun = date.getFullYear();
         var bulan = date.getMonth();
@@ -75,6 +79,12 @@
         var jam = date.getHours();
         var menit = date.getMinutes();
         var detik = date.getSeconds();
+
+        jam = jam.toString().paddingLeft("00");
+        menit = menit.toString().paddingLeft("00");
+        detik = detik.toString().paddingLeft("00");
+        tanggal = tanggal.toString().paddingLeft("00");
+
         switch (hari) {
             case 0:
                 hari = "Minggu";
