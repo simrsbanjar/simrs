@@ -9,7 +9,7 @@
             <div class="btn btn-app btn-danger btn-xs mr-1 d-none d-lg-inline" style="min-width:127px">
                 <i class="far fa-calendar-alt" style="float: left; padding-top:0.5rem; padding-bottom:0.5rem; padding-right:0.25rem; padding-left:0;"></i>
                 <span style="font-size: 14px; float: left; padding-left: 5px; line-height: 16px; text-align: left;">
-                    <h4 id="demo"></h4>
+                    <h4 id="demo" style="font-size: 16px"></h4>
                 </span>
             </div>
 

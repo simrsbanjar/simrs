@@ -127,7 +127,7 @@
                     <div class="btn btn-app btn-danger btn-xs mr-1 d-none d-lg-inline" style="min-width:127px">
                         <i class="far fa-calendar-alt" style="float: left; padding-top:0.5rem; padding-bottom:0.5rem; padding-right:0.25rem; padding-left:0;"></i>
                         <span style="font-size: 14px; float: left; padding-left: 5px; line-height: 16px; text-align: left;">
-                            <h4 id="demo"></h4>
+                            <h4 id="demo" style="font-size: 16px"></h4>
                         </span>
                     </div>
 
@@ -255,9 +255,87 @@
 <script>
     var myVar = setInterval(myTimer, 1000);
 
+
     function myTimer() {
-        var d = new Date();
-        document.getElementById("demo").innerHTML = d.toLocaleDateString("id") + ' ' + d.toLocaleTimeString();
+        var date = new Date();
+        document.getElementById("demo").innerHTML = getharitanggal(date, '1') + '<br>' + getharitanggal(date, '2');
+    }
+
+    function getharitanggal(date, status) {
+        var tahun = date.getFullYear();
+        var bulan = date.getMonth();
+        var tanggal = date.getDate();
+        var hari = date.getDay();
+        var jam = date.getHours();
+        var menit = date.getMinutes();
+        var detik = date.getSeconds();
+        switch (hari) {
+            case 0:
+                hari = "Minggu";
+                break;
+            case 1:
+                hari = "Senin";
+                break;
+            case 2:
+                hari = "Selasa";
+                break;
+            case 3:
+                hari = "Rabu";
+                break;
+            case 4:
+                hari = "Kamis";
+                break;
+            case 5:
+                hari = "Jumat";
+                break;
+            case 6:
+                hari = "Sabtu";
+                break;
+        }
+        switch (bulan) {
+            case 0:
+                bulan = "Januari";
+                break;
+            case 1:
+                bulan = "Februari";
+                break;
+            case 2:
+                bulan = "Maret";
+                break;
+            case 3:
+                bulan = "April";
+                break;
+            case 4:
+                bulan = "Mei";
+                break;
+            case 5:
+                bulan = "Juni";
+                break;
+            case 6:
+                bulan = "Juli";
+                break;
+            case 7:
+                bulan = "Agustus";
+                break;
+            case 8:
+                bulan = "September";
+                break;
+            case 9:
+                bulan = "Oktober";
+                break;
+            case 10:
+                bulan = "November";
+                break;
+            case 11:
+                bulan = "Desember";
+                break;
+        }
+
+        if (status == '1') {
+            return tanggal + " " + bulan + " " + tahun;
+        } else {
+            return hari + ", " + jam + ":" + menit + ":" + detik;
+        }
     }
 </script>
 
