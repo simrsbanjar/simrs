@@ -31,7 +31,11 @@
                             <br>
                             Ruangan : <?= $ruangan['NamaRuangan']; ?>
                         </div>
-                        <img class="img-profile rounded-circle" src="<?= base_url('assets/img/profile/default_1.png'); ?>">
+                        <?php if ($datapegawai['JenisKelamin'] == 'L') { ?>
+                            <img class="img-profile rounded-circle" src="<?= base_url('assets/img/profile/default.png'); ?>">
+                        <?php } else { ?>
+                            <img class="img-profile rounded-circle" src="<?= base_url('assets/img/profile/default_1.png'); ?>">
+                        <?php } ?>
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
