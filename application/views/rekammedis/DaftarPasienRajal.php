@@ -89,6 +89,7 @@
                             <th>Alamat</th>
                         </tr>
                     </thead>
+                </div>
             </table>
         </div>
     </div>
@@ -103,6 +104,9 @@
 
         $(document).ready(function() {
             tableData.DataTable({
+                "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
@@ -130,6 +134,9 @@
 
             tableData.DataTable({
                 "destroy": true,
+                "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
