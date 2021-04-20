@@ -2,22 +2,67 @@
 
 class M_DaftarPasienRajal extends CI_Model
 {
-    var $table  = 'V_LaporanPasienRawatJalan';
-    var $column_order = array('NoCM', '[Nama Pasien] AS NamaPasien', 'StatusPasien', 'Umur', 'JK', 'JenisPasien', 'NamaRuangan', 'NamaDiagnosa', 'TglMasuk', 'TglLahir', 'Telepon', 'Alamat', 'KdRuangan');
-    var $order = array('NoCM', '[Nama Pasien] AS NamaPasien', 'StatusPasien', 'Umur', 'JK', 'JenisPasien', 'NamaRuangan', 'NamaDiagnosa', 'TglMasuk', 'TglLahir', 'Telepon', 'Alamat', 'KdRuangan');
-
-    public function getDataTable()
+    public function _get_data_query($awal, $akhir, $jenispasien, $ruangan, $caritext)
     {
-        $tangal   = date('Y-m-d');
-        //$tangal   = '2020-12-16';
+        $this->db->select("V_LaporanPasienRawatJalan.NoCM AS NoCM, 
+                          NamaLengkap AS NamaPasien, 
+                          StatusPasien,
+                          Umur, 
+                          JK, 
+                          JenisPasien, 
+                          NamaRuangan, 
+                          NamaDiagnosa, 
+                          StatusKasus, 
+                          TglMasuk, 
+                          V_LaporanPasienRawatJalan.TglLahir AS TglLahir, 
+                          V_LaporanPasienRawatJalan.Telepon AS Telepon, 
+                          V_LaporanPasienRawatJalan.Alamat AS Alamat, 
+                          KdRuangan");
+        $this->db->from("V_LaporanPasienRawatJalan");
+        $this->db->join('Pasien', 'Pasien.NoCM = V_LaporanPasienRawatJalan.NoCM');
+        $this->db->where("TGLMASUK BETWEEN '" . $awal .  " 00:00:00' AND '" . $akhir .  " 23:59:59'");
+        if ($jenispasien != '%') {
+            $this->db->where("JenisPasien", $jenispasien);
+        }
+        if ($ruangan != '%') {
+            $this->db->where("KdRuangan", $ruangan);
+        }
 
-        $query  = $this->db->query("SELECT * FROM (SELECT NoCM, [Nama Pasien] AS NamaPasien, StatusPasien, Umur, JK, JenisPasien, NamaRuangan, NamaDiagnosa, StatusKasus, TglMasuk, TglLahir, Telepon, Alamat, KdRuangan FROM V_LaporanPasienRawatJalan ) AS COBA WHERE TGLMASUK BETWEEN '" . $tangal . " 00:00:00' AND '" . $tangal . " 23:59:59' ORDER BY TglMasuk,NamaPasien,NoCM");
-        return $query->result();
+        $searchValue = $_POST['search']['value'];
+        $searchQuery = "";
+        if (isset($searchValue)) {
+            $searchQuery = " (NamaLengkap like '%" . $searchValue . "%' or 
+                              V_LaporanPasienRawatJalan.NoCM like '%" . $searchValue . "%' or 
+                              JenisPasien like '%" . $searchValue . "%' or 
+                              NamaRuangan like '%" . $searchValue . "%' or 
+                              NamaDiagnosa like'%" . $searchValue . "%' ) ";
+        }
+        if ($searchQuery != '') {
+            $this->db->where($searchQuery);
+        }
+
+        $this->db->order_by('TglMasuk,NamaLengkap,V_LaporanPasienRawatJalan.NoCM', 'ASC');
     }
 
-    public function getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext)
+    public function getDataTable($awal, $akhir, $jenispasien, $ruangan, $caritext)
     {
-        $query  = $this->db->query("SELECT * FROM (SELECT NoCM, [Nama Pasien] AS NamaPasien, StatusPasien, Umur, JK, JenisPasien, NamaRuangan, NamaDiagnosa, StatusKasus, TglMasuk, TglLahir, Telepon, Alamat, KdRuangan FROM V_LaporanPasienRawatJalan ) AS COBA WHERE TGLMASUK BETWEEN '" . $awal . " 00:00:00' AND '" . $akhir . " 23:59:59' AND JenisPasien LIKE '" . $jenispasien . "' AND KdRuangan LIKE '" . $ruangan . "' AND (UPPER(NamaPasien) LIKE '%" . $caritext . "%' OR NoCM LIKE '%" . $caritext . "%') ORDER BY TglMasuk,NamaPasien,NoCM");
+        $this->_get_data_query($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        if ($_POST['length'] != -1) {
+            $this->db->limit($_POST['length'], $_POST['start']);
+        }
+        $query = $this->db->get();
         return $query->result();
+    }
+    public function count_filtered_data($awal, $akhir, $jenispasien, $ruangan, $caritext)
+    {
+        $this->_get_data_query($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    public function count_all_data($awal, $akhir, $jenispasien, $ruangan, $caritext)
+    {
+        $this->_get_data_query($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        return $this->db->count_all_results();
     }
 }

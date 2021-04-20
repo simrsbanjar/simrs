@@ -29,37 +29,6 @@ class DaftarPasienRajal extends CI_Controller
         }
     }
 
-    public function getData()
-    {
-        $results = $this->M_DaftarPasienRajal->getDataTable();
-
-        $data = [];
-        $no = $_POST['start'];
-        foreach ($results as $result) {
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $result->NoCM;
-            $row[] = $result->NamaPasien;
-            $row[] = $result->Umur;
-            $row[] = $result->JK;
-            $row[] = $result->JenisPasien;
-            $row[] = $result->NamaRuangan;
-            $row[] = $result->NamaDiagnosa;
-            $row[] = date('d-m-Y m:s', strtotime($result->TglMasuk));
-            $row[] = date('d-m-Y', strtotime($result->TglLahir));
-            $row[] = $result->Telepon;
-            $data[] = $row;
-        }
-
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_DaftarPasienRajal->getDataTable(),
-            "data" => $data,
-        );
-        $this->output->set_content_type('application/json')->set_output(json_encode($output));
-    }
-
     public function AmbilData()
     {
         $awal   = $this->input->post('awal');
@@ -72,10 +41,10 @@ class DaftarPasienRajal extends CI_Controller
             $caritext = '%';
         }
 
-        $results    = $this->M_DaftarPasienRajal->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
-
+        $results    = $this->M_DaftarPasienRajal->getDataTable($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        // var_dump($results);
         $data = [];
-        $no = 0;
+        $no = $_POST['start'];
         foreach ($results as $result) {
             $no++;
             $row = array();
@@ -96,11 +65,13 @@ class DaftarPasienRajal extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_DaftarPasienRajal->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext),
-            "data" => $data,
+            "recordsTotal" => $this->M_DaftarPasienRajal->count_all_data($awal, $akhir, $jenispasien, $ruangan, $caritext),
+            "recordsFiltered" => $this->M_DaftarPasienRajal->count_filtered_data($awal, $akhir, $jenispasien, $ruangan, $caritext),
+            "data" => $data
         );
-
         $this->output->set_content_type('application/json')->set_output(json_encode($output));
+        // var_dump($this->M_DaftarPasienRajal->count_all_data($awal, $akhir, $jenispasien, $ruangan, $caritext));
+        // var_dump($this->M_DaftarPasienRajal->count_filtered_data($awal, $akhir, $jenispasien, $ruangan, $caritext));
     }
 
 

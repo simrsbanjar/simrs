@@ -101,26 +101,6 @@
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
 
-        $(document).ready(function() {
-            tableData.DataTable({
-                "processing": true,
-                "serverSide": true,
-                "bFilter": false,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
-                "order": [],
-                "ajax": {
-                    "url": "<?= base_url('DaftarPasienRajal/getData') ?>",
-                    "type": "POST"
-                },
-                "columnDefs": [{
-                    "target": [-1],
-                    "orderable": false
-                }]
-            });
-        });
-
         function AmbilData() {
             var awal = $('#awal').val();
             var akhir = $('#akhir').val();
@@ -129,13 +109,12 @@
             var caritext = $('#caritext').val();
 
             tableData.DataTable({
+                "dom": "<'row'<'col-sm-2'l><'col-sm-5'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
-                "bFilter": false,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienRajal/AmbilData') ?>",
