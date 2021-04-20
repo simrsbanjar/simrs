@@ -41,11 +41,13 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('User'); ?>">
-                <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="col-5 m-md-auto"></img>
-                <!-- <div class="sidebar-brand-icon"> -->
+                <img src="<?= base_url('assets/img/simrs') ?>/logo rsu.png" class="col-5 m-md-auto"></img>
+                <!-- <div class=" sidebar-brand-icon"> -->
                 <!-- <i class="fas fa-hospital-alt"></i> -->
                 <!-- </div> -->
-                <div class="mb-auto col-auto" style="font-size: 28px; color: whitesmoke;">SIMRS</div>
+                <div style="font-size: 24px; color: whitesmoke; margin-right: 50px; margin-top: 40px; ">SIMRS</div>
+
+                <!-- <img src="<?= base_url('assets/img/simrs') ?>/sidebar.png" style="height: 55px; width: 150px;"></img> -->
             </a>
 
             <!-- Divider -->

@@ -112,7 +112,16 @@
         var formData = $('#formData');
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
+        var chart = $('#chartContainer');
 
+        chart.hide();
+        tableData.show();
+        tableData.DataTable({
+            "bFilter": false,
+            "bLengthChange": true,
+            "paging": true,
+            "info": true,
+        });
         $(document).ready(function() {
             $('#instalasi').change(function() {
                 var id = $(this).val();
@@ -152,9 +161,9 @@
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
-                "bLengthChange": false,
-                "paging": false,
-                "info": false,
+                "bLengthChange": true,
+                "paging": true,
+                "info": true,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('RekapBesarPenyakitTen/AmbilData') ?>",

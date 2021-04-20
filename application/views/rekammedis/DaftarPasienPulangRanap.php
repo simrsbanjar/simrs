@@ -132,12 +132,15 @@
 
         $(document).ready(function() {
             tableData.DataTable({
+                "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
-                "bLengthChange": false,
-                "paging": false,
-                "info": false,
+                "bLengthChange": true,
+                "paging": true,
+                "info": true,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienPulangRanap/getData') ?>",
@@ -159,13 +162,16 @@
             var kondisipulang = $("input:radio[name=radiokondisipulang]:checked").val()
 
             tableData.DataTable({
+                "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
-                "bLengthChange": false,
-                "paging": false,
-                "info": false,
+                "bLengthChange": true,
+                "paging": true,
+                "info": true,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienPulangRanap/AmbilData') ?>",

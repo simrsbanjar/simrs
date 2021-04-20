@@ -89,6 +89,7 @@
                             <th>Alamat</th>
                         </tr>
                     </thead>
+                </div>
             </table>
         </div>
     </div>
