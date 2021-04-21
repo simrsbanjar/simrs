@@ -8,8 +8,6 @@ class DaftarPasienRajal extends CI_Controller
         parent::__construct();
         $this->load->model("rekammedis/M_DaftarPasienRajal");
         $this->load->library('session');
-        // $this->load->library('mypdf');
-        //$this->mypdf->generate('rekammedis/laporan/LapDaftarPasienRajal');
     }
 
     public function index()
@@ -41,8 +39,7 @@ class DaftarPasienRajal extends CI_Controller
             $caritext = '%';
         }
 
-        $results    = $this->M_DaftarPasienRajal->getDataTable($awal, $akhir, $jenispasien, $ruangan, $caritext);
-        // var_dump($results);
+        $results    = $this->M_DaftarPasienRajal->getDataTable($awal, $akhir, $jenispasien, $ruangan, $caritext, '1');
         $data = [];
         $no = $_POST['start'];
         foreach ($results as $result) {
@@ -70,8 +67,6 @@ class DaftarPasienRajal extends CI_Controller
             "data" => $data
         );
         $this->output->set_content_type('application/json')->set_output(json_encode($output));
-        // var_dump($this->M_DaftarPasienRajal->count_all_data($awal, $akhir, $jenispasien, $ruangan, $caritext));
-        // var_dump($this->M_DaftarPasienRajal->count_filtered_data($awal, $akhir, $jenispasien, $ruangan, $caritext));
     }
 
 
@@ -88,7 +83,7 @@ class DaftarPasienRajal extends CI_Controller
         }
 
 
-        $result['datahasil']    = $this->M_DaftarPasienRajal->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $caritext);
+        $result['datahasil']    = $this->M_DaftarPasienRajal->getDataTable($awal, $akhir, $jenispasien, $ruangan, $caritext, '2');
         $result['datafilter']    = [
             'TglAwal' => $awal,
             'TglAkhir' => $akhir,

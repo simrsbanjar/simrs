@@ -68,6 +68,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
 
         <div class="table-responsive" style="width:100%">
@@ -137,7 +138,7 @@
         }
     </script>
 
-</div>
+    <!-- </div> -->
 
 </div>
 <!-- /.container-fluid -->
