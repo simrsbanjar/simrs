@@ -52,7 +52,7 @@
                 <br><br>
                 <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '02' ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
-                    <div class="form-group mt-4">
+                    <div class="form-group mt-0">
                         <label for=" ruangan">Ruangan</label>
                         <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Ruangan -</option>
@@ -63,8 +63,8 @@
                     </div>
                     <div class="form-group mt-4">
                         <div class="form-inline" style="margin-left:10px;">
-                            <label for="format">Nama Pasien / No. CM</label>
-                            <input type="text" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
+                            <!-- <label for="format">Nama Pasien / No. CM</label> -->
+                            <input type="hidden" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
                         </div>
                     </div>
                 </div>
