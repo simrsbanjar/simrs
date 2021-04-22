@@ -45,33 +45,35 @@
         </p>
     </div>
     <table class="table table-bordered mt-5 border border-dark">
-        <tr style="text-align: center;" class="align-middle">
-            <th>No. Urut</th>
-            <th>No. CM</th>
-            <th>Nama Pasien</th>
-            <th>JK</th>
-            <th>Tgl. Lahir</th>
-            <th>Telepon</th>
-            <th>Alamat</th>
-            <th>Tgl. Masuk</th>
-            <th>Jenis Pasien</th>
-            <th>Ruangan</th>
-            <th>Tgl. Pulang</th>
-            <th>Lama Dirawat</th>
-            <th>Jenis Diagnosa</th>
-            <th>Kode Diagnosa</th>
-            <th>Nama Diagnosa</th>
-            <th>Dokter</th>
-            <th>Status Pulang</th>
-            <th>Kondisi Pulang</th>
-        </tr>
+        <thead>
+            <tr style="text-align: center;" class="align-middle">
+                <th>No. Urut</th>
+                <th>No. CM</th>
+                <th>Nama Pasien</th>
+                <th>JK</th>
+                <th>Tgl. Lahir</th>
+                <th>Telepon</th>
+                <th>Alamat</th>
+                <th>Tgl. Masuk</th>
+                <th>Jenis Pasien</th>
+                <th>Ruangan</th>
+                <th>Tgl. Pulang</th>
+                <th>Lama Dirawat</th>
+                <th>Jenis Diagnosa</th>
+                <th>Kode Diagnosa</th>
+                <th>Nama Diagnosa</th>
+                <th>Dokter</th>
+                <th>Status Pulang</th>
+                <th>Kondisi Pulang</th>
+            </tr>
+        </thead>
         <?php $no = 1;
         foreach ($datahasil as $row) : ?>
             <?php $TglMasuk = date('d-m-Y m:s', strtotime($row->TglPendaftaran)) ?>
             <?php $TglLahir = date('d-m-Y', strtotime($row->TglLahir)) ?>
 
             <tr>
-                <td><?php echo $no++;                 ?></td>
+                <td style="text-align: center;"><?php echo $no++;                 ?></td>
                 <td><?php echo $row->NoCM;            ?></td>
                 <td><?php echo $row->NamaPasien;    ?></td>
                 <td><?php echo $row->JenisKelamin;    ?></td>

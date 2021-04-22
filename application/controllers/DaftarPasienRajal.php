@@ -62,8 +62,8 @@ class DaftarPasienRajal extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_DaftarPasienRajal->count_all_data($awal, $akhir, $jenispasien, $ruangan, $caritext),
-            "recordsFiltered" => $this->M_DaftarPasienRajal->count_filtered_data($awal, $akhir, $jenispasien, $ruangan, $caritext),
+            "recordsTotal" => $this->M_DaftarPasienRajal->count_all_data($awal, $akhir, $jenispasien, $ruangan, '1'),
+            "recordsFiltered" => $this->M_DaftarPasienRajal->count_filtered_data($awal, $akhir, $jenispasien, $ruangan, '1'),
             "data" => $data
         );
         $this->output->set_content_type('application/json')->set_output(json_encode($output));

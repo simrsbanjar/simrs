@@ -117,10 +117,10 @@
         chart.hide();
         tableData.show();
         tableData.DataTable({
-            "bFilter": false,
-            "bLengthChange": true,
-            "paging": true,
-            "info": true,
+            "bFilter": true,
+            "bLengthChange": false,
+            "paging": false,
+            "info": false,
         });
         $(document).ready(function() {
             $('#instalasi').change(function() {
@@ -160,10 +160,10 @@
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
-                "bFilter": false,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
+                "bFilter": true,
+                "bLengthChange": false,
+                "paging": false,
+                "info": false,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('RekapBesarPenyakitTen/AmbilData') ?>",
