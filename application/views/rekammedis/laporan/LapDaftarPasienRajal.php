@@ -31,7 +31,7 @@
     </table>
     <br>
     <h2>
-        <center><b>Pasien Rawat Jalan</b></center>
+        <center><b>Daftar Pasien Rawat Jalan</b></center>
     </h2>
     <div class="mb-3">
         <p align="center">
@@ -39,20 +39,22 @@
         </p>
     </div>
     <table class="table table-bordered mt-5 border border-dark">
-        <tr style="text-align: center;" class="align-middle">
-            <th>No. Urut</th>
-            <th>No. CM</th>
-            <th>Nama Pasien</th>
-            <th>Umur</th>
-            <th>JK</th>
-            <th>Jenis Pasien</th>
-            <th>Ruangan</th>
-            <th>Nama Diagnosa</th>
-            <th>Tgl. Masuk</th>
-            <th>Tgl. Lahir</th>
-            <th>Telepon</th>
-            <th>Alamat</th>
-        </tr>
+        <thead>
+            <tr style="text-align: center;" class="align-middle">
+                <th>No. Urut</th>
+                <th>No. CM</th>
+                <th>Nama Pasien</th>
+                <th>Umur</th>
+                <th>JK</th>
+                <th>Jenis Pasien</th>
+                <th>Ruangan</th>
+                <th>Nama Diagnosa</th>
+                <th>Tgl. Masuk</th>
+                <th>Tgl. Lahir</th>
+                <th>Telepon</th>
+                <th>Alamat</th>
+            </tr>
+        </thead>
         <?php $no = 1;
         foreach ($datahasil as $row) : ?>
             <?php $TglMasuk = date('d-m-Y m:s', strtotime($row->TglMasuk)) ?>
@@ -60,7 +62,7 @@
 
             <tr>
                 <td style="text-align: center;" class="align-middle"><?php echo $no++; ?></td>
-                <td style="font-size: 20px;"><b><?php echo $row->NoCM ?></b></td>
+                <td><?php echo $row->NoCM ?></td>
                 <td><?php echo $row->NamaPasien ?></td>
                 <td><?php echo $row->Umur ?></td>
                 <td><?php echo $row->JK ?></td>

@@ -36,12 +36,10 @@
                     </div>
                 </div>
 
-
-
                 <br><br>
                 <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '03' ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
-                    <div class="form-group mt-4">
+                    <div class="form-group mt-0">
                         <label for=" ruangan">Ruangan</label>
                         <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Ruangan -</option>
@@ -52,45 +50,46 @@
                     </div>
                     <div class="form-group mt-4">
                         <div class="form-inline" style="margin-left:10px;">
-                            <label for="format">Nama Pasien / No. CM</label>
-                            <input type="text" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
+                            <!-- <label for="format">Nama Pasien / No. CM</label> -->
+                            <input type="hidden" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
+                        </div>
+                    </div>
+                    <div class="form-group mt-0">
+                        <div class="form-inline" style="margin-left:10px;">
+                            <label for="format" style="margin-right:10px;">Kondisi Pulang</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radiokondisipulang" id="hidupmati" value="1" checked />
+                                <label class="form-check-label" for="inlineRadio1">Hidup dan Mati</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radiokondisipulang" id="hidup" value="2" />
+                                <label class="form-check-label" for="inlineRadio2">Hidup</label>
+                            </div>
+
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="radiokondisipulang" id="mati" value="3" />
+                                <label class="form-check-label" for="inlineRadio3">Mati</label>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group mt-4">
-                    <div class="form-inline" style="margin-left:10px;">
-                        <label for="format" style="margin-right:10px;">Kondisi Pulang</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiokondisipulang" id="hidupmati" value="1" checked />
-                            <label class="form-check-label" for="inlineRadio1">Hidup dan Mati</label>
-                        </div>
 
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiokondisipulang" id="hidup" value="2" />
-                            <label class="form-check-label" for="inlineRadio2">Hidup</label>
-                        </div>
-
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radiokondisipulang" id="mati" value="3" />
-                            <label class="form-check-label" for="inlineRadio3">Mati</label>
-                        </div>
+            </div>
+            <div class="form-inline" style="margin-top: 10px;">
+                <div class="form-group d-flex bd-highlight">
+                    <div class="p-3 order-10 bd-highlight">
+                        <buttons type="button" class="btn btn-success" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
+                    </div>
+                    <div class="p-0 order-10 bd-highlight">
+                        <button type="submit" value="1" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+                    </div>
+                    <div class="p-0 order-10 bd-highlight" style="margin-left:15px;">
+                        <button type="submit" value="2" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak Kondisi Pulang</button>
                     </div>
                 </div>
-
-                <div class="form-inline" style="margin-top: 10px;">
-                    <div class="form-group d-flex bd-highlight">
-                        <div class="p-3 order-10 bd-highlight">
-                            <buttons type="button" class="btn btn-success" id="print" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
-                        </div>
-                        <div class="p-0 order-10 bd-highlight">
-                            <button type="submit" value="1" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
-                        </div>
-                        <div class="p-0 order-10 bd-highlight" style="margin-left:15px;">
-                            <button type="submit" value="2" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak Kondisi Pulang</button>
-                        </div>
-                    </div>
-                </div>
+            </div>
         </form>
 
         <div class="table-responsive" style="width:100%">
@@ -130,29 +129,6 @@
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
 
-        $(document).ready(function() {
-            tableData.DataTable({
-                "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
-                "processing": true,
-                "serverSide": true,
-                "bFilter": false,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
-                "order": [],
-                "ajax": {
-                    "url": "<?= base_url('DaftarPasienPulangRanap/getData') ?>",
-                    "type": "POST"
-                },
-                "columnDefs": [{
-                    "target": [-1],
-                    "orderable": false
-                }]
-            });
-        });
-
         function AmbilData() {
             var awal = $('#awal').val();
             var akhir = $('#akhir').val();
@@ -168,10 +144,6 @@
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
-                "bFilter": false,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienPulangRanap/AmbilData') ?>",
@@ -197,7 +169,7 @@
 
 </div>
 
-</div>
+<!-- </div> -->
 <!-- /.container-fluid -->
 
 </div>
