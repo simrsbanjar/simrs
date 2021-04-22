@@ -46,7 +46,7 @@ class RekapBesarPenyakitTen extends CI_Controller
         $instalasi   = strtoupper($this->input->post('instalasi'));
         $kriteria   = strtoupper($this->input->post('kriteria'));
 
-        $results    = $this->M_RekapBesarPenyakitTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $results    = $this->M_RekapBesarPenyakitTen->getDataTable($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria, '1');
 
         $data = [];
         $no = 0;
@@ -61,7 +61,8 @@ class RekapBesarPenyakitTen extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_RekapBesarPenyakitTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria),
+            "recordsTotal" => $this->M_RekapBesarPenyakitTen->count_all_data($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria, '1'),
+            "recordsFiltered" => $this->M_RekapBesarPenyakitTen->count_filtered_data($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria, '1'),
             "data" => $data,
         );
 
@@ -85,7 +86,7 @@ class RekapBesarPenyakitTen extends CI_Controller
             $kriteriatext   = 'BERDASARKAN JUMLAH PASIEN';
         }
 
-        $result['datahasil']    = $this->M_RekapBesarPenyakitTen->getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria);
+        $result['datahasil']    = $this->M_RekapBesarPenyakitTen->getDataTable($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria, '2');
         $result['datafilter']    = [
             'TglAwal' => $awal,
             'TglAkhir' => $akhir,

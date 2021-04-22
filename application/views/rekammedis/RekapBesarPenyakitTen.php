@@ -117,7 +117,7 @@
         chart.hide();
         tableData.show();
         tableData.DataTable({
-            "bFilter": false,
+            "bFilter": true,
             "bLengthChange": true,
             "paging": true,
             "info": true,
@@ -160,7 +160,7 @@
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
-                "bFilter": false,
+                "bFilter": true,
                 "bLengthChange": true,
                 "paging": true,
                 "info": true,

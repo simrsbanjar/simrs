@@ -68,13 +68,15 @@
     </div>
 
     <table class="table table-bordered mt-5 border border-dark">
-        <tr style="text-align: center;" class="align-middle">
-            <th>No. Urut</th>
-            <th>Kd. Diagnosa</th>
-            <th>Diagnosa</th>
-            <th>Jumlah</th>
-            <th>Persentase</th>
-        </tr>
+        <thead>
+            <tr style="text-align: center;" class="align-middle">
+                <th>No. Urut</th>
+                <th>Kd. Diagnosa</th>
+                <th>Diagnosa</th>
+                <th>Jumlah</th>
+                <th>Persentase</th>
+            </tr>
+        </thead>
 
         <?php
         $jumlahdata = 0;
