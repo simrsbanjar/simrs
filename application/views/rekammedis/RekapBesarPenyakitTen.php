@@ -118,9 +118,9 @@
         tableData.show();
         tableData.DataTable({
             "bFilter": true,
-            "bLengthChange": true,
-            "paging": true,
-            "info": true,
+            "bLengthChange": false,
+            "paging": false,
+            "info": false,
         });
         $(document).ready(function() {
             $('#instalasi').change(function() {
@@ -161,9 +161,9 @@
                 "processing": true,
                 "serverSide": true,
                 "bFilter": true,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
+                "bLengthChange": false,
+                "paging": false,
+                "info": false,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('RekapBesarPenyakitTen/AmbilData') ?>",

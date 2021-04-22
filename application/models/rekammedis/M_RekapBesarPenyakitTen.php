@@ -9,17 +9,6 @@ class M_RekapBesarPenyakitTen extends CI_Model
         return $query->result();
     }
 
-    // public function getDataTableFilter($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris,  $instalasi, $kriteria)
-    // {
-    //     if ($kriteria  == '1') {
-    //         $query  = $this->db->query("SELECT TOP  " . $jumlahbaris . " KdDiagnosa, Diagnosa, sum(jumlahpasien) as [JumlahPasien]  FROM V_RekapitulasiDiagnosaTopTen WHERE TglPeriksa BETWEEN '" . $awal . " 00:00:00' AND '" . $akhir . " 23:59:59'  AND KdInstalasi LIKE '" . $instalasi . "' AND KdRuangan LIKE '" . $ruangan . "' AND KdKelompokPasien LIKE '" . $jenispasien . "' group by Diagnosa, KdDiagnosa  order by Diagnosa asc");
-    //     } else {
-    //         $query  = $this->db->query("SELECT TOP  " . $jumlahbaris . " KdDiagnosa, Diagnosa, sum(jumlahpasien) as [JumlahPasien]  FROM V_RekapitulasiDiagnosaTopTen WHERE TglPeriksa BETWEEN '" . $awal . " 00:00:00' AND '" . $akhir . " 23:59:59'  AND KdInstalasi LIKE '" . $instalasi . "' AND KdRuangan LIKE '" . $ruangan . "' AND KdKelompokPasien LIKE '" . $jenispasien . "' AND NoDTD not in ('267', '268', '269', '270.0', '270.1', '270.2', '270.3', '270.4', '270.5', '270.9') group by Diagnosa, KdDiagnosa  order by JumlahPasien desc");
-    //     }
-    //     return $query->result();
-    // }
-
-
     public function _get_data_query($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris, $instalasi, $kriteria, $status)
     {
         $this->db->select("KdDiagnosa, 
@@ -36,6 +25,9 @@ class M_RekapBesarPenyakitTen extends CI_Model
 
         if ($instalasi != '%') {
             $this->db->where("KdInstalasi", $instalasi);
+        } else {
+            $instalasi = array('01', '02', '03', '06', '08');
+            $this->db->where_in('KdInstalasi', $instalasi);
         }
 
         if ($status == '1') {
@@ -56,7 +48,7 @@ class M_RekapBesarPenyakitTen extends CI_Model
         } else {
             $nodtd = array('267', '268', '269', '270.0', '270.1', '270.2', '270.3', '270.4', '270.5', '270.9');
             $this->db->where_not_in('NoDTD', $nodtd);
-            $this->db->order_by('JumlahPasien', 'ASC');
+            $this->db->order_by('JumlahPasien', 'DESC');
         }
         $this->db->limit($jumlahbaris);
     }
@@ -64,11 +56,11 @@ class M_RekapBesarPenyakitTen extends CI_Model
     public function getDataTable($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris, $instalasi, $kriteria, $status)
     {
         $this->_get_data_query($awal, $akhir, $jenispasien, $ruangan, $jumlahbaris, $instalasi, $kriteria, $status);
-        if ($status == '1') {
-            if ($_POST['length'] != -1) {
-                $this->db->limit($_POST['length'], $_POST['start']);
-            }
-        }
+        // if ($status == '1') {
+        //     if ($_POST['length'] != -1) {
+        //         $this->db->limit($_POST['length'], $_POST['start']);
+        //     }
+        // }
         $query = $this->db->get();
         return $query->result();
     }
