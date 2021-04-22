@@ -90,26 +90,6 @@
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
 
-        $(document).ready(function() {
-            tableData.DataTable({
-                "processing": true,
-                "serverSide": true,
-                "bFilter": false,
-                "info": true,
-                "bLengthChange": true,
-                "paging": true,
-                "order": [],
-                "ajax": {
-                    "url": "<?= base_url('DaftarPasienMeninggal/getData') ?>",
-                    "type": "POST"
-                },
-                "columnDefs": [{
-                    "target": [-1],
-                    "orderable": false
-                }]
-            });
-        });
-
         function AmbilData() {
             var awal = $('#awal').val();
             var akhir = $('#akhir').val();
@@ -119,10 +99,6 @@
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
-                "bFilter": false,
-                "info": true,
-                "bLengthChange": true,
-                "paging": true,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('DaftarPasienMeninggal/AmbilData') ?>",
