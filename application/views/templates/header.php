@@ -50,6 +50,14 @@
             border-style: inset;
             border-top: 1px solid #000;
         }
+
+        .dataTables_wrapper .myfilter .dataTables_filter {
+            float: right
+        }
+
+        .dataTables_wrapper .mylength .dataTables_length {
+            float: left
+        }
     </style>
 </head>
 

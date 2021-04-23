@@ -14,7 +14,7 @@
 
         <form style="font-size:15px" action="<?php echo base_url('DaftarPasienPulangRanap/Cetak') ?>" id="formData" method="POST" target="_blank">
             <div class="form-inline">
-                <div class="form-group">
+                <div class="form-group m-lg-1">
                     <label for="awal">Periode</label>
                     <input type="date" value="<?= date('Y-m-d') ?>" class="form-control ml-2 mr-2" id="awal" name="awal" style="width:200px;">
                 </div>
@@ -25,7 +25,7 @@
 
                 <?php $jenispasien  = $this->db->query("SELECT * FROM KelompokPasien  WHERE StatusEnabled = '1' ORDER BY JenisPasien ASC")->result(); ?>
                 <div class="form-inline">
-                    <div class="form-group">
+                    <div class="form-group mx-sm-4">
                         <label for=" jenispasien" style="margin-left:5px;">Jenis Pasien</label>
                         <select id="jenispasien" name="jenispasien" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Jenis Pasien -</option>
@@ -39,7 +39,7 @@
                 <br><br>
                 <?php $ruangan  = $this->db->query("SELECT * FROM Ruangan WHERE KdInstalasi = '03' ORDER BY NamaRuangan ASC")->result(); ?>
                 <div class="form-inline">
-                    <div class="form-group mt-0">
+                    <div class="form-group mt-1">
                         <label for=" ruangan">Ruangan</label>
                         <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Ruangan -</option>
@@ -54,7 +54,7 @@
                             <input type="hidden" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
                         </div>
                     </div>
-                    <div class="form-group mt-0">
+                    <div class="form-group mx-sm-4">
                         <div class="form-inline" style="margin-left:10px;">
                             <label for="format" style="margin-right:10px;">Kondisi Pulang</label>
                             <div class="form-check form-check-inline">
@@ -138,9 +138,9 @@
             var kondisipulang = $("input:radio[name=radiokondisipulang]:checked").val()
 
             tableData.DataTable({
-                "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                // "dom": "<'row'<'col-sm-2'l><'col-sm-7'f>>" +
+                //     "<'row'<'col-sm-12'tr>>" +
+                //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,

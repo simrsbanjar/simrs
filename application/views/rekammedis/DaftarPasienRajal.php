@@ -111,9 +111,9 @@
             var caritext = $('#caritext').val();
 
             tableData.DataTable({
-                "dom": "<'row'<'col-sm-2'l><'col-sm-5'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                // "dom": "<'row'<'col-sm-2'l><'col-sm-5'f>>" +
+                //     "<'row'<'col-sm-12'tr>>" +
+                //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
