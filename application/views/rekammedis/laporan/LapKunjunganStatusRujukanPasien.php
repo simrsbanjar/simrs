@@ -484,12 +484,16 @@
 
         function myMethod() {
             if (tampil != null) {
-                window.print();
+                setTimeout(window.print(), 5000);
                 clearInterval(myVar);
+                window.close();
             }
         }
     <?php } else { ?>
         window.print();
+        window.onafterprint = function() {
+            window.close();
+        }
     <?php } ?>
 </script>
 

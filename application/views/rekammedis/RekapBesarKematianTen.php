@@ -124,9 +124,9 @@
         tableData.show();
         tableData.DataTable({
             "bFilter": false,
-            "bLengthChange": true,
-            "paging": true,
-            "info": true,
+            "bLengthChange": false,
+            "paging": false,
+            "info": false,
         });
         $(document).ready(function() {
             $('#instalasi').change(function() {
@@ -169,9 +169,9 @@
                 "processing": true,
                 "serverSide": true,
                 "bFilter": false,
-                "bLengthChange": true,
-                "paging": true,
-                "info": true,
+                "bLengthChange": false,
+                "paging": false,
+                "info": false,
                 "order": [],
                 "ajax": {
                     "url": "<?= base_url('RekapBesarKematianTen/AmbilData') ?>",
@@ -204,8 +204,9 @@
             var kriteria = $("input:radio[name=radiokriteria]:checked").val()
             document.formData.kliktombol.value = '2';
             chart.show();
-            tableData.hide();
+
             // memanggil data array dengan JSON
+            tableData.hide();
             var source = {
                 datatype: "json",
                 datafields: [{

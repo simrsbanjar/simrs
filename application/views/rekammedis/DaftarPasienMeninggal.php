@@ -35,8 +35,8 @@
             </div>
             <div class="form-inline">
                 <div class="form-group">
-                    <label for="format">Cari Nama Pasien / No. CM</label>
-                    <input type="text" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
+                    <!-- <label for="format">Cari Nama Pasien / No. CM</label> -->
+                    <input type="hidden" class="form-control" style="margin-left:10px;" id="caritext" name="caritext">
                 </div>
             </div>
         </form>

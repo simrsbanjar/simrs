@@ -70,13 +70,15 @@
 
     <?php if ($datafilter['kliktombol'] == '1') { ?>
         <table class="table table-bordered mt-5 border border-dark">
-            <tr style="text-align: center;" class="align-middle">
-                <th>No. Urut</th>
-                <th>Kd. Diagnosa</th>
-                <th>Diagnosa</th>
-                <th>Jumlah</th>
-                <th>Persentase</th>
-            </tr>
+            <thead>
+                <tr style="text-align: center;" class="align-middle">
+                    <th>No. Urut</th>
+                    <th>Kd. Diagnosa</th>
+                    <th>Diagnosa</th>
+                    <th>Jumlah</th>
+                    <th>Persentase</th>
+                </tr>
+            </thead>
 
             <?php
             $jumlahdata = 0;
@@ -107,13 +109,8 @@
         <div id="chartContainer" style="float: left; height: 500px; width: 100%;">
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="<?php echo base_url(); ?>assets/js/jquery-3.5.1.js" type="text/javascript"></script>
 
-        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"> </script>
-        <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"> </script>
         <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxcore.js"></script>
         <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxdraw.js"></script>
         <script src="<?php echo base_url(); ?>/assets/jqwidgets/jqxchart.core.js"></script>
@@ -209,6 +206,9 @@
     <?php } ?>
 
     setTimeout(window.print, 500);
+    window.onafterprint = function() {
+        window.close();
+    }
 </script>
 
 </html>

@@ -16,7 +16,7 @@
     </style>
 </head>
 
-<body onload="window.print()">
+<body>
     <table style="width: 100%;" class="mb-5">
         <?php $masterrs       = $this->db->query("SELECT * FROM ProfilRS WHERE StatusEnabled ='1'")->row(); ?>
         <tr>
@@ -104,5 +104,12 @@
 
     </table>
 </body>
+
+<script>
+    window.print();
+    window.onafterprint = function() {
+        window.close();
+    }
+</script>
 
 </html>

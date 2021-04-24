@@ -473,17 +473,21 @@
         });
 
         if (tampil === null) {
-            var myVar = setInterval(myMethod, 500);
+            var myVar = setInterval(myMethod, 700);
         }
 
         function myMethod() {
             if (tampil != null) {
-                window.print();
+                setTimeout(window.print(), 5000);
                 clearInterval(myVar);
+                window.close();
             }
         }
     <?php } else { ?>
         window.print();
+        window.onafterprint = function() {
+            window.close();
+        }
     <?php } ?>
 </script>
 

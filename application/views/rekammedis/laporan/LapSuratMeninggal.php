@@ -10,7 +10,7 @@
     <title>Surat Meninggal</title>
 </head>
 
-<body onload="window.print()">
+<body>
     <?php $profil = $this->db->query("SELECT * FROM ProfilRS")->row(); ?>
     <table style="width: 100%;">
         <tr>
@@ -75,5 +75,12 @@
         </tr>
     </table>
 </body>
+
+<script>
+    window.print();
+    window.onafterprint = function() {
+        window.close();
+    }
+</script>
 
 </html>

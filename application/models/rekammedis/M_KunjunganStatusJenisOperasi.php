@@ -115,6 +115,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
         if ($status == 1) {
             if ($format == '1') {
                 $query = $this->db->query("SELECT DISTINCT 
+                                                   IDTANGGAL = CONVERT(DATE,TglPendaftaran),
                                                    TANGGAL = CONVERT(DATE,TglPendaftaran)
                                               FROM V_DataKunjunganPasienMasukIBSBJenisOperasi 
                                              WHERE TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' 
@@ -122,6 +123,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                                and KdInstalasi ='" . $instalasi . "'
                                             UNION ALL
                                             SELECT DISTINCT 
+                                                   IDTANGGAL = CONVERT(DATE,TglPendaftaran),
                                                    TANGGAL = CONVERT(DATE,TglPendaftaran)
                                               FROM V_DataKunjunganPasienMasukBStatusPasien 
                                              WHERE TglPendaftaran BETWEEN '" . $tanggalawal . " 00:00:00" . "' 
@@ -302,6 +304,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
         } else {
             if ($format == '1') {
                 $query = $this->db->query("SELECT DISTINCT 
+                                                   IDTANGGAL	= CONVERT(CHAR(4),TglPendaftaran,102),
                                                    TANGGAL = CONVERT(CHAR(4),TglPendaftaran,102)
                                               FROM V_DataKunjunganPasienMasukIBSBJenisOperasi 
                                              WHERE YEAR(TglPendaftaran) BETWEEN '" . $tanggalawal . "' 
@@ -309,6 +312,7 @@ class M_KunjunganStatusJenisOperasi extends CI_Model
                                                and KdInstalasi ='" . $instalasi . "'
                                                UNION ALL
                                                SELECT DISTINCT 
+                                                   IDTANGGAL	= CONVERT(CHAR(4),TglPendaftaran,102),
                                                    TANGGAL = CONVERT(CHAR(4),TglPendaftaran,102)
                                               FROM V_DataKunjunganPasienMasukBStatusPasien 
                                              WHERE YEAR(TglPendaftaran) BETWEEN '" . $tanggalawal . "' 
