@@ -44,7 +44,7 @@
 
             <?php $ruangan  = $this->db->query("SELECT * FROM Instalasi WHERE StatusEnabled = '1' AND KdInstalasi IN ('01', '02', '03', '06', '08') ORDER BY KdInstalasi ASC")->result(); ?>
             <div class="form-inline">
-                <div class="form-group mt-4">
+                <div class="form-group mt-2">
                     <label for=" instalasi">Instalasi</label>
                     <select id="instalasi" name="instalasi" class='form-control' style="width:200px; margin-left:2px;">
                         <option value="%">- Semua Instalasi -</option>
@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-inline" style="margin-left:5px;">
-                    <div class="form-group mt-4">
+                    <div class="form-group mt-2">
                         <label for="ruangan">Ruangan</label>
                         <select id="ruangan" name="ruangan" class='form-control' style="width:200px; margin-left:2px;">
                             <option value="%">- Semua Ruangan -</option>
@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                <div class="form-group mt-4">
+                <div class="form-group mt-2">
                     <div class="form-inline" style="margin-left:10px;">
                         <label for="format" style="margin-right:10px;">Kriteria / Urutan</label>
                         <div class="form-check form-check-inline">
@@ -77,14 +77,28 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group mt-2">
+                    <div class="form-inline">
+                        <label for="format" style="margin-right:10px;">Format</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioformat" id="speadsheet" value="1" checked />
+                            <label class="form-check-label" for="inlineRadio1">Speadsheet</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioformat" id="grafik" value="2" />
+                            <label class="form-check-label" for="inlineRadio2">Grafik</label>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-inline">
                 <div class="form-group d-flex bd-highlight">
-                    <div class="p-3 order-10 bd-highlight">
+                    <div class="form-group mt-3">
                         <input type="hidden" name="kliktombol" value="1" />
-                        <buttons type="button" class="btn btn-success mr-2" id="lihat" onclick="AmbilData()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
-                        <buttons type="button" class="btn btn-success mr-2" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</buttons>
-                        <button type="submit" value="1" name='tombolcetak' class="btn btn-primary"><i class="fa fa-print"></i> Cetak</button>
+                        <buttons type="button" class="btn btn-success mr-2" id="lihat" onclick="cekformat()"><i class="fas fa-book-medical"></i> Lihat Laporan</buttons>
+                        <!-- <buttons type="button" class="btn btn-success mr-2" id="grafik" onclick="Grafik()"><i class="fas fa-chart-pie"></i> Grafik</buttons> -->
+                        <button type="submit" value="1" name='tombolcetak' class="btn btn-success mr-2"><i class="fa fa-print"></i> Cetak</button>
                     </div>
                 </div>
             </div>
@@ -152,6 +166,16 @@
                 });
             });
         });
+
+        function cekformat() {
+            var format = $("input:radio[name=radioformat]:checked").val()
+
+            if (format == '1') {
+                AmbilData();
+            } else {
+                Grafik()
+            }
+        }
 
         function AmbilData() {
             var awal = $('#awal').val();
