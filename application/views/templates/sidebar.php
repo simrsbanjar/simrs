@@ -3,12 +3,15 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('User'); ?>">
-        <img src="<?= base_url('assets/img/simrs') ?>/logosimrs.png" width="320px" class="col-5 m-md-auto ml-sm-0"></img>
-        <!-- <div class="sidebar-brand-icon"> -->
+        <img src="<?= base_url('assets/img/simrs') ?>/logo rsu.png" class="col-5 m-sm-auto"></img>
+        <!-- <div class=" sidebar-brand-icon"> -->
         <!-- <i class="fas fa-hospital-alt"></i> -->
         <!-- </div> -->
-        <div class="mb-auto col-6 m-2 ml-sm-0" style="font-size: 28px;">SIMRS</div>
+        <div style="font-size: 24px; color: whitesmoke; margin-right: 50px; margin-top: 30px;">SIMRS</div>
+
+        <!-- <img src="<?= base_url('assets/img/simrs') ?>/sidebar.png" style="height: 55px; width: 150px;"></img> -->
     </a>
+    <div style="font-size: 15px; color: whitesmoke;margin-left: 85px;">RSU Kota Banjar</div>
 
     <?php $menu          = $this->db->query("SELECT * FROM ListMenuWeb WHERE StatusEnabled = '1' ")->result();  ?>
 

@@ -63,8 +63,8 @@
 
     function myTimer() {
         var date = new Date();
-        document.getElementById("demo").innerHTML = '<font size = "5">' + getharitanggal(date, '1') + '</font>' + '<br>' + '<div class="mt-1">' +
-            '<font size = "3">' + getharitanggal(date, '2') + '</font>' + '</div>';
+        document.getElementById("demo").innerHTML = '<font size = "3">' + getharitanggal(date, '1') + '</font>' + '<br>' + '<div class="mt-1">' +
+            '<font size = "2">' + getharitanggal(date, '2') + '</font>' + '</div>';
     }
 
     String.prototype.paddingLeft = function(paddingValue) {

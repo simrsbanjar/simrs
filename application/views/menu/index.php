@@ -41,14 +41,15 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('User'); ?>">
-                <img src="<?= base_url('assets/img/simrs') ?>/logo rsu.png" class="col-5 m-md-auto"></img>
+                <img src="<?= base_url('assets/img/simrs') ?>/logo rsu.png" class="col-5 m-sm-auto"></img>
                 <!-- <div class=" sidebar-brand-icon"> -->
                 <!-- <i class="fas fa-hospital-alt"></i> -->
                 <!-- </div> -->
-                <div style="font-size: 24px; color: whitesmoke; margin-right: 50px; margin-top: 40px; ">SIMRS</div>
+                <div style="font-size: 24px; color: whitesmoke; margin-right: 50px; margin-top: 30px;">SIMRS</div>
 
                 <!-- <img src="<?= base_url('assets/img/simrs') ?>/sidebar.png" style="height: 55px; width: 150px;"></img> -->
             </a>
+            <div style="font-size: 15px; color: whitesmoke;margin-left: 85px;">RSU Kota Banjar</div>
 
             <!-- Divider -->
             <br>
@@ -120,20 +121,18 @@
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
             <!-- Main Content -->
             <div id="content">
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <div class="btn btn-danger btn-xs mr-1 d-none d-lg-inline" style="min-width:210px;">
+                    <div class="btn btn-danger btn-xs mr-1 d-none d-lg-inline" style="min-width:160px;">
                         <div style="font-size: 20px;">
                             <i class="far fa-calendar-alt fa-lg" style="float: left; padding-top:0.5rem; padding-bottom:0.5rem; padding-right:0.25rem; padding-left:0;"></i>
                         </div>
                         <span style="font-size: 14px; float: left; padding-left: 5px; line-height: 50px; text-align: left;">
                             <span id="demo" style="font-size: 16px; float:left; padding-left: 5px; line-height: 16px;text-align: left;"></span>
                     </div>
-
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
@@ -181,6 +180,12 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
+                    <!-- breadcrumb -->
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item mt-0"><a href="<?= base_url('User') ?>">Home</a></li>
+                        <li class="breadcrumb-item active mt-0" aria-current="page">Profil</li>
+                    </ol>
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
                     <div class="card mb-3" style="max-width: 640px;">
@@ -269,8 +274,8 @@
 
     function myTimer() {
         var date = new Date();
-        document.getElementById("demo").innerHTML = '<font size = "5">' + getharitanggal(date, '1') + '</font>' + '<br>' + '<div class="mt-1">' +
-            '<font size = "3">' + getharitanggal(date, '2') + '</font>' + '</div>';
+        document.getElementById("demo").innerHTML = '<font size = "3">' + getharitanggal(date, '1') + '</font>' + '<br>' + '<div class="mt-1">' +
+            '<font size = "2">' + getharitanggal(date, '2') + '</font>' + '</div>';
     }
 
     String.prototype.paddingLeft = function(paddingValue) {
