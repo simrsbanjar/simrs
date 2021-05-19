@@ -59,6 +59,14 @@
             float: left
         }
     </style>
+    <script src="<?php echo base_url(); ?>assets/export/Buttons-1.5.1/js/buttons.print.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/export/Buttons-1.5.1/js/buttons.html5.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/export/pdfmake-0.1.32/vfs_fonts.js"></script>
+    <script src="<?php echo base_url(); ?>assets/export/pdfmake-0.1.32/pdfmake.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/export/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/export/Buttons-1.5.1/js/buttons.flash.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/export/Buttons-1.5.1/js/dataTables.buttons.min.js"></script>
+    <link href="<?php echo base_url(); ?>assets/export/Buttons-1.5.1/css/buttons.dataTables.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">

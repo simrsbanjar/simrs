@@ -110,6 +110,7 @@
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-print"></i> Print</button>
+                            <!-- <button id="btnproses" type="button" onclick="Export()" class="btn btn-sm btn-success"><i class="fas fa-file-export"></i> Export</button> -->
                         </div>
                     </form>
                 </div>
@@ -296,7 +297,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script type="text/javascript">

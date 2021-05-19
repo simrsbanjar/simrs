@@ -129,6 +129,27 @@
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
 
+        $(document).ready(function() {
+            tableData.DataTable({
+                "bLengthChange": true,
+                "paging": true,
+                "info": true,
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                dom: 'lBfrtip',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ],
+            });
+        });
+
         function AmbilData() {
             var awal = $('#awal').val();
             var akhir = $('#akhir').val();
@@ -160,7 +181,15 @@
                 "columnDefs": [{
                     "target": [-1],
                     "orderable": false
-                }]
+                }],
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ],
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ]
             });
 
         }

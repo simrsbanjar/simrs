@@ -116,13 +116,24 @@
 
         chart.hide();
         tableData.show();
-        tableData.DataTable({
-            "bFilter": true,
-            "bLengthChange": false,
-            "paging": false,
-            "info": false,
-        });
+
         $(document).ready(function() {
+            tableData.DataTable({
+                "bFilter": true,
+                "bLengthChange": false,
+                "paging": false,
+                "info": false,
+                dom: 'Bfrtip',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ],
+            });
+
             $('#instalasi').change(function() {
                 var id = $(this).val();
                 $.ajax({
@@ -181,7 +192,15 @@
                 "columnDefs": [{
                     "target": [-1],
                     "orderable": false
-                }]
+                }],
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ],
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ]
             });
 
         }

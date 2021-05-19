@@ -103,6 +103,28 @@
         var modalTitle = $('#modalTitle');
         var btnsave = $('#btnSave');
 
+        $(document).ready(function() {
+            tableData.DataTable({
+                "bLengthChange": true,
+                "paging": true,
+                "info": true,
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                dom: 'lBfrtip',
+                exportOptions: {
+                    modifier: {
+                        page: 'current'
+                    }
+                },
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ],
+            });
+        });
+
+
         function AmbilData() {
             var awal = $('#awal').val();
             var akhir = $('#akhir').val();
@@ -111,9 +133,6 @@
             var caritext = $('#caritext').val();
 
             tableData.DataTable({
-                // "dom": "<'row'<'col-sm-2'l><'col-sm-5'f>>" +
-                //     "<'row'<'col-sm-12'tr>>" +
-                //     "<'row'<'col-sm-5'i><'col-sm-7'p>>",
                 "destroy": true,
                 "processing": true,
                 "serverSide": true,
@@ -132,7 +151,15 @@
                 "columnDefs": [{
                     "target": [-1],
                     "orderable": false
-                }]
+                }],
+                dom: 'lBfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel'
+                ],
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ]
             });
 
         }

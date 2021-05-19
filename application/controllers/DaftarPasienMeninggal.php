@@ -65,7 +65,6 @@ class DaftarPasienMeninggal extends CI_Controller
             $row[] = $result->Pekerjaan;
             $row[] = $result->KdKelasAkhir;
             $row[] = $result->DeskKelas;
-            $row[] = $result->NamaDiagnosa;
             $row[] = $result->KdKelompokPasien;
             $row[] = $result->JenisPasien;
             $row[] = $result->Kota;

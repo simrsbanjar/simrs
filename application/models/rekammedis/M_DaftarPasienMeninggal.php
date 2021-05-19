@@ -21,7 +21,6 @@ class M_DaftarPasienMeninggal extends CI_Model
                           Pekerjaan, 
                           KdKelasAkhir, 
                           DeskKelas, 
-                          NamaDiagnosa,
                           KdKelompokPasien, 
                           JenisPasien, 
                           V_DaftarPasienMeninggal.Kota AS Kota, 
@@ -44,8 +43,7 @@ class M_DaftarPasienMeninggal extends CI_Model
                 $searchQuery = " (Pasien.NamaLengkap like '%" . $searchValue . "%' or 
                               V_DaftarPasienMeninggal.NoCM like '%" . $searchValue . "%' or 
                               JenisPasien like '%" . $searchValue . "%' or 
-                              Penyebab like '%" . $searchValue . "%' or 
-                              NamaDiagnosa like'%" . $searchValue . "%' ) ";
+                              Penyebab like '%" . $searchValue . "%') ";
             }
             if ($searchQuery != '') {
                 $this->db->where($searchQuery);
@@ -91,7 +89,7 @@ class M_DaftarPasienMeninggal extends CI_Model
         [Dokter Pemeriksa] AS DokterPemeriksa,
         KdRuangan, NamaSubInstalasi, UmurTahun,
         Pekerjaan, KdKelasAkhir, DeskKelas,
-        NamaDiagnosa, KdKelompokPasien, JenisPasien,
+        KdKelompokPasien, JenisPasien,
         Kota, Kelurahan, Kecamatan, RTRW, TglLahir,
         IdPegawai, NamaJabatan 
         FROM V_DaftarPasienMeninggal) AS COBA 
@@ -113,7 +111,7 @@ class M_DaftarPasienMeninggal extends CI_Model
         [Dokter Pemeriksa] AS DokterPemeriksa,
         KdRuangan, NamaSubInstalasi, UmurTahun,
         Pekerjaan = ISNULL(Pekerjaan,'-'), KdKelasAkhir, DeskKelas,
-        NamaDiagnosa, KdKelompokPasien, JenisPasien,
+        KdKelompokPasien, JenisPasien,
         Kota, Kelurahan, Kecamatan, RTRW, TglLahir,
         IdPegawai, NamaJabatan
         FROM V_DaftarPasienMeninggal) AS COBA 

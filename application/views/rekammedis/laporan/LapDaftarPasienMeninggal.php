@@ -51,7 +51,6 @@
                 <th>Tgl. Masuk</th>
                 <th>Tgl. Meninggal</th>
                 <th>Tempat Meninggal</th>
-                <th>Nama Diagnosa</th>
                 <th>Dokter Pemeriksa</th>
             </tr>
         </thead>
@@ -71,7 +70,6 @@
                 <td><?php echo $TglMasuk  ?></td>
                 <td><?php echo $TglMeninggal ?></td>
                 <td><?php echo $row->TempatMeninggal ?></td>
-                <td><?php echo $row->NamaDiagnosa ?></td>
                 <td><?php echo $row->DokterPemeriksa ?></td>
             </tr>
         <?php endforeach ?>
