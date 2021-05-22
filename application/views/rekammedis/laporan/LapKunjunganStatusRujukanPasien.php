@@ -7,6 +7,7 @@
     <title>Laporan Kunjungan Pasien Berdasarkan Status dan Rujukan Pasien</title>
     <link rel="icon" href="<?= base_url('assets/img/simrs/logo rsu.png'); ?>" type="image/png" sizes="16x16">
     <link rel="stylesheet" href="<?= base_url('assets/'); ?>css/bootstrap-v5.min.css">
+
     <!-- Chart Plugin -->
     <script src="<?php echo base_url(); ?>assets/css/Chart.bundle.js"></script>
     <script src="<?php echo base_url(); ?>assets/css/Chart.bundle.min.js"></script>
@@ -16,6 +17,7 @@
     <link href="<?= base_url('assets/'); ?>css/Chart.min.css">
     <script src="<?php echo base_url() ?>assets/chartjs/Chart.js"></script>
     <link href="<?= base_url('assets/'); ?>css/bg.css" rel="stylesheet">
+    <script src="<?php echo base_url(); ?>assets/js/jquery-3.2.1.min.js" type="text/javascript"></script>
 
 </head>
 
@@ -105,8 +107,7 @@
             <?php $no1++ ?>
         <?php endforeach ?>
 
-
-        <table class="table table-bordered mt-5 border border-dark">
+        <table class="table table-bordered mt-5 border border-dark" id="testTable">
             <!-- Repeat header dengan thead     -->
             <thead>
                 <tr style="text-align: center;" class="align-middle">
@@ -320,6 +321,7 @@
         var bulanakhir = "<?= $datafilter['bulanakhir'] ?>";
         var tahun2 = "<?= $datafilter['tahun2'] ?>";
         var tahun3 = "<?= $datafilter['tahun3'] ?>";
+        var tombol = "<?= $datafilter['tombol'] ?>";
         var tampil = null;
 
         var dataparm = {
@@ -490,11 +492,42 @@
             }
         }
     <?php } else { ?>
-        window.print();
-        window.onafterprint = function() {
-            window.close();
-        }
+        <?php if ($datafilter['tombol'] == '1') { ?>
+            window.print();
+            window.onafterprint = function() {
+                window.close();
+            }
+        <?php } else { ?>
+            $(document).ready(function() {
+                tableToExcel('testTable', 'Sheet1')
+                setTimeout(window.close, 50);
+            });
+        <?php } ?>
     <?php } ?>
+
+    var tableToExcel = (function() {
+        var uri = 'data:application/vnd.ms-excel;base64,',
+            template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table cellspacing="0" rules="rows" border="1" style="color:Black;background-color:White;border-color:#CCCCCC;border-width:1px;border-style:None;width:100%;border-collapse:collapse;font-size:9pt;text-align:center;">{table}</table></body></html>',
+            base64 = function(s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            },
+            format = function(s, c) {
+                return s.replace(/{(\w+)}/g, function(m, p) {
+                    return c[p];
+                })
+            }
+        return function(table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet',
+                table: table.innerHTML
+            }
+            var link = document.createElement("a");
+            link.download = "Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Pasien.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+        }
+    })()
 </script>
 
 </html>
