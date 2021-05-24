@@ -570,7 +570,7 @@
                 table: table.innerHTML
             }
             var link = document.createElement("a");
-            link.download = "Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Pasien.xls";
+            link.download = "Laporan Kunjungan Pasien Berdasarkan Status dan Kondisi Pulang.xls";
             link.href = uri + base64(format(template, ctx));
             link.click();
         }
