@@ -70,6 +70,12 @@ class KunjunganKelasStatusPasien extends CI_Controller
         $tahun3 = $this->input->post('tahun3');
         $format = $this->input->post('flexRadioDefault');
 
+        if ($this->input->post('submit2') != null) {
+            $tombol = $this->input->post('submit2');
+        } else {
+            $tombol = $this->input->post('submit1');
+        }
+
         if ($nilaifilter == 1) {
             $instalasi = $this->input->post('instalasi');
 
@@ -91,7 +97,8 @@ class KunjunganKelasStatusPasien extends CI_Controller
                 'tahun3' => $tahun3,
                 'bulanawal'   => $bulanawal,
                 'bulanakhir'   => $bulanakhir,
-                'tahunakhir' => $tahun3
+                'tahunakhir' => $tahun3,
+                'tombol' => $tombol
             ];
             $this->load->view('rekammedis/laporan/LapKunjunganKelasStatusPas', $data);
         } elseif ($nilaifilter == 2) {
@@ -168,7 +175,8 @@ class KunjunganKelasStatusPasien extends CI_Controller
                 'tahun3' => $tahun3,
                 'bulanawal'   => $bulanawal,
                 'bulanakhir'   => $bulanakhir,
-                'tahunakhir' => $tahun3
+                'tahunakhir' => $tahun3,
+                'tombol' => $tombol
             ];
             $this->load->view('rekammedis/laporan/LapKunjunganKelasStatusPas', $data);
         } elseif ($nilaifilter == 3) {
@@ -192,7 +200,8 @@ class KunjunganKelasStatusPasien extends CI_Controller
                 'tahun3' => $tahun3,
                 'bulanawal'   => $bulanawal,
                 'bulanakhir'   => $bulanakhir,
-                'tahunakhir' => $tahun3
+                'tahunakhir' => $tahun3,
+                'tombol' => $tombol
             ];
             $this->load->view('rekammedis/laporan/LapKunjunganKelasStatusPas', $data);
         }
