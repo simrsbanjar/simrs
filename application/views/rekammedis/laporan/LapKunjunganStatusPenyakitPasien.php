@@ -40,16 +40,18 @@
         </tr>
     </table>
     <br>
-    <h2>
-        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Kasus Penyakit Pasien</b></center>
-    </h2>
-    <div class="mb-3">
-        <p align="center">
-            <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
-            Periode : <?= $subtitle ?> <br>
-            Instalasi : <?= $instalasi->NamaInstalasi  ?>
-        </p>
-    </div>
+    <?php if ($datafilter['tombol'] == '1') { ?>
+        <h2>
+            <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Kasus Penyakit Pasien</b></center>
+        </h2>
+        <div class="mb-3">
+            <p align="center">
+                <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
+                Instalasi : <?= $instalasi->NamaInstalasi  ?><br>
+                Periode : <?= $subtitle ?>
+            </p>
+        </div>
+    <?php } ?>
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
         $ruangan_old = '';
@@ -107,6 +109,20 @@
         <?php endforeach ?>
 
         <table class="table table-bordered mt-5 border border-dark" id="testTable">
+            <?php if ($datafilter['tombol'] != '1') { ?>
+                <caption>
+                    <h2>
+                        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Kasus Penyakit Pasien</b></center>
+                    </h2>
+                    <div class="mb-3">
+                        <p align="center">
+                            <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
+                            Instalasi : <?= $instalasi->NamaInstalasi  ?> <br>
+                            Periode : <?= $subtitle ?>
+                        </p>
+                    </div>
+                </caption>
+            <?php } ?>
             <!-- repeat header dengan thead -->
             <thead>
                 <tr style="text-align: center;" class="align-middle">

@@ -41,16 +41,18 @@
         </tr>
     </table>
     <br>
-    <h2>
-        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Pasien</b></center>
-    </h2>
-    <div class="mb-3">
-        <p align="center">
-            <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
-            Periode : <?= $subtitle ?> <br>
-            Instalasi : <?= $instalasi->NamaInstalasi  ?>
-        </p>
-    </div>
+    <?php if ($datafilter['tombol'] == '1') { ?>
+        <h2>
+            <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Pasien</b></center>
+        </h2>
+        <div class="mb-3">
+            <p align="center">
+                <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
+                Instalasi : <?= $instalasi->NamaInstalasi  ?> <br>
+                Periode : <?= $subtitle ?>
+            </p>
+        </div>
+    <?php } ?>
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
         $ruangan_old = '';
@@ -92,29 +94,27 @@
         }
         ?>
 
-        <?php
-        $no = 0;
-        foreach ($jenispasien as $row) : ?>
-            <?php $no++ ?>
-        <?php endforeach ?>
-
-        <?php
-        $no1 = 0;
-        foreach ($jumlah as $row) : ?>
-            <?php if ($row->STS_FORMAT == '2') { ?>
-                <?php if ($ruangan_old != $row->RuanganPelayanan) { ?>
-                    <?php $no1++ ?>
-                <?php } ?>
-            <?php } ?>
-        <?php endforeach ?>
-
         <table class="table table-bordered mt-5 border border-dark" id="testTable">
+            <?php if ($datafilter['tombol'] != '1') { ?>
+                <caption>
+                    <h2>
+                        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Jenis Pasien</b></center>
+                    </h2>
+                    <div class="mb-3">
+                        <p align="center">
+                            <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
+                            Instalasi : <?= $instalasi->NamaInstalasi  ?> <br>
+                            Periode : <?= $subtitle ?>
+                        </p>
+                    </div>
+                </caption>
+            <?php } ?>
             <!-- Repeat header dengan thead -->
             <thead>
                 <tr style="text-align: center;" class="align-middle">
                     <th rowspan="3">Ruangan</th>
-                    <th colspan="<?= ($no * 3) + 1; ?>">Jenis Pasien</th>
-                    <th colspan="<?= ($no1 * 3) + 1; ?>">Status Pasien</th>
+                    <th colspan="<?= (count($jenispasien) * 3) + 1; ?>">Jenis Pasien</th>
+                    <th colspan="<?= (count($statuspasien) * 3) + 1; ?>">Status Pasien</th>
                 </tr>
                 <tr style="text-align: center;" class="align-middle">
                     <?php foreach ($jenispasien as $row) : ?>
