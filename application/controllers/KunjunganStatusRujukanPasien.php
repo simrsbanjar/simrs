@@ -71,6 +71,12 @@ class KunjunganStatusRujukanPasien extends CI_Controller
         $tahun3 = $this->input->post('tahun3');
         $format = $this->input->post('flexRadioDefault');
 
+        if ($this->input->post('submit2') != null) {
+            $tombol = $this->input->post('submit2');
+        } else {
+            $tombol = $this->input->post('submit1');
+        }
+
         if ($nilaifilter == 1) {
             $instalasi = $this->input->post('instalasi');
 
@@ -92,8 +98,10 @@ class KunjunganStatusRujukanPasien extends CI_Controller
                 'tahun3' => $tahun3,
                 'bulanawal'   => $bulanawal,
                 'bulanakhir'   => $bulanakhir,
-                'tahunakhir' => $tahun3
+                'tahunakhir' => $tahun3,
+                'tombol' => $tombol
             ];
+
             $this->load->view('rekammedis/laporan/LapKunjunganStatusRujukanPasien', $data);
         } elseif ($nilaifilter == 2) {
             $instalasi = $this->input->post('instalasi1');
@@ -157,6 +165,7 @@ class KunjunganStatusRujukanPasien extends CI_Controller
             if ($format == '1') {
                 $data['jumlah'] = $this->M_KunjunganStatusRujukanPasien->GetDataBulan($tahun1, $bulanawal, $bulanakhir, $instalasi);
             }
+
             $data['datafilter'] = [
                 'tanggalawal'   => $tanggalawal,
                 'tanggalakhir'   => $tanggalakhir,
@@ -169,7 +178,8 @@ class KunjunganStatusRujukanPasien extends CI_Controller
                 'tahun3' => $tahun3,
                 'bulanawal'   => $bulanawal,
                 'bulanakhir'   => $bulanakhir,
-                'tahunakhir' => $tahun3
+                'tahunakhir' => $tahun3,
+                'tombol' => $tombol
             ];
             $this->load->view('rekammedis/laporan/LapKunjunganStatusRujukanPasien', $data);
         } elseif ($nilaifilter == 3) {
@@ -178,7 +188,6 @@ class KunjunganStatusRujukanPasien extends CI_Controller
             $data['title'] = "Laporan Kunjungan Status dan Rujukan Pasien Berdasarkan Tahun";
             $data['subtitle'] =  $tahun2 . ' s.d ' . $tahun3;
             $data['instalasi'] = $instalasi;
-
             if ($format == '1') {
                 $data['jumlah'] = $this->M_KunjunganStatusRujukanPasien->GetDataTahun($tahun2, $instalasi, $tahun3);
             }
@@ -194,7 +203,8 @@ class KunjunganStatusRujukanPasien extends CI_Controller
                 'tahun3' => $tahun3,
                 'bulanawal'   => $bulanawal,
                 'bulanakhir'   => $bulanakhir,
-                'tahunakhir' => $tahun3
+                'tahunakhir' => $tahun3,
+                'tombol' => $tombol
             ];
             $this->load->view('rekammedis/laporan/LapKunjunganStatusRujukanPasien', $data);
         }
