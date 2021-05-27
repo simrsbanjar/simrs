@@ -40,31 +40,41 @@
         </tr>
     </table>
     <br>
-    <h2>
-        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Kondisi Pasien</b></center>
-    </h2>
-    <div class="mb-3">
-        <p align="center">
-            <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
-            Periode : <?= $subtitle ?> <br>
-            Instalasi : <?= $instalasi->NamaInstalasi  ?>
-        </p>
-    </div>
+    <?php if ($datafilter['tombol'] == '1') { ?>
+        <h2>
+            <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Kondisi Pasien</b></center>
+        </h2>
+        <div class="mb-3">
+            <p align="center">
+                <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
+                Periode : <?= $subtitle ?> <br>
+                Instalasi : <?= $instalasi->NamaInstalasi  ?>
+            </p>
+        </div>
+    <?php } ?>
 
     <?php if ($datafilter['format'] == '1') { ?>
         <?php
         $periode_old = '';
+        $periode[] = '';
         foreach ($jumlah as $row) : ?>
             <?php if ($row->STS_FORMAT == '1') { ?>
+
                 <?php if ($periode_old != $row->TANGGAL) { ?>
                     <?php $periode[] = $row->TANGGAL; ?>
                 <?php } ?>
                 <?php $periode_old = $row->TANGGAL;  ?>
             <?php } ?>
         <?php endforeach ?>
+        <?php
+        $periode    = array_values(array_unique($periode));
+        unset($periode[0]);
+        $periode = array_values($periode);
+        ?>
 
         <?php
         $ruangan_old = '';
+        $ruangan[] = '';
         foreach ($jumlah as $row) : ?>
             <?php if ($row->STS_FORMAT == '1') { ?>
                 <?php if ($ruangan_old != $row->RuanganPelayanan) { ?>
@@ -73,7 +83,11 @@
                 <?php $ruangan_old = $row->RuanganPelayanan;  ?>
             <?php } ?>
         <?php endforeach ?>
-        <?php $ruangan    = array_values(array_unique($ruangan)); ?>
+        <?php
+        $ruangan    = array_values(array_unique($ruangan));
+        unset($ruangan[0]);
+        $ruangan = array_values($ruangan);
+        ?>
 
         <?php
         $kondisipulang_old = '';
@@ -115,6 +129,20 @@
         <?php endforeach ?>
 
         <table class="table table-bordered mt-5 border border-dark" id="testTable">
+            <?php if ($datafilter['tombol'] != '1') { ?>
+                <caption>
+                    <h2>
+                        <center><b>Laporan Kunjungan Pasien Berdasarkan Status dan Kondisi Pasien</b></center>
+                    </h2>
+                    <div class="mb-3">
+                        <p align="center">
+                            <?php $instalasi       = $this->db->query("SELECT * FROM Instalasi WHERE KdInstalasi ='" . $instalasi . "'")->row(); ?>
+                            Periode : <?= $subtitle ?> <br>
+                            Instalasi : <?= $instalasi->NamaInstalasi  ?>
+                        </p>
+                    </div>
+                </caption>
+            <?php } ?>
             <thead>
                 <tr style="text-align: center;" class="align-middle">
                     <th rowspan="3">Periode</th>
@@ -148,209 +176,211 @@
                 </tr>
             </thead>
 
-            <?php
-            $row3 = 0;
-            while ($row3    <= count($periode) - 1) { ?>
+            <?php if ($no1 > 0) { ?>
                 <?php
-                if ($datafilter['nilaifilter'] == '2') {
-                    if ($periode[$row3] == '01') {
-                        $periodebln = 'JANUARI';
-                    } else if ($periode[$row3] == '02') {
-                        $periodebln = 'FEBRUARI';
-                    } else if ($periode[$row3] == '03') {
-                        $periodebln = 'MARET';
-                    } else if ($periode[$row3] == '04') {
-                        $periodebln = 'APRIL';
-                    } else if ($periode[$row3] == '05') {
-                        $periodebln = 'MEI';
-                    } else if ($periode[$row3] == '06') {
-                        $periodebln = 'JUNI';
-                    } else if ($periode[$row3] == '07') {
-                        $periodebln = 'JULI';
-                    } else if ($periode[$row3] == '08') {
-                        $periodebln = 'AGUSTUS';
-                    } else if ($periode[$row3] == '09') {
-                        $periodebln = 'SEPTEMBER';
-                    } else if ($periode[$row3] == '10') {
-                        $periodebln = 'OKTOBER';
-                    } else if ($periode[$row3] == '11') {
-                        $periodebln = 'NOVEMBER';
-                    } else {
-                        $periodebln = 'DESEMBER';
+                $row3 = 0;
+                while ($row3    <= count($periode) - 1) { ?>
+                    <?php
+                    if ($datafilter['nilaifilter'] == '2') {
+                        if ($periode[$row3] == '01') {
+                            $periodebln = 'JANUARI';
+                        } else if ($periode[$row3] == '02') {
+                            $periodebln = 'FEBRUARI';
+                        } else if ($periode[$row3] == '03') {
+                            $periodebln = 'MARET';
+                        } else if ($periode[$row3] == '04') {
+                            $periodebln = 'APRIL';
+                        } else if ($periode[$row3] == '05') {
+                            $periodebln = 'MEI';
+                        } else if ($periode[$row3] == '06') {
+                            $periodebln = 'JUNI';
+                        } else if ($periode[$row3] == '07') {
+                            $periodebln = 'JULI';
+                        } else if ($periode[$row3] == '08') {
+                            $periodebln = 'AGUSTUS';
+                        } else if ($periode[$row3] == '09') {
+                            $periodebln = 'SEPTEMBER';
+                        } else if ($periode[$row3] == '10') {
+                            $periodebln = 'OKTOBER';
+                        } else if ($periode[$row3] == '11') {
+                            $periodebln = 'NOVEMBER';
+                        } else {
+                            $periodebln = 'DESEMBER';
+                        }
                     }
-                }
 
-                $noruangan = 0;
-                foreach ($ruangan as $rowruangan) : ?>
-                    <?php $noruangan++ ?>
-                <?php endforeach ?>
+                    $noruangan = 0;
+                    foreach ($ruangan as $rowruangan) : ?>
+                        <?php $noruangan++ ?>
+                    <?php endforeach ?>
 
-                <?php if ($datafilter['nilaifilter'] == '2') { ?>
-                    <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $periodebln;            ?></td>
-                <?php } else { ?>
-                    <td style="text-align: center;" rowspan='<?= $noruangan + 1 ?>'><?php echo $periode[$row3];            ?></td>
-                <?php }
-                $row = 0;
-
-                while ($row <= count($ruangan) - 1) { ?>
                     <tr>
-                        <?php $sumtotal = 0; ?>
-                        <td style="text-align: center;" class="align-middle"><?= $ruangan[$row];            ?></td>
+                        <?php if ($datafilter['nilaifilter'] == '2') { ?>
+                            <td style="text-align: center; vertical-align: middle;" rowspan='<?= $noruangan ?>'><?php echo $periodebln;            ?></td>
+                        <?php } else { ?>
+                            <td style="text-align: center; vertical-align: middle;" rowspan='<?= $noruangan ?>'><?php echo $periode[$row3];            ?></td>
+                        <?php }
+                        $row = 0;
 
-                        <?php if ($no > 0) { ?>
-                            <?php
-                            $row1 = 0;
-                            while ($row1 <= count($kondisipulang) - 1) { ?>
+                        while ($row <= count($ruangan) - 1) { ?>
+                            <?php $sumtotal = 0; ?>
+                            <td style="text-align: center; vertical-align: middle;"><?= $ruangan[$row];            ?></td>
+
+                            <?php if ($no > 0) { ?>
                                 <?php
-                                $row2 = 0;
-                                $count = 0;
-                                while ($row2 <= count($jumlah) - 1) {
-                                    if (
-                                        $jumlah[$row2]->Detail == $kondisipulang[$row1] and
-                                        $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
-                                        $jumlah[$row2]->TANGGAL == $periode[$row3]
-                                    ) { ?>
-                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
-
-                                        <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
-                                        <?php $count++ ?>
+                                $row1 = 0;
+                                while ($row1 <= count($kondisipulang) - 1) { ?>
                                     <?php
+                                    $row2 = 0;
+                                    $count = 0;
+                                    while ($row2 <= count($jumlah) - 1) {
+                                        if (
+                                            $jumlah[$row2]->Detail == $kondisipulang[$row1] and
+                                            $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
+                                            $jumlah[$row2]->TANGGAL == $periode[$row3]
+                                        ) { ?>
+                                            <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                            <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                            <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+
+                                            <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
+                                            <?php $count++ ?>
+                                        <?php
+                                        }
+
+                                        $row2++;
                                     }
+                                    if ($count == 0) { ?>
+                                        <td style="text-align: center; vertical-align: middle;">0</td>
+                                        <td style="text-align: center; vertical-align: middle;">0</td>
+                                        <td style="text-align: center; vertical-align: middle;">0</td>
+                                <?php }
+                                    $row1++;
+                                }; ?>
+                                <td style="text-align: center; vertical-align: middle;"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
+                            <?php } ?>
 
-                                    $row2++;
-                                }
-                                if ($count == 0) { ?>
-                                    <td style="text-align: center;" class="align-middle">0</td>
-                                    <td style="text-align: center;" class="align-middle">0</td>
-                                    <td style="text-align: center;" class="align-middle">0</td>
-                            <?php }
-                                $row1++;
-                            }; ?>
-                            <td style="text-align: center;" class="align-middle"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
-                        <?php } ?>
-
-                        <?php if ($no1 > 0) { ?>
-                            <?php $sumpastotal = 0; ?>
-                            <?php
-                            $row1 = 0;
-                            while ($row1 <= count($statuspasien) - 1) { ?>
+                            <?php if ($no1 > 0) { ?>
+                                <?php $sumpastotal = 0; ?>
                                 <?php
-                                $row2 = 0;
-                                $count = 0;
-                                while ($row2 <= count($jumlah) - 1) {
-                                    if (
-                                        $jumlah[$row2]->Detail == $statuspasien[$row1] and
-                                        $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
-                                        $jumlah[$row2]->TANGGAL == $periode[$row3]
-                                    ) { ?>
-                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                        <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
-
-                                        <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
-                                        <?php $count++ ?>
+                                $row1 = 0;
+                                while ($row1 <= count($statuspasien) - 1) { ?>
                                     <?php
+                                    $row2 = 0;
+                                    $count = 0;
+                                    while ($row2 <= count($jumlah) - 1) {
+                                        if (
+                                            $jumlah[$row2]->Detail == $statuspasien[$row1] and
+                                            $jumlah[$row2]->RuanganPelayanan == $ruangan[$row] and
+                                            $jumlah[$row2]->TANGGAL == $periode[$row3]
+                                        ) { ?>
+                                            <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                            <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                            <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+
+                                            <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
+                                            <?php $count++ ?>
+                                        <?php
+                                        }
+
+                                        $row2++;
                                     }
+                                    if ($count == 0) { ?>
+                                        <td style="text-align: center; vertical-align: middle;">0</td>
+                                        <td style="text-align: center; vertical-align: middle;">0</td>
+                                        <td style="text-align: center; vertical-align: middle;">0</td>
+                                <?php }
+                                    $row1++;
+                                }; ?>
+                                <td style="text-align: center; vertical-align: middle;"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
 
-                                    $row2++;
-                                }
-                                if ($count == 0) { ?>
-                                    <td style="text-align: center;" class="align-middle">0</td>
-                                    <td style="text-align: center;" class="align-middle">0</td>
-                                    <td style="text-align: center;" class="align-middle">0</td>
-                            <?php }
-                                $row1++;
-                            }; ?>
-                            <td style="text-align: center;" class="align-middle"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
-
-                        <?php } ?>
+                            <?php } ?>
                     </tr>
                     <?php $row++; ?>
                 <?php }; ?>
 
             <?php $row3++;
-            } ?>
+                } ?>
+        <?php } ?>
 
-            <th style="text-align: center;" colspan="2">Total</th>
+        <th style="text-align: center; vertical-align: middle;" colspan="2">Total</th>
 
-            <?php
-            if ($no > 0) {
-                $sumtotalall = 0;
-                $row1 = 0;
-                while ($row1 <= count($kondisipulang) - 1) { ?>
-                    <?php
-                    $row2 = 0;
-                    $count = 0;
-                    $totalL = 0;
-                    $totalP = 0;
-                    $sumtotal = 0;
-                    while ($row2 <= count($jumlah) - 1) {
-                        if (
-                            $jumlah[$row2]->Detail == $kondisipulang[$row1]
-                        ) {
-                            $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
-                            $totalL = $totalL + $jumlah[$row2]->L;
-                            $totalP = $totalP + $jumlah[$row2]->P;
-                            $sumtotalall = $sumtotalall + $jumlah[$row2]->TOTAL;
-                            $count++;
-                        };
-                        $row2++;
-                    }; ?>
-
-                    <?php if ($count == 0) { ?>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
-                    <?php } else { ?>
-                        <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
-                    <?php } ?>
-                <?php $row1++;
-                }; ?>
-                <th style="text-align: center;"><?= number_format($sumtotalall, 0, ',', '.'); ?></th>
-            <?php } ?>
-
-            <?php if ($no1 > 0) { ?>
+        <?php
+        if ($no > 0) {
+            $sumtotalall = 0;
+            $row1 = 0;
+            while ($row1 <= count($kondisipulang) - 1) { ?>
                 <?php
-                $sumtotalallpas = 0;
-                $row1 = 0;
-                while ($row1 <= count($statuspasien) - 1) { ?>
-                    <?php
-                    $row2 = 0;
-                    $count = 0;
-                    $totalL = 0;
-                    $totalP = 0;
-                    $sumtotal = 0;
-                    while ($row2 <= count($jumlah) - 1) {
-                        if (
-                            $jumlah[$row2]->Detail == $statuspasien[$row1]
-                        ) {
-                            $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
-                            $totalL = $totalL + $jumlah[$row2]->L;
-                            $totalP = $totalP + $jumlah[$row2]->P;
-                            $sumtotalallpas = $sumtotalallpas + $jumlah[$row2]->TOTAL;
-                            $count++;
-                        };
-                        $row2++;
-                    }; ?>
-
-                    <?php if ($count == 0) { ?>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
-                    <?php } else { ?>
-                        <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
-                <?php }
-                    $row1++;
+                $row2 = 0;
+                $count = 0;
+                $totalL = 0;
+                $totalP = 0;
+                $sumtotal = 0;
+                while ($row2 <= count($jumlah) - 1) {
+                    if (
+                        $jumlah[$row2]->Detail == $kondisipulang[$row1]
+                    ) {
+                        $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
+                        $totalL = $totalL + $jumlah[$row2]->L;
+                        $totalP = $totalP + $jumlah[$row2]->P;
+                        $sumtotalall = $sumtotalall + $jumlah[$row2]->TOTAL;
+                        $count++;
+                    };
+                    $row2++;
                 }; ?>
 
-                <th style="text-align: center;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
-            <?php } ?>
+                <?php if ($count == 0) { ?>
+                    <th style="text-align: center; vertical-align: middle;">0</th>
+                    <th style="text-align: center; vertical-align: middle;">0</th>
+                    <th style="text-align: center; vertical-align: middle;">0</th>
+                <?php } else { ?>
+                    <th style="text-align: center; vertical-align: middle;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                    <th style="text-align: center; vertical-align: middle;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                    <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
+                <?php } ?>
+            <?php $row1++;
+            }; ?>
+            <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotalall, 0, ',', '.'); ?></th>
+        <?php } ?>
+
+        <?php if ($no1 > 0) { ?>
+            <?php
+            $sumtotalallpas = 0;
+            $row1 = 0;
+            while ($row1 <= count($statuspasien) - 1) { ?>
+                <?php
+                $row2 = 0;
+                $count = 0;
+                $totalL = 0;
+                $totalP = 0;
+                $sumtotal = 0;
+                while ($row2 <= count($jumlah) - 1) {
+                    if (
+                        $jumlah[$row2]->Detail == $statuspasien[$row1]
+                    ) {
+                        $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL;
+                        $totalL = $totalL + $jumlah[$row2]->L;
+                        $totalP = $totalP + $jumlah[$row2]->P;
+                        $sumtotalallpas = $sumtotalallpas + $jumlah[$row2]->TOTAL;
+                        $count++;
+                    };
+                    $row2++;
+                }; ?>
+
+                <?php if ($count == 0) { ?>
+                    <th style="text-align: center; vertical-align: middle;">0</th>
+                    <th style="text-align: center; vertical-align: middle;">0</th>
+                    <th style="text-align: center; vertical-align: middle;">0</th>
+                <?php } else { ?>
+                    <th style="text-align: center; vertical-align: middle;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                    <th style="text-align: center; vertical-align: middle;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                    <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
+            <?php }
+                $row1++;
+            }; ?>
+
+            <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
+        <?php } ?>
         </table>
     <?php } else { ?>
         <div style="width:auto;">
