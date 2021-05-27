@@ -162,7 +162,7 @@
             while ($row <= count($ruangan) - 1) { ?>
                 <tr>
                     <?php $sumtotal = 0; ?>
-                    <td style="text-align: center;" class="align-middle"><?= $ruangan[$row]['RuanganPelayanan'];            ?></td>
+                    <td style="text-align: center; vertical-align: middle;"><?= $ruangan[$row]['RuanganPelayanan'];            ?></td>
 
                     <?php if ($no > 0) { ?>
                         <?php
@@ -176,9 +176,9 @@
                                     $jumlah[$row2]->Detail == $asalrujukan[$row1] and
                                     $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
                                 ) { ?>
-                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                     <?php $sumtotal = $sumtotal + $jumlah[$row2]->TOTAL  ?>
                                     <?php $count++ ?>
@@ -188,13 +188,13 @@
                                 $row2++;
                             }
                             if ($count == 0) { ?>
-                                <td style="text-align: center;" class="align-middle">0</td>
-                                <td style="text-align: center;" class="align-middle">0</td>
-                                <td style="text-align: center;" class="align-middle">0</td>
+                                <td style="text-align: center; vertical-align: middle;">0</td>
+                                <td style="text-align: center; vertical-align: middle;">0</td>
+                                <td style="text-align: center; vertical-align: middle;">0</td>
                         <?php }
                             $row1++;
                         }; ?>
-                        <td style="text-align: center;" class="align-middle"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
+                        <td style="text-align: center; vertical-align: middle;"><?= number_format($sumtotal, 0, ',', '.'); ?></td>
                     <?php } ?>
 
                     <?php if ($no1 > 0) { ?>
@@ -210,9 +210,9 @@
                                     $jumlah[$row2]->Detail == $statuspasien[$row1] and
                                     $jumlah[$row2]->RuanganPelayanan == $ruangan[$row]['RuanganPelayanan']
                                 ) { ?>
-                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
-                                    <td style="text-align: center;" class="align-middle"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->L, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->P, 0, ',', '.'); ?></td>
+                                    <td style="text-align: center; vertical-align: middle;"><?= number_format($jumlah[$row2]->TOTAL, 0, ',', '.'); ?></td>
 
                                     <?php $sumpastotal = $sumpastotal + $jumlah[$row2]->TOTAL  ?>
                                     <?php $count++ ?>
@@ -222,20 +222,20 @@
                                 $row2++;
                             }
                             if ($count == 0) { ?>
-                                <td style="text-align: center;" class="align-middle">0</td>
-                                <td style="text-align: center;" class="align-middle">0</td>
-                                <td style="text-align: center;" class="align-middle">0</td>
+                                <td style="text-align: center; vertical-align: middle;">0</td>
+                                <td style="text-align: center; vertical-align: middle;">0</td>
+                                <td style="text-align: center; vertical-align: middle;">0</td>
                         <?php }
                             $row1++;
                         }; ?>
-                        <td style="text-align: center;" class="align-middle"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
+                        <td style="text-align: center; vertical-align: middle;"><?= number_format($sumpastotal, 0, ',', '.'); ?></td>
 
                     <?php } ?>
                 </tr>
                 <?php $row++; ?>
             <?php }; ?>
 
-            <th style="text-align: center;">Total</th>
+            <th style="text-align: center; vertical-align: middle;">Total</th>
 
             <?php
             if ($no > 0) {
@@ -262,17 +262,17 @@
                     }; ?>
 
                     <?php if ($count == 0) { ?>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
+                        <th style="text-align: center; vertical-align: middle;">0</th>
+                        <th style="text-align: center; vertical-align: middle;">0</th>
+                        <th style="text-align: center; vertical-align: middle;">0</th>
                     <?php } else { ?>
-                        <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
+                        <th style="text-align: center; vertical-align: middle;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                        <th style="text-align: center; vertical-align: middle;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                        <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
                     <?php } ?>
                 <?php $row1++;
                 }; ?>
-                <th style="text-align: center;"><?= number_format($sumtotalall, 0, ',', '.'); ?></th>
+                <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotalall, 0, ',', '.'); ?></th>
             <?php } ?>
 
             <?php if ($no1 > 0) { ?>
@@ -300,18 +300,18 @@
                     }; ?>
 
                     <?php if ($count == 0) { ?>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
-                        <th style="text-align: center;">0</th>
+                        <th style="text-align: center; vertical-align: middle;">0</th>
+                        <th style="text-align: center; vertical-align: middle;">0</th>
+                        <th style="text-align: center; vertical-align: middle;">0</th>
                     <?php } else { ?>
-                        <th style="text-align: center;"><?= number_format($totalL, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($totalP, 0, ',', '.'); ?></th>
-                        <th style="text-align: center;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
+                        <th style="text-align: center; vertical-align: middle;"><?= number_format($totalL, 0, ',', '.'); ?></th>
+                        <th style="text-align: center; vertical-align: middle;"><?= number_format($totalP, 0, ',', '.'); ?></th>
+                        <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotal, 0, ',', '.'); ?></th>
                 <?php }
                     $row1++;
                 }; ?>
 
-                <th style="text-align: center;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
+                <th style="text-align: center; vertical-align: middle;"><?= number_format($sumtotalallpas, 0, ',', '.'); ?></th>
             <?php } ?>
 
         </table>
